@@ -201,6 +201,31 @@
 	line-height: 1.05;
 }
 
+.westgate-wiki .wiki-page-heading__title--subpage {
+	align-items: baseline;
+	column-gap: 0.22em;
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 0.08em;
+}
+
+.westgate-wiki .wiki-page-heading__title-part {
+	min-inline-size: 0;
+}
+
+.westgate-wiki .wiki-page-heading__title-part--parent {
+	color: color-mix(in srgb, var(--wg-text-muted) 78%, var(--wg-gold-soft) 22%);
+	text-shadow: none;
+}
+
+.westgate-wiki .wiki-page-heading__title-separator {
+	color: var(--wg-gold);
+	font-family: var(--wg-font-ui);
+	font-weight: 100;
+	line-height: 1;
+	text-shadow: 0 0 10px rgba(194, 163, 90, 0.28);
+}
+
 .westgate-wiki .wiki-article-prose :where(h1, h2, h3, h4),
 .westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2, h3, h4),
 .westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2, h3, h4) {
@@ -348,6 +373,245 @@
 	font-family: var(--wg-font-ui);
 }
 
+.westgate-wiki :where(.wiki-topic-list a, .wiki-index-entry-title, .wiki-sidebar-nav-page) {
+	align-items: baseline;
+	display: inline-flex;
+	flex-wrap: nowrap;
+	min-inline-size: 0;
+	white-space: nowrap;
+}
+
+.westgate-wiki .wiki-sidebar-parent-path,
+.westgate-wiki .wiki-topic-parent-path {
+	display: inline-flex;
+	align-items: baseline;
+	column-gap: 0.34em;
+	color: color-mix(in srgb, var(--wg-text-muted) 78%, var(--wg-gold-soft) 22%) !important;
+	font-size: 0.82em;
+	font-weight: 600;
+	text-transform: none;
+}
+
+.westgate-wiki .wiki-sidebar-parent-path__part,
+.westgate-wiki .wiki-topic-parent-path__part {
+	min-inline-size: 0;
+}
+
+.westgate-wiki .wiki-topic-title-separator {
+	display: inline-block;
+	margin-inline: 0.34em;
+	color: var(--wg-gold);
+	font-family: var(--wg-font-ui);
+	font-weight: 700;
+	text-shadow: 0 0 8px rgba(194, 163, 90, 0.22);
+}
+
+.westgate-wiki .wiki-namespace-directory {
+	--wiki-tree-indent: 1.28rem;
+	--wiki-tree-line-color: rgba(194, 163, 90, 0.34);
+	margin-block-start: 0.78rem;
+}
+
+.westgate-wiki .wiki-directory-filter {
+	background:
+		linear-gradient(180deg, rgba(255, 244, 221, 0.028), rgba(0, 0, 0, 0.1)),
+		rgba(8, 7, 10, 0.4) !important;
+	border-color: rgba(194, 163, 90, 0.18) !important;
+	border-radius: 7px !important;
+	box-shadow: inset 0 1px 0 rgba(255, 244, 221, 0.035);
+	color: var(--wg-text-soft) !important;
+	font-family: var(--wg-font-ui);
+	min-block-size: 2.28rem;
+}
+
+.westgate-wiki .wiki-directory-filter::placeholder {
+	color: color-mix(in srgb, var(--wg-text-muted) 82%, transparent);
+}
+
+.westgate-wiki .wiki-directory-filter:focus {
+	background:
+		linear-gradient(180deg, rgba(255, 244, 221, 0.04), rgba(0, 0, 0, 0.08)),
+		rgba(14, 11, 17, 0.76) !important;
+	border-color: rgba(194, 163, 90, 0.38) !important;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 244, 221, 0.04),
+		0 0 0 0.18rem rgba(194, 163, 90, 0.09) !important;
+	color: var(--wg-text) !important;
+}
+
+.westgate-wiki .wiki-index-jump--dynamic {
+	background: rgba(8, 7, 10, 0.18);
+	border-block: 1px solid rgba(194, 163, 90, 0.1);
+	gap: 0.36rem;
+	margin-block: 0.72rem 0.9rem !important;
+	padding-block: 0.46rem;
+}
+
+.westgate-wiki .wiki-index-jump-link {
+	background:
+		linear-gradient(180deg, rgba(255, 244, 221, 0.035), rgba(0, 0, 0, 0.1)),
+		rgba(194, 163, 90, 0.045) !important;
+	border-color: rgba(194, 163, 90, 0.16) !important;
+	box-shadow: inset 0 1px 0 rgba(255, 244, 221, 0.03);
+	transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.westgate-wiki .wiki-index-jump-link:hover,
+.westgate-wiki .wiki-index-jump-link:focus,
+.westgate-wiki .wiki-index-jump-link.is-active {
+	background:
+		linear-gradient(180deg, rgba(194, 163, 90, 0.14), rgba(81, 25, 61, 0.12)),
+		rgba(194, 163, 90, 0.08) !important;
+	border-color: rgba(216, 194, 138, 0.36) !important;
+	color: #fff4dd !important;
+	transform: translateY(-1px);
+}
+
+.westgate-wiki .wiki-index-list {
+	list-style: none;
+	padding-inline-start: 0;
+}
+
+.westgate-wiki .wiki-index-list:has(.wiki-index-entry--subpage) {
+	column-count: auto;
+	column-gap: 0;
+	display: block;
+}
+
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry {
+	margin-block: 0 0.42rem;
+	position: relative;
+}
+
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry-main {
+	align-items: center;
+	min-block-size: 1.8rem;
+	padding: 0.18rem 0;
+	position: relative;
+	transition: color 0.16s ease, text-shadow 0.16s ease;
+}
+
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry:not(.wiki-index-entry--subpage) .wiki-index-entry-main::before {
+	background: radial-gradient(circle, #e0c878 0 30%, rgba(194, 163, 90, 0.28) 31% 58%, transparent 59%);
+	block-size: 0.42rem;
+	content: "";
+	inline-size: 0.42rem;
+	margin-inline: 0.28rem 0.26rem;
+}
+
+.westgate-wiki .wiki-index-entry--subpage {
+	list-style: none;
+	margin-block: -0.16rem 0.28rem;
+	margin-inline-start: calc(var(--wiki-title-depth, 1) * var(--wiki-tree-indent, 1.28rem));
+	padding-inline-start: 0.84rem;
+	position: relative;
+}
+
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry--subpage .wiki-index-entry-main {
+	min-block-size: 1.62rem;
+	padding-block: 0.1rem;
+}
+
+.westgate-wiki .wiki-index-entry--subpage::before {
+	background: linear-gradient(90deg, var(--wiki-tree-line-color, rgba(194, 163, 90, 0.34)), rgba(194, 163, 90, 0.12));
+	position: absolute;
+	block-size: 1px;
+	content: "";
+	inline-size: 0.86rem;
+	inset-block-start: 1.02rem;
+	inset-inline-start: -0.08rem;
+}
+
+.westgate-wiki .wiki-index-entry--subpage::after {
+	background: linear-gradient(180deg, rgba(194, 163, 90, 0.08), var(--wiki-tree-line-color, rgba(194, 163, 90, 0.34)));
+	block-size: 1.18rem;
+	content: "";
+	inline-size: 1px;
+	inset-block-start: -0.12rem;
+	inset-inline-start: -0.08rem;
+	position: absolute;
+}
+
+.westgate-wiki .wiki-index-entry--subpage .wiki-topic-parent-path,
+.westgate-wiki .wiki-index-entry--subpage .wiki-topic-title-separator,
+.westgate-wiki .wiki-topic-list__item--subpage .wiki-topic-parent-path,
+.westgate-wiki .wiki-topic-list__item--subpage .wiki-topic-title-separator {
+	display: none;
+}
+
+.westgate-wiki .wiki-index-entry--subpage .wiki-index-entry-title,
+.westgate-wiki .wiki-topic-list__item--subpage a {
+	color: color-mix(in srgb, var(--wg-gold) 86%, var(--wg-text-muted) 14%) !important;
+}
+
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry-title {
+	line-height: 1.28;
+	min-inline-size: 0;
+	overflow-wrap: anywhere;
+	text-decoration: none !important;
+	white-space: normal;
+}
+
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry-main:hover .wiki-index-entry-title,
+.westgate-wiki .wiki-namespace-directory .wiki-index-entry-main:focus-within .wiki-index-entry-title {
+	color: #fff4dd !important;
+	text-shadow: 0 0 10px rgba(194, 163, 90, 0.16);
+}
+
+.westgate-wiki .wiki-index-entry--subpage[style*="--wiki-title-depth: 2"] .wiki-index-entry-title,
+.westgate-wiki .wiki-topic-list__item--subpage[style*="--wiki-title-depth: 2"] a {
+	color: color-mix(in srgb, var(--wg-gold) 78%, var(--wg-text-muted) 22%) !important;
+	font-size: 0.96em;
+}
+
+.westgate-wiki .wiki-index-entry--subpage[style*="--wiki-title-depth: 3"] .wiki-index-entry-title,
+.westgate-wiki .wiki-topic-list__item--subpage[style*="--wiki-title-depth: 3"] a {
+	color: color-mix(in srgb, var(--wg-gold) 70%, var(--wg-text-muted) 30%) !important;
+	font-size: 0.93em;
+}
+
+.westgate-wiki .wiki-topic-list__item--subpage {
+	--wiki-tree-indent: 1rem;
+	--wiki-tree-line-color: rgba(194, 163, 90, 0.36);
+	list-style: none;
+	margin-block-start: -0.15rem;
+	margin-inline-start: calc(var(--wiki-title-depth, 1) * var(--wiki-tree-indent));
+	padding-inline-start: 0.52rem;
+	position: relative;
+}
+
+.westgate-wiki .wiki-topic-list__item--subpage::before {
+	background: linear-gradient(90deg, var(--wiki-tree-line-color), rgba(194, 163, 90, 0.12));
+	position: absolute;
+	block-size: 1px;
+	content: "";
+	inline-size: 0.66rem;
+	inset-block-start: 0.7em;
+	inset-inline-start: -0.3rem;
+}
+
+.westgate-wiki .wiki-topic-list__item--subpage::after {
+	background: linear-gradient(180deg, rgba(194, 163, 90, 0.08), var(--wiki-tree-line-color));
+	block-size: 0.44em;
+	content: "";
+	inline-size: 1px;
+	inset-block-start: 0.28em;
+	inset-inline-start: -0.3rem;
+	position: absolute;
+}
+
+.westgate-wiki .wiki-sidebar-page-title,
+.westgate-wiki .wiki-topic-title-leaf {
+	display: inline;
+	min-inline-size: 0;
+}
+
+.westgate-wiki .wiki-directory-status {
+	color: var(--wg-text-muted) !important;
+	font-family: var(--wg-font-ui);
+	margin-block-start: 0.72rem;
+}
+
 .westgate-wiki .wiki-article-toc__link {
 	font-size: 0.94rem;
 	font-weight: 600;
@@ -369,6 +633,80 @@
 .westgate-wiki .wiki-sidebar-list a {
 	line-height: 1.35;
 	text-decoration: none;
+}
+
+.westgate-wiki .wiki-sidebar-directory {
+	--wiki-sidebar-tree-indent: 1.1rem;
+	--wiki-sidebar-tree-line-color: rgba(194, 163, 90, 0.26);
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-rows--child-pages {
+	border-inline-start-color: rgba(194, 163, 90, 0.16) !important;
+	margin-inline-start: 0.42rem;
+	padding-inline-start: 0.66rem;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page {
+	position: relative;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page:has(.wiki-sidebar-parent-path) {
+	--wiki-sidebar-row-depth: 1;
+	margin-block-start: 0.26rem;
+	padding-inline-start: calc(0.35rem + (var(--wiki-sidebar-row-depth) * var(--wiki-sidebar-tree-indent)));
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page:has(.wiki-sidebar-parent-path__part:nth-of-type(3)) {
+	--wiki-sidebar-row-depth: 2;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page:has(.wiki-sidebar-parent-path__part:nth-of-type(5)) {
+	--wiki-sidebar-row-depth: 3;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page:has(.wiki-sidebar-parent-path__part:nth-of-type(7)) {
+	--wiki-sidebar-row-depth: 4;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page:has(.wiki-sidebar-parent-path)::before {
+	background: linear-gradient(90deg, var(--wiki-sidebar-tree-line-color), rgba(194, 163, 90, 0.08));
+	block-size: 1px;
+	content: "";
+	inline-size: 0.7rem;
+	inset-block-start: 0.78em;
+	inset-inline-start: calc(0.18rem + ((var(--wiki-sidebar-row-depth, 1) - 1) * var(--wiki-sidebar-tree-indent)));
+	position: absolute;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-row--page:has(.wiki-sidebar-parent-path)::after {
+	background: linear-gradient(180deg, rgba(194, 163, 90, 0.06), var(--wiki-sidebar-tree-line-color));
+	block-size: 0.58em;
+	content: "";
+	inline-size: 1px;
+	inset-block-start: 0.22em;
+	inset-inline-start: calc(0.18rem + ((var(--wiki-sidebar-row-depth, 1) - 1) * var(--wiki-sidebar-tree-indent)));
+	position: absolute;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-nav-page {
+	align-items: baseline;
+	display: inline-flex;
+	flex-direction: row;
+	gap: 0;
+	min-inline-size: 0;
+	max-inline-size: 100%;
+	white-space: normal;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-parent-path,
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-parent-path + .wiki-topic-title-separator {
+	display: none !important;
+}
+
+.westgate-wiki .wiki-sidebar-directory .wiki-sidebar-page-title {
+	display: inline;
+	min-inline-size: 0;
+	overflow-wrap: anywhere;
 }
 
 .westgate-wiki .wiki-sidebar-nav-ns:hover,
@@ -400,7 +738,6 @@
 	border-color: rgba(194, 163, 90, 0.13) !important;
 }
 
-.westgate-wiki .wiki-index-jump-link,
 .westgate-wiki .wiki-index-entry-badge {
 	background: rgba(194, 163, 90, 0.055) !important;
 	border-color: rgba(194, 163, 90, 0.14) !important;
