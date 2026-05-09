@@ -38,6 +38,16 @@
 	--wiki-prose-heading-text-shadow:
 		0 1px 0 rgba(0, 0, 0, 0.9),
 		0 0 10px rgba(104, 32, 76, 0.16);
+	--wiki-prose-h1-size: clamp(2.05rem, 4vw, 2.65rem);
+	--wiki-prose-h2-size: clamp(1.68rem, 3vw, 2.12rem);
+	--wiki-prose-h3-size: clamp(1.42rem, 2.2vw, 1.64rem);
+	--wiki-prose-h4-size: 1.26rem;
+	--wiki-prose-heading-rule: linear-gradient(
+		90deg,
+		rgba(194, 163, 90, 0.42),
+		rgba(194, 163, 90, 0.1) 54%,
+		transparent
+	);
 
 	--wiki-prose-link-color: var(--wg-gold);
 	--wiki-prose-link-hover-color: #e0c878;
@@ -188,6 +198,80 @@
 .westgate-wiki .wiki-page-heading__title {
 	font-size: clamp(2rem, 5vw, 2.65rem);
 	line-height: 1.05;
+}
+
+.westgate-wiki .wiki-article-prose :where(h1, h2, h3, h4),
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2, h3, h4),
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2, h3, h4) {
+	color: var(--wiki-prose-heading-color) !important;
+	font-family: var(--wiki-prose-heading-font-family);
+	font-weight: var(--wiki-prose-heading-font-weight);
+	letter-spacing: 0;
+	line-height: 1.08;
+	text-shadow: var(--wiki-prose-heading-text-shadow);
+}
+
+.westgate-wiki .wiki-article-prose :where(h1, h2),
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2),
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2) {
+	margin-block: 0 0.55em;
+	padding-block-end: 0.24em;
+	position: relative;
+}
+
+.westgate-wiki .wiki-article-prose :where(h1, h2)::after,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2)::after,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2)::after {
+	content: "";
+	display: block;
+	inline-size: min(14rem, 48%);
+	block-size: 1px;
+	margin-block-start: 0.24em;
+	background: var(--wiki-prose-heading-rule);
+}
+
+.westgate-wiki .wiki-article-prose :where(h3, h4),
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h3, h4),
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h3, h4) {
+	margin-block: 0 0.38em;
+	color: #efe6d7 !important;
+}
+
+.westgate-wiki .wiki-article-prose p + :where(h1, h2),
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content p + :where(h1, h2),
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content p + :where(h1, h2) {
+	margin-block-start: 1.05em;
+}
+
+.westgate-wiki .wiki-article-prose p + :where(h3, h4),
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content p + :where(h3, h4),
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content p + :where(h3, h4) {
+	margin-block-start: 0.85em;
+}
+
+.westgate-wiki .wiki-article-prose h1,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content h1,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content h1 {
+	font-size: var(--wiki-prose-h1-size);
+}
+
+.westgate-wiki .wiki-article-prose h2,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content h2,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content h2 {
+	font-size: var(--wiki-prose-h2-size);
+}
+
+.westgate-wiki .wiki-article-prose h3,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content h3,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content h3 {
+	font-size: var(--wiki-prose-h3-size);
+}
+
+.westgate-wiki .wiki-article-prose h4,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content h4,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content h4 {
+	font-size: var(--wiki-prose-h4-size);
+	color: var(--wg-gold) !important;
 }
 
 .westgate-wiki .wiki-page-heading__meta,
