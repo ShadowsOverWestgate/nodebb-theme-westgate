@@ -38,9 +38,7 @@
 	--wiki-prose-large-heading-color: var(--wg-gold);
 	--wiki-prose-heading-font-weight: 500;
 	--wiki-prose-heading-bold-font-weight: 700;
-	--wiki-prose-heading-text-shadow:
-		0 1px 0 rgba(0, 0, 0, 0.9),
-		0 0 10px rgba(104, 32, 76, 0.16);
+	--wiki-prose-heading-text-shadow: 2px 2px 10px rgb(0, 0, 0);
 	--wiki-prose-h1-size: clamp(2.05rem, 4vw, 2.65rem);
 	--wiki-prose-h2-size: clamp(1.68rem, 3vw, 2.12rem);
 	--wiki-prose-h3-size: clamp(1.42rem, 2.2vw, 1.64rem);
