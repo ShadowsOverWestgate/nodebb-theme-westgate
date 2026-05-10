@@ -266,13 +266,18 @@
 .westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2) {
 	color: var(--wiki-prose-large-heading-color) !important;
 	margin-block: 0 0.55em;
+}
+
+.westgate-wiki .wiki-article-prose h1,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content h1,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content h1 {
 	padding-block-end: 0.24em;
 	position: relative;
 }
 
-.westgate-wiki .wiki-article-prose :where(h1, h2)::after,
-.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2)::after,
-.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2)::after {
+.westgate-wiki .wiki-article-prose h1::after,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content h1::after,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content h1::after {
 	content: "";
 	display: block;
 	inline-size: min(14rem, 48%);
