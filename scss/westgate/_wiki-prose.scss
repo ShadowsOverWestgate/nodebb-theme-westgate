@@ -10,6 +10,7 @@
 	--wiki-chrome-radius: 8px;
 	--wiki-chrome-heading-color: var(--wg-text);
 	--wiki-chrome-page-title-font-family: var(--wg-font-display);
+	--wiki-chrome-page-title-font-weight: 400;
 	--wiki-chrome-muted-color: var(--wg-text-muted);
 	--wiki-chrome-link-color: var(--wg-gold);
 	--wiki-chrome-link-hover-color: #e0c878;
@@ -35,7 +36,8 @@
 	--wiki-prose-color: var(--wg-text-soft);
 	--wiki-prose-heading-color: var(--wg-text);
 	--wiki-prose-large-heading-color: var(--wg-gold);
-	--wiki-prose-heading-font-weight: 600;
+	--wiki-prose-heading-font-weight: 400;
+	--wiki-prose-heading-bold-font-weight: 700;
 	--wiki-prose-heading-text-shadow:
 		0 1px 0 rgba(0, 0, 0, 0.9),
 		0 0 10px rgba(104, 32, 76, 0.16);
@@ -213,6 +215,7 @@
 
 .westgate-wiki .wiki-page-heading__title {
 	font-size: clamp(2rem, 5vw, 2.65rem);
+	font-weight: var(--wiki-chrome-page-title-font-weight);
 	line-height: 1.05;
 }
 
@@ -250,6 +253,12 @@
 	letter-spacing: 0;
 	line-height: 1.08;
 	text-shadow: var(--wiki-prose-heading-text-shadow);
+}
+
+.westgate-wiki .wiki-article-prose :where(h1, h2, h3, h4, h5, h6) :where(strong, b),
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2, h3, h4, h5, h6) :where(strong, b),
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2, h3, h4, h5, h6) :where(strong, b) {
+	font-weight: var(--wiki-prose-heading-bold-font-weight) !important;
 }
 
 .westgate-wiki .wiki-article-prose :where(h1, h2),
