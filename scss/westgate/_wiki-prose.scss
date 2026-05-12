@@ -284,6 +284,114 @@
 	background: var(--wiki-prose-heading-rule);
 }
 
+.westgate-wiki .wiki-article-prose,
+.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content,
+.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content {
+	h1:is(
+		[style*="text-align: left"],
+		[style*="text-align:left"],
+		[style*="text-align: center"],
+		[style*="text-align:center"],
+		[style*="text-align: right"],
+		[style*="text-align:right"]
+	) {
+		display: table;
+		max-inline-size: 100%;
+
+		&::after {
+			inline-size: 100%;
+		}
+	}
+
+	h1:is([style*="text-align: left"], [style*="text-align:left"]) {
+		margin-inline: 0 auto;
+	}
+
+	h1:is([style*="text-align: center"], [style*="text-align:center"]) {
+		margin-inline: auto;
+
+		&::after {
+			background: var(
+				--wiki-prose-heading-rule-center,
+				linear-gradient(
+					90deg,
+					transparent,
+					rgba(194, 163, 90, 0.28) 22%,
+					rgba(194, 163, 90, 0.82) 50%,
+					rgba(194, 163, 90, 0.28) 78%,
+					transparent
+				)
+			);
+		}
+	}
+
+	h1:is([style*="text-align: right"], [style*="text-align:right"]) {
+		margin-inline: auto 0;
+
+		&::after {
+			background: var(
+				--wiki-prose-heading-rule-right,
+				linear-gradient(
+					270deg,
+					rgba(194, 163, 90, 0.82),
+					rgba(194, 163, 90, 0.24) 54%,
+					transparent
+				)
+			);
+		}
+	}
+
+	h1:has(> :where(strong, b, em, i, u, span, a):only-child)::after {
+		content: none;
+	}
+
+	h1 > :where(strong, b, em, i, u, span, a):only-child {
+		display: inline-block;
+		max-width: 100%;
+
+		&::after {
+			background: var(--wiki-prose-heading-rule);
+			block-size: 1px;
+			content: "";
+			display: block;
+			inline-size: 100%;
+			margin-block-start: 0.24em;
+		}
+	}
+
+	h1:is(
+		[style*="text-align: center"],
+		[style*="text-align:center"]
+	) > :where(strong, b, em, i, u, span, a):only-child::after {
+		background: var(
+			--wiki-prose-heading-rule-center,
+			linear-gradient(
+				90deg,
+				transparent,
+				rgba(194, 163, 90, 0.28) 22%,
+				rgba(194, 163, 90, 0.82) 50%,
+				rgba(194, 163, 90, 0.28) 78%,
+				transparent
+			)
+		);
+	}
+
+	h1:is(
+		[style*="text-align: right"],
+		[style*="text-align:right"]
+	) > :where(strong, b, em, i, u, span, a):only-child::after {
+		background: var(
+			--wiki-prose-heading-rule-right,
+			linear-gradient(
+				270deg,
+				rgba(194, 163, 90, 0.82),
+				rgba(194, 163, 90, 0.24) 54%,
+				transparent
+			)
+		);
+	}
+}
+
 .westgate-wiki .wiki-article-prose :where(h3, h4),
 .westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h3, h4),
 .westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h3, h4) {
