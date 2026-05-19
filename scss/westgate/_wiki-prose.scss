@@ -246,6 +246,12 @@
 	text-shadow: 0 0 10px rgba(194, 163, 90, 0.28);
 }
 
+.westgate-wiki .wiki-article-prose .wiki-callout::after,
+.westgate-wiki-compose .wiki-editor__content .wiki-callout::after {
+	mask-mode: alpha;
+	-webkit-mask-mode: alpha;
+}
+
 .westgate-wiki .wiki-article-prose :where(h1, h2, h3, h4),
 .westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(h1, h2, h3, h4),
 .westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(h1, h2, h3, h4) {
