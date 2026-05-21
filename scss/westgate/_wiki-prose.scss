@@ -148,6 +148,7 @@
 	--wiki-fab-danger-bg: rgba(142, 52, 56, 0.16);
 
 	--wiki-editor-table-handle-layer: 4;
+	--wiki-infobox-layer: 1;
 	--wiki-editor-floating-toolbar-layer: 20;
 	--wiki-editor-toolbar-layer: 30;
 
@@ -250,6 +251,12 @@
 .westgate-wiki-compose .wiki-editor__content .wiki-callout::after {
 	mask-mode: alpha;
 	-webkit-mask-mode: alpha;
+}
+
+.westgate-wiki .wiki-article-prose .wiki-infobox,
+.westgate-wiki-compose .wiki-editor__content .wiki-infobox {
+	position: relative;
+	z-index: var(--wiki-infobox-layer, 1);
 }
 
 .westgate-wiki .wiki-article-prose :where(h1, h2, h3, h4),
