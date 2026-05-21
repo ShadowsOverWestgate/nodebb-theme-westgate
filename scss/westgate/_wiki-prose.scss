@@ -1167,6 +1167,75 @@
 	font-family: var(--wg-font-code) !important;
 }
 
+.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll {
+	display: contents;
+}
+
+@media (max-width: 767.98px) {
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll,
+	.westgate-wiki .wiki-article-prose :where(.tableWrapper, .table-responsive, .table-responsive-sm, .table-responsive-md, figure.table),
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(.tableWrapper, .table-responsive, .table-responsive-sm, .table-responsive-md, figure.table),
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(.tableWrapper, .table-responsive, .table-responsive-sm, .table-responsive-md, figure.table) {
+		border: 1px solid rgba(194, 163, 90, 0.14);
+		border-radius: 7px;
+		box-shadow:
+			inset -1.25rem 0 1rem -1rem rgba(194, 163, 90, 0.16),
+			0 0.6rem 1.4rem rgba(0, 0, 0, 0.16);
+		display: block;
+		inline-size: 100%;
+		max-inline-size: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-color: rgba(194, 163, 90, 0.5) rgba(8, 7, 10, 0.48);
+		scrollbar-width: thin;
+	}
+
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll:focus {
+		outline: 2px solid rgba(194, 163, 90, 0.42);
+		outline-offset: 2px;
+	}
+
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table,
+	.westgate-wiki .wiki-article-prose :where(.tableWrapper, .table-responsive, .table-responsive-sm, .table-responsive-md, figure.table) > table,
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(.tableWrapper, .table-responsive, .table-responsive-sm, .table-responsive-md, figure.table) > table,
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(.tableWrapper, .table-responsive, .table-responsive-sm, .table-responsive-md, figure.table) > table {
+		margin-block: 0;
+	}
+
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table,
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content table,
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content table {
+		max-inline-size: none;
+		max-width: none;
+	}
+
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table {
+		min-inline-size: var(--wg-mobile-table-min-width, max-content);
+	}
+
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table.wiki-table-layout-fixed[style*="width:100%"],
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table.wiki-table-layout-fixed[style*="width: 100%"],
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content table.wiki-table-layout-fixed[style*="width:100%"],
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content table.wiki-table-layout-fixed[style*="width: 100%"],
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content table.wiki-table-layout-fixed[style*="width:100%"],
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content table.wiki-table-layout-fixed[style*="width: 100%"] {
+		min-width: var(--wg-mobile-table-min-width, max-content);
+	}
+
+	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table:not([style*="width"]),
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content table:not([style*="width"]),
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content table:not([style*="width"]) {
+		min-inline-size: var(--wg-mobile-table-min-width, max-content);
+	}
+
+	.westgate-wiki .wiki-article-prose :where(th, td),
+	.westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content :where(th, td),
+	.westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content :where(th, td) {
+		padding: 0.48rem 0.62rem;
+	}
+}
+
 .westgate-wiki-compose .wiki-article-prose .ck.ck-editor__editable_inline.ck-content pre[data-language]::after,
 .westgate-wiki-compose .ck.ck-editor__editable_inline.wiki-article-prose.ck-content pre[data-language]::after,
 .westgate-wiki-compose .ck-code-block-language-label {
