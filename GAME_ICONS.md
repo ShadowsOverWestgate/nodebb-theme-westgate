@@ -10,35 +10,36 @@ The SVGs in `public/game-icons/` were sanitized for theme use by removing the de
 
 ## Recommended Mapping
 
-| Category | Recommended icon | ACP custom class | Asset |
-| --- | --- | --- | --- |
-| INFORMATION | Scroll unfurled | `wg-icon-scroll-unfurled` | `public/game-icons/scroll-unfurled.svg` |
-| Player Guide | Compass | `wg-icon-compass` | `public/game-icons/compass.svg` |
-| Announcements | Trumpet flag | `wg-icon-trumpet-flag` | `public/game-icons/trumpet-flag.svg` |
-| Patch Notes | Spinning wheel | `wg-icon-spinning-wheel` | `public/game-icons/spinning-wheel.svg` |
-| COMMUNITY | Tavern sign | `wg-icon-tavern-sign` | `public/game-icons/tavern-sign.svg` |
-| General Discussion | Beer stein | `wg-icon-beer-stein` | `public/game-icons/beer-stein.svg` |
-| Introductions | Shaking hands | `wg-icon-shaking-hands` | `public/game-icons/shaking-hands.svg` |
-| Screenshots | Wood frame | `wg-icon-wood-frame` | `public/game-icons/wood-frame.svg` |
-| Creations | Harp | `wg-icon-harp` | `public/game-icons/harp.svg` |
-| ROLEPLAY | Duality mask | `wg-icon-duality-mask` | `public/game-icons/duality-mask.svg` |
-| Notices | Stabbed note | `wg-icon-stabbed-note` | `public/game-icons/stabbed-note.svg` |
-| Rumors & Gossip | Mute | `wg-icon-mute` | `public/game-icons/mute.svg` |
-| Journals & Biographies | Sword altar | `wg-icon-sword-altar` | `public/game-icons/sword-altar.svg` |
-| Factions & Guilds | Cowled | `wg-icon-cowled` | `public/game-icons/cowled.svg` |
-| Organization Registry | Wax seal | `wg-icon-wax-seal` | `public/game-icons/wax-seal.svg` |
-| SUPPORT | Candle flame | `wg-icon-candle-flame` | `public/game-icons/candle-flame.svg` |
-| Common Issues & Questions | Key lock | `wg-icon-key-lock` | `public/game-icons/key-lock.svg` |
-| Technical Help | Round potion | `wg-icon-round-potion` | `public/game-icons/round-potion.svg` |
-| Bug Reports | Long antennae bug | `wg-icon-long-antennae-bug` | `public/game-icons/long-antennae-bug.svg` |
-| Feedback | Envelope | `wg-icon-envelope` | `public/game-icons/envelope.svg` |
-| DEVELOPMENT | Anvil | `wg-icon-anvil` | `public/game-icons/anvil.svg` |
-| Tools & References | Spanner | `wg-icon-spanner` | `public/game-icons/spanner.svg` |
-| General | Wax tablet | `wg-icon-wax-tablet` | `public/game-icons/wax-tablet.svg` |
-| Lore | Classical knowledge | `wg-icon-classical-knowledge` | `public/game-icons/classical-knowledge.svg` |
-| Designs | Pencil ruler | `wg-icon-pencil-ruler` | `public/game-icons/pencil-ruler.svg` |
-| Programming | Gears | `wg-icon-gears` | `public/game-icons/gears.svg` |
-| Area Building | Castle ruins | `wg-icon-castle-ruins` | `public/game-icons/castle-ruins.svg` |
+| Category                  | Recommended icon    | ACP custom class              | Asset                                       |
+| ------------------------- | ------------------- | ----------------------------- | ------------------------------------------- |
+| INFORMATION               | Scroll unfurled     | `wg-icon-scroll-unfurled`     | `public/game-icons/scroll-unfurled.svg`     |
+| Player Guide              | Compass             | `wg-icon-compass`             | `public/game-icons/compass.svg`             |
+| Announcements             | Trumpet flag        | `wg-icon-trumpet-flag`        | `public/game-icons/trumpet-flag.svg`        |
+| Patch Notes               | Spinning wheel      | `wg-icon-spinning-wheel`      | `public/game-icons/spinning-wheel.svg`      |
+| COMMUNITY                 | Tavern sign         | `wg-icon-tavern-sign`         | `public/game-icons/tavern-sign.svg`         |
+| General Discussion        | Beer stein          | `wg-icon-beer-stein`          | `public/game-icons/beer-stein.svg`          |
+| Introductions             | Shaking hands       | `wg-icon-shaking-hands`       | `public/game-icons/shaking-hands.svg`       |
+| Screenshots               | Wood frame          | `wg-icon-wood-frame`          | `public/game-icons/wood-frame.svg`          |
+| Creations                 | Harp                | `wg-icon-harp`                | `public/game-icons/harp.svg`                |
+| ROLEPLAY                  | Duality mask        | `wg-icon-duality-mask`        | `public/game-icons/duality-mask.svg`        |
+| Notices                   | Stabbed note        | `wg-icon-stabbed-note`        | `public/game-icons/stabbed-note.svg`        |
+| Rumors & Gossip           | Mute                | `wg-icon-mute`                | `public/game-icons/mute.svg`                |
+| Journals & Biographies    | Sword altar         | `wg-icon-sword-altar`         | `public/game-icons/sword-altar.svg`         |
+| Factions & Guilds         | Cowled              | `wg-icon-cowled`              | `public/game-icons/cowled.svg`              |
+| Organization Registry     | Wax seal            | `wg-icon-wax-seal`            | `public/game-icons/wax-seal.svg`            |
+| SUPPORT                   | Candle flame        | `wg-icon-candle-flame`        | `public/game-icons/candle-flame.svg`        |
+| Common Issues & Questions | Key lock            | `wg-icon-key-lock`            | `public/game-icons/key-lock.svg`            |
+| Technical Help            | Round potion        | `wg-icon-round-potion`        | `public/game-icons/round-potion.svg`        |
+| Bug Reports               | Long antennae bug   | `wg-icon-long-antennae-bug`   | `public/game-icons/long-antennae-bug.svg`   |
+| Feedback                  | Envelope            | `wg-icon-envelope`            | `public/game-icons/envelope.svg`            |
+| DEVELOPMENT               | Anvil               | `wg-icon-anvil`               | `public/game-icons/anvil.svg`               |
+| Tools & References        | Spanner             | `wg-icon-spanner`             | `public/game-icons/spanner.svg`             |
+| General                   | Wax tablet          | `wg-icon-wax-tablet`          | `public/game-icons/wax-tablet.svg`          |
+| Lore                      | Classical knowledge | `wg-icon-classical-knowledge` | `public/game-icons/classical-knowledge.svg` |
+| Designs                   | Pencil ruler        | `wg-icon-pencil-ruler`        | `public/game-icons/pencil-ruler.svg`        |
+| Programming               | Gears               | `wg-icon-gears`               | `public/game-icons/gears.svg`               |
+| Area Building             | Castle ruins        | `wg-icon-castle-ruins`        | `public/game-icons/castle-ruins.svg`        |
+| Applications & Reports    | Ticket              | `wg-icon-ticket`              | `public/game-icons/ticket.svg`              |
 
 The stylesheet still defines earlier classes such as `wg-icon-scroll-quill`, `wg-icon-rule-book`, `wg-icon-ringing-bell`, `wg-icon-saloon`, `wg-icon-large-paint-brush`, `wg-icon-flute`, `wg-icon-drama-masks`, `wg-icon-target-poster`, `wg-icon-chat-bubble`, `wg-icon-notebook`, `wg-icon-glowing-hands`, `wg-icon-question`, `wg-icon-monkey-wrench`, `wg-icon-idea`, `wg-icon-toolbox`, `wg-icon-open-book`, and `wg-icon-processor` as legacy fallbacks. Prefer the table above for new ACP configuration.
 
