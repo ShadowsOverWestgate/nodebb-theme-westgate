@@ -148,15 +148,9 @@ li[component="post"] [component="post/upvote"] {
 	position: relative;
 
 	i.fa-chevron-up {
-		display: none !important;
-	}
-
-	&::before {
-		content: "\f004";
-		font-family: "Font Awesome 6 Free";
+		// Font Awesome 7: fa-heart
+		--fa: "\f004";
 		font-size: 0.95rem;
-		font-weight: 900;
-		line-height: 1;
 		color: var(--bs-primary);
 	}
 
@@ -174,7 +168,7 @@ li[component="post"] [component="post/upvote"] {
 		}
 	}
 
-	&.upvoted::before {
+	&.upvoted i.fa-chevron-up {
 		color: #d47a87;
 	}
 }
@@ -183,15 +177,9 @@ li[component="post"] [component="post/downvote"] {
 	position: relative;
 
 	i.fa-chevron-down {
-		display: none !important;
-	}
-
-	&::before {
-		content: "\f7a9";
-		font-family: "Font Awesome 6 Free";
+		// Font Awesome 7: fa-heart-crack (fa-heart-broken alias)
+		--fa: "\f7a9";
 		font-size: 0.92rem;
-		font-weight: 900;
-		line-height: 1;
 		color: rgba(194, 163, 90, 0.82);
 	}
 
@@ -209,7 +197,7 @@ li[component="post"] [component="post/downvote"] {
 		}
 	}
 
-	&.downvoted::before {
+	&.downvoted i.fa-chevron-down {
 		color: #b86a78;
 	}
 }
