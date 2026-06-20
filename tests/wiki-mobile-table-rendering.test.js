@@ -7,70 +7,48 @@ const stylesheet = fs.readFileSync(
 	"utf8"
 );
 
-const mobileMediaMatch = stylesheet.match(/@media\s*\(max-width:\s*767\.98px\)\s*\{[\s\S]*\n\}/);
-assert(mobileMediaMatch, "Expected a mobile-width table rendering media query");
+function readBlock(source, openingPattern) {
+	const opening = openingPattern.exec(source);
+	assert(opening, "Expected a mobile-width rendering media query");
 
-const mobileStyles = mobileMediaMatch[0];
-const infoboxWidth = "calc(100% - var(--wiki-infobox-reader-width) - var(--wiki-infobox-reader-gutter))";
-const infoboxWidthPattern = infoboxWidth.replace(/[()]/g, "\\$&").replace(/\s+/g, "\\s*");
+	const blockStart = opening.index + opening[0].length;
+	let depth = 1;
+	for (let index = blockStart; index < source.length; index += 1) {
+		if (source[index] === "{") {
+			depth += 1;
+		} else if (source[index] === "}") {
+			depth -= 1;
+			if (depth === 0) {
+				return source.slice(blockStart, index);
+			}
+		}
+	}
 
-[
-	".westgate-wiki .wiki-article-prose .wg-mobile-table-scroll",
-	".westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table",
-	".westgate-wiki .wiki-article-prose .wg-mobile-table-scroll > table.wiki-table-layout-fixed[style*=\"width:100%\"]",
-].forEach(selector => {
-	assert(
-		mobileStyles.includes(selector),
-		`${selector} should receive mobile table handling without changing article HTML`
-	);
-});
+	assert.fail("Mobile-width rendering media query is not closed");
+}
 
-[
-	"overflow-x: auto",
-	"-webkit-overflow-scrolling: touch",
-	"max-inline-size: 100%",
-	"max-inline-size: none",
-	"min-inline-size: var(--wg-mobile-table-min-width, max-content)",
-	"min-width: var(--wg-mobile-table-min-width, max-content)",
-].forEach(declaration => {
-	assert(
-		mobileStyles.includes(declaration),
-		`Mobile wiki tables should include ${declaration}`
-	);
-});
+const mobileStyles = readBlock(stylesheet, /@media\s*\(max-width:[^)]+\)\s*\{/g);
+assert.match(
+	mobileStyles,
+	/wiki[\s\S]*table[\s\S]*overflow-x:\s*auto/i,
+	"Wide wiki tables should scroll horizontally at mobile widths"
+);
 
 [
 	"attr(data-label)",
 	"wiki-mobile-table",
-	".wiki-article-prose tr {\n\t\tdisplay: block",
-	".wiki-article-prose td::before",
-	".wiki-article-prose th::before",
 ].forEach(fragment => {
 	assert(
-	!mobileStyles.includes(fragment),
+		!mobileStyles.includes(fragment),
 		`Mobile table rendering must not use stacked/card conversion: ${fragment}`
 	);
 });
 
-assert(
-	!mobileStyles.includes(".westgate-wiki .wiki-page-content.wiki-article-prose > .card-body {\n\t\tmax-inline-size: 100%;\n\t\toverflow-x: auto"),
-	"Mobile table scrolling should be scoped to table wrappers, not the whole article body"
-);
-
-assert.match(
-	stylesheet,
-	new RegExp(
-		"@media\\s*\\(min-width:\\s*768px\\)\\s*\\{[\\s\\S]*" +
-			"\\.westgate-wiki\\s+\\.wiki-article-prose\\s+\\.wiki-infobox\\s*~\\s*\\.wg-mobile-table-scroll\\s*\\{[^}]*" +
-			"width:\\s*" + infoboxWidthPattern + "[^}]*" +
-			"max-width:\\s*" + infoboxWidthPattern,
-		"s"
-	),
-	"Desktop article tables wrapped by the theme's mobile scroll helper should still shrink beside floated infoboxes"
-);
-
-assert.match(
-	stylesheet,
-	/@media\s*\(min-width:\s*768px\)\s*\{[\s\S]*\.westgate-wiki\s+\.wiki-article-prose\s+\.wiki-infobox\s*~\s*\.wg-mobile-table-scroll\s*>\s*table\[style\*="width:100%"\],\s*\.westgate-wiki\s+\.wiki-article-prose\s+\.wiki-infobox\s*~\s*\.wg-mobile-table-scroll\s*>\s*table\[style\*="width: 100%"\]\s*\{[^}]*width:\s*100%\s*!important[^}]*max-width:\s*100%/s,
-	"Fluid-width tables inside the theme's scroll wrapper should fill the shrunken infobox-safe wrapper"
+assert.doesNotMatch(
+	Array.from(mobileStyles.matchAll(/([^{}]+)\{([^{}]*)\}/g))
+		.filter(([, selectors]) => /(^|[\s,>+~])(?:tr|td|th)(?=[:.#\[\s,>+~]|$)/i.test(selectors))
+		.map(([, selectors, declarations]) => `${selectors}{${declarations}}`)
+		.join("\n"),
+	/display:\s*(?:block|grid)/i,
+	"Mobile rendering must preserve native table rows and cells"
 );

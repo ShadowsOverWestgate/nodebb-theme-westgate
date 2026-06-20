@@ -54,3 +54,7 @@ NodeBB theme documentation: https://docs.nodebb.org/development/themes/
 - Avoid unrelated formatting churn.
 - Before overriding a template, inspect the corresponding Harmony template and copy only what is necessary.
 - Preserve accessibility: readable contrast, visible focus states, usable hover/active states, and no text hidden purely for visual effect unless there is an accessible alternative.
+
+## Tests
+
+Tests must survive harmless changes to constants, defaults, wording, ordering, fixture data, and internal implementation details. A test that fails merely because a basic value changed is usually a bad test. Only assert exact values when the value is part of a documented public contract, external protocol, compatibility requirement, security rule, migration, or business rule.

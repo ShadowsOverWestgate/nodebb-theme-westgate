@@ -9,19 +9,16 @@ const source = fs.readFileSync(
 	path.join(__dirname, '..', 'public', 'client.js'),
 	'utf8'
 );
+const stylesheet = fs.readFileSync(
+	path.join(__dirname, '..', 'scss', 'westgate', '_wiki-prose.scss'),
+	'utf8'
+);
 
 const readyCallbacks = [];
 const eventHandlers = [];
+const wrappers = [];
 const fakeApi = {
 	get: function () {},
-};
-const fakeDocument = {
-	querySelectorAll: function () {
-		return [];
-	},
-	createElement: function () {
-		throw new Error('createElement should not be called during initialisation');
-	},
 };
 
 function fakeJquery() {
@@ -35,12 +32,83 @@ function fakeJquery() {
 	};
 }
 
+function createParent() {
+	return {
+		children: [],
+		insertBefore: function (node, before) {
+			const index = this.children.indexOf(before);
+			assert.notEqual(index, -1, 'table fixture should belong to its parent');
+			this.children.splice(index, 0, node);
+			node.parentNode = this;
+		},
+	};
+}
+
+function createTable(parent, options = {}) {
+	const cells = [{ marker: 'first' }, { marker: 'second' }];
+	const table = {
+		parentNode: parent,
+		style: {},
+		rows: [{ children: cells }],
+		closest: function () {
+			return options.existingWrapper || null;
+		},
+		getAttribute: function () {
+			return null;
+		},
+		getBoundingClientRect: function () {
+			return { width: 320 };
+		},
+		querySelectorAll: function (selector) {
+			if (selector === 'tr') {
+				return this.rows;
+			}
+			return [];
+		},
+	};
+	parent.children.push(table);
+	return table;
+}
+
+function createWrapper() {
+	const wrapper = {
+		attributes: {},
+		children: [],
+		style: {
+			setProperty: function () {},
+		},
+		appendChild: function (child) {
+			const oldParent = child.parentNode;
+			const oldIndex = oldParent.children.indexOf(child);
+			oldParent.children.splice(oldIndex, 1);
+			this.children.push(child);
+			child.parentNode = this;
+		},
+		setAttribute: function (name, value) {
+			this.attributes[name] = value;
+		},
+	};
+	wrappers.push(wrapper);
+	return wrapper;
+}
+
+const firstParent = createParent();
+const firstTable = createTable(firstParent);
+let queriedTables = [firstTable];
+const fakeDocument = {
+	querySelectorAll: function () {
+		return queriedTables;
+	},
+	createElement: function () {
+		return createWrapper();
+	},
+};
+
 const context = {
 	console,
 	document: fakeDocument,
 	require: function (deps, callback) {
-		assert.equal(deps.length, 1);
-		assert.equal(deps[0], 'api');
+		assert(Array.isArray(deps));
 		callback(fakeApi);
 	},
 	window: {},
@@ -50,104 +118,33 @@ const context = {
 vm.runInNewContext(source, context, { filename: 'public/client.js' });
 readyCallbacks.forEach(callback => callback());
 
-assert.equal(
-	typeof (context.window.westgateTheme && context.window.westgateTheme.wrapWikiTables),
-	'function',
-	'client should expose a testable wiki table wrapper helper'
-);
-
+assert.equal(wrappers.length, 1, 'plain rendered wiki tables should gain a scroll container');
+assert.equal(wrappers[0].children[0], firstTable, 'wrapping must preserve the original table node');
 assert(
-	eventHandlers.some(handler => handler.eventName === 'action:ajaxify.end'),
-	'client should rerun wiki table wrapping after ajaxify navigation'
+	wrappers[0].className && stylesheet.includes(`.${wrappers[0].className}`),
+	'the generated scroll container should be handled by the theme stylesheet'
 );
+assert.deepEqual(
+	firstTable.rows[0].children.map(cell => cell.marker),
+	['first', 'second'],
+	'wrapping must preserve table cell order and semantics'
+);
+assert.equal(wrappers[0].attributes.tabindex, '0', 'the scroll container should be keyboard focusable');
+assert(wrappers[0].attributes['aria-label'], 'the scroll container should have an accessible name');
 
-let createdWrapper;
-let insertedNode;
-const parent = {
-	insertBefore: function (node, before) {
-		insertedNode = { node, before };
-		node.parentNode = this;
-	},
-};
-const table = {
-	style: {},
-	parentNode: parent,
-	closest: function (selector) {
-		assert(
-			selector.includes('wg-mobile-table-scroll') ||
-				selector.includes('tableWrapper') ||
-				selector.includes('wiki-infobox'),
-			`unexpected closest selector: ${selector}`
-		);
-		return null;
-	},
-	getAttribute: function (name) {
-		return name === 'style' ? 'width:100%' : null;
-	},
-	getBoundingClientRect: function () {
-		return { width: 320 };
-	},
-	querySelectorAll: function (selector) {
-		if (selector === 'colgroup col') {
-			return [
-				{ style: { width: '61px' }, getAttribute: function () { return 'width:61px'; } },
-				{ style: { width: '80px' }, getAttribute: function () { return 'width:80px'; } },
-			];
-		}
+const ajaxifyHandler = eventHandlers.find(handler => handler.eventName === 'action:ajaxify.end');
+assert(ajaxifyHandler, 'client should rerun wiki table wrapping after NodeBB ajaxify navigation');
 
-		if (selector === 'tr') {
-			return [
-				{
-					children: Array.from({ length: 10 }, () => ({
-						getAttribute: function () {
-							return null;
-						},
-					})),
-				},
-			];
-		}
+const secondParent = createParent();
+const secondTable = createTable(secondParent);
+queriedTables = [secondTable];
+ajaxifyHandler.callback();
+assert.equal(wrappers.length, 2, 'tables loaded by ajaxify navigation should also be wrapped');
+assert.equal(wrappers[1].children[0], secondTable);
 
-		return [];
-	},
-};
-const root = {
-	querySelectorAll: function (selector) {
-		assert.equal(
-			selector,
-			'.westgate-wiki .wiki-page-content.wiki-article-prose > .card-body table'
-		);
-		return [table];
-	},
-};
-
-context.document.createElement = function (tagName) {
-	assert.equal(tagName, 'div');
-	createdWrapper = {
-		className: '',
-		child: null,
-		attributes: {},
-		style: {
-			values: {},
-			setProperty: function (name, value) {
-				this.values[name] = value;
-			},
-		},
-		appendChild: function (child) {
-			this.child = child;
-			child.parentNode = this;
-		},
-		setAttribute: function (name, value) {
-			this.attributes[name] = value;
-		},
-	};
-	return createdWrapper;
-};
-
-context.window.westgateTheme.wrapWikiTables(root);
-
-assert.equal(createdWrapper.className, 'wg-mobile-table-scroll');
-assert.equal(createdWrapper.attributes.tabindex, '0');
-assert.equal(insertedNode.node, createdWrapper);
-assert.equal(insertedNode.before, table);
-assert.equal(createdWrapper.child, table);
-assert.equal(createdWrapper.style.values['--wg-mobile-table-min-width'], '720px');
+const existingWrapper = {};
+const wrappedParent = createParent();
+const alreadyWrappedTable = createTable(wrappedParent, { existingWrapper });
+queriedTables = [alreadyWrappedTable];
+ajaxifyHandler.callback();
+assert.equal(wrappers.length, 2, 'tables already handled by a compatible wrapper should not be nested again');

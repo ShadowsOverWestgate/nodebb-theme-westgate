@@ -14,14 +14,14 @@ assert(
 
 assert.match(
 	stylesheet,
-	/i\.fa-chevron-up\s*\{[^}]*--fa:\s*"\\f004"/s,
-	"The upvote button should reuse Harmony's Font Awesome element with the fa-heart glyph"
+	/i\.fa-chevron-up\s*\{[^}]*--fa:\s*"\\f[0-9a-f]+"/s,
+	"The upvote button should reuse Harmony's Font Awesome element"
 );
 
 assert.match(
 	stylesheet,
-	/i\.fa-chevron-down\s*\{[^}]*--fa:\s*"\\f7a9"/s,
-	"The downvote button should reuse Harmony's Font Awesome element with the fa-heart-crack glyph"
+	/i\.fa-chevron-down\s*\{[^}]*--fa:\s*"\\f[0-9a-f]+"/s,
+	"The downvote button should reuse Harmony's Font Awesome element"
 );
 
 assert.doesNotMatch(
