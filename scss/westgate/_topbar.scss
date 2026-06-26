@@ -149,7 +149,7 @@ $wg-topbar-panel-bg: linear-gradient(
   color: #fff0dc;
 }
 
-.wg-topbar__utility-list .visible-closed {
+.wg-topbar__utility-list .visible-closed:not(.hidden) {
   display: inline-block !important;
 }
 

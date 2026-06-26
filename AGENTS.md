@@ -33,6 +33,7 @@ Follow the current NodeBB theme model:
 - Template overrides belong under `templates/` and must preserve the same relative path as the Harmony template they replace.
 - Do not copy or redefine Harmony templates unless an actual override is needed.
 - If a template does not exist here, NodeBB inherits it from the configured base theme.
+- In the Westgate topbar, notification, chat, draft, and navigation count bubbles must honor NodeBB/Harmony's `hidden` class and only display when there is an actual count to check.
 
 NodeBB theme documentation: https://docs.nodebb.org/development/themes/
 

@@ -75,6 +75,11 @@ assertIncludes(
 	'Topbar styles should be scoped to .wg-topbar'
 );
 assertIncludes(
+	stylesheet,
+	'.wg-topbar__utility-list .visible-closed:not(.hidden)',
+	'Topbar collapsed utility labels should not override hidden count badges'
+);
+assertIncludes(
 	client,
 	'initWestgateTopbar',
 	'Client bundle should initialize Westgate topbar behavior'
