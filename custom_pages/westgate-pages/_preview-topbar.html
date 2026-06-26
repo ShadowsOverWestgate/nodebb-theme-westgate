@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Westgate top bar preview (theme harness)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* --- Simulated theme globals (mirror of scss/westgate/_tokens.scss :root) --- */
+:root{
+  --wg-font-display:"Cinzel",Georgia,serif;
+  --wg-font-text:"Jost",system-ui,sans-serif;
+  --wg-font-ui:"Jost",system-ui,sans-serif;
+  --wg-font-code:"IBM Plex Mono",ui-monospace,monospace;
+  --wg-bg:#0f0d12;--wg-bg-deep:#09080b;--wg-panel:#18141d;--wg-panel-2:#110f15;
+  --wg-plum:#2a1222;--wg-plum-soft:#3a1830;--wg-gold:#c2a35a;--wg-gold-soft:#a8893f;
+  --wg-red:#8e3438;--wg-status-online:#7fb86a;
+  --wg-text:#e6e0d6;--wg-text-soft:#b9b2a6;--wg-text-muted:#9a9086;
+  --wg-border:rgba(194,163,90,.14);--wg-border-soft:rgba(194,163,90,.08);
+  --wg-velvet-panel:linear-gradient(100deg,rgba(42,18,34,.46) 0%,rgba(25,22,31,.95) 23%,rgba(18,16,23,.99) 62%,rgba(13,12,17,.98) 100%);
+  --wg-velvet-shadow:inset 0 1px 0 rgba(255,255,255,.025),inset 0 0 34px rgba(96,32,68,.11),0 10px 26px rgba(0,0,0,.24);
+}
+html,body{margin:0;background:var(--wg-bg);color:var(--wg-text-soft);font-family:var(--wg-font-text);}
+/* dummy page body to demo sticky behaviour + full-width #panel */
+.harness-page{max-width:1180px;margin:34px auto;padding:0 24px;}
+.harness-page h1{font-family:var(--wg-font-display);font-weight:700;font-size:40px;color:#f3ede4;letter-spacing:.03em;margin:0 0 8px;}
+.harness-page .eb{font-family:var(--wg-font-display);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--wg-gold);}
+.harness-page p{font-size:16px;line-height:1.9;color:var(--wg-text-muted);max-width:680px;}
+.harness-block{height:240px;margin:20px 0;border:1px dashed rgba(194,163,90,.2);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-family:var(--wg-font-code);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:#6b6152;
+  background:repeating-linear-gradient(135deg,#1b1320,#1b1320 11px,#161019 11px,#161019 22px);}
+</style>
+</head>
+<body>
+  <div id="slot">Loading top bar…</div>
+  <main class="harness-page">
+    <div class="eb">Simulated #panel content</div>
+    <h1>The Gates Open</h1>
+    <p>Scroll to confirm the bar stays pinned. This dummy body stands in for the full-width forum content that runs under the global top bar once the left sidebar is removed.</p>
+    <div class="harness-block">Forum content / widget area</div>
+    <div class="harness-block">Forum content / widget area</div>
+  </main>
+<script>
+fetch('top-bar.html').then(r=>r.text()).then(html=>{
+  var slot = document.getElementById('slot');
+  // strip leading HTML comment block, keep <style> + markup + <script>
+  slot.innerHTML = html.replace(/^[\s\S]*?-->/,'');
+  // re-execute injected <script> tags (innerHTML doesn't run them)
+  slot.querySelectorAll('script').forEach(function(old){
+    var s=document.createElement('script');
+    if(old.src) s.src=old.src; else s.textContent=old.textContent;
+    old.parentNode.replaceChild(s,old);
+  });
+});
+</script>
+</body>
+</html>

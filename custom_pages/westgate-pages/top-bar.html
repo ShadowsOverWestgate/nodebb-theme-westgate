@@ -1,0 +1,886 @@
+<!--
+  ============================================================================
+  SHADOWS OVER WESTGATE — GLOBAL TOP BAR (theme header partial)
+  ----------------------------------------------------------------------------
+  Visual target: "Westgate Top Bar.dc.html" (member / guest / Forums menu /
+  user menu / mobile drawer). Theme: nodebb-theme-westgate.
+
+  WHAT THIS IS
+  - A self-contained, modular header: markup + scoped CSS + a small vanilla-JS
+    controller. Drop-in for previewing AND a faithful reference for the live
+    NodeBB partial described in THEME-INTEGRATION.md §4.
+
+  HOW TO USE IT LIVE (templates/partials/header/topbar.tpl)
+  1. Paste the <style> block once (or move it into scss/westgate/_topbar.scss).
+  2. Paste the <header class="wg-topbar"> markup into the partial. Replace the
+     two demo clusters with NodeBB conditionals:
+        {{{ if loggedIn }}}  ...member right-cluster...
+        {{{ else }}}         ...guest right-cluster...  {{{ end }}}
+  3. NAV ITEMS: loop ACP -> Navigation instead of the hard-coded <a>s. The
+     "Forums" item keeps the data-wg-menu="forums" hook to open the mega-menu;
+     populate its panel from your real category list.
+  4. LIVE COMPONENTS: swap the static notification / chat / user dropdowns for
+     Harmony's includes (partials/header/menu.tpl etc.) so counts stay live.
+     The data-wg-menu / data-wg-panel hooks below show exactly where each goes.
+  5. Mount in header.tpl (replace the IMPORT of partials/sidebar-left.tpl) and
+     drop the left layout column so #panel runs full width.
+  6. JS: the inline <script> at the bottom is for this self-contained preview.
+     In production put the controller in ACP -> Custom JavaScript (see the
+     paste-ready "topbar-custom.js" in this folder) — NodeBB is an SPA, so it
+     uses document-level event delegation to survive page navigation, and the
+     preview-only member/guest switch is dropped there.
+
+  NOTES
+  - All colours/fonts use the theme's global --wg-* variables (with fallbacks),
+    so the bar tracks the forum + wiki palette.
+  - Everything is scoped under .wg-topbar so it can't leak into forum chrome.
+  - The little floating switch (bottom-right) is PREVIEW-ONLY — it flips
+    member/guest and is wrapped in .wg-topbar-demo. Delete that block + its
+    markup for production; nothing else depends on it.
+  - Avatar / badge counts are placeholders here.
+  ============================================================================
+-->
+
+<!-- Preview-only: load brand fonts. The live theme already provides these, so
+     this <link> is harmless (de-dupes by URL) but can be removed in the partial. -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Jost:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+<style>
+/* ===================== GLOBAL TOP BAR ===================== */
+.wg-topbar{
+  --tb-h:66px;
+  --tb-gold:var(--wg-gold,#c2a35a);
+  --tb-text:var(--wg-text,#e6e0d6);
+  --tb-soft:var(--wg-text-soft,#b9b2a6);
+  --tb-muted:var(--wg-text-muted,#9a9086);
+  --tb-bg:var(--wg-bg,#0f0d12);
+  --tb-border:rgba(194,163,90,.16);
+  --tb-presence:#7fb86a;   /* status ring colour, switched by [data-presence] below */
+  position:sticky;top:0;z-index:1000;
+  font-family:var(--wg-font-text,"Jost",sans-serif);
+  background:var(--tb-bg);
+  border-bottom:1px solid var(--tb-border);
+}
+.wg-topbar[data-presence="online"]   {--tb-presence:#7fb86a;}
+.wg-topbar[data-presence="away"]     {--tb-presence:#d8bd76;}
+.wg-topbar[data-presence="dnd"]      {--tb-presence:#bf6a66;}
+.wg-topbar[data-presence="offline"]  {--tb-presence:#6b6152;}
+.wg-topbar *{box-sizing:border-box;}
+.wg-topbar a{text-decoration:none;color:inherit;}
+/* NB: use font-family (not the `font` shorthand) so this rule's specificity
+   doesn't reset font-size on text buttons like the Forums nav trigger — the
+   button's own class (e.g. .wg-topbar__link) sets the size. */
+.wg-topbar button{font-family:inherit;line-height:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0;}
+
+/* ---- bar shell ---- */
+.wg-topbar__bar{
+  height:var(--tb-h);width:100%;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 26px;gap:24px;
+  background:linear-gradient(180deg,rgba(20,17,25,.9),rgba(15,13,18,.92));
+}
+.wg-topbar__left{display:flex;align-items:center;gap:36px;min-width:0;}
+
+/* ---- brand ---- */
+.wg-topbar__brand{display:flex;align-items:center;gap:12px;flex:none;}
+.wg-topbar__glyph{
+  width:24px;height:24px;transform:rotate(45deg);border:1.5px solid var(--tb-gold);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 12px rgba(194,163,90,.22);
+}
+.wg-topbar__glyph i{width:8px;height:8px;background:var(--tb-gold);display:block;}
+.wg-topbar__name{
+  font-family:var(--wg-font-display,"Cinzel",serif);font-weight:600;font-size:15px;
+  letter-spacing:.14em;color:var(--tb-text);white-space:nowrap;
+}
+.wg-topbar__name--short{display:none;}
+
+/* ---- primary nav ---- */
+.wg-topbar__nav{display:flex;align-items:center;gap:26px;}
+.wg-topbar__link{
+  position:relative;display:flex;align-items:center;gap:6px;
+  font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--tb-soft);padding:4px 0;white-space:nowrap;
+  transition:color .2s;
+}
+.wg-topbar__link:hover,.wg-topbar__link.is-active{color:var(--tb-text);}
+.wg-topbar__link .caret{transition:transform .25s;}
+.wg-topbar__link[aria-expanded="true"] .caret{transform:rotate(180deg);}
+.wg-topbar__link[aria-expanded="true"]{color:var(--tb-text);}
+.wg-topbar__link::after{
+  content:"";position:absolute;left:-3px;right:-3px;bottom:-21px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--tb-gold),transparent);
+  opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .25s;
+}
+.wg-topbar__link.is-active::after,
+.wg-topbar__link[aria-expanded="true"]::after{opacity:1;transform:scaleX(1);}
+
+/* ---- right cluster ---- */
+.wg-topbar__right{display:flex;align-items:center;gap:16px;flex:none;}
+.wg-topbar__icon{
+  position:relative;width:34px;height:34px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--tb-soft);transition:background .2s,border-color .2s,color .2s;
+}
+.wg-topbar__icon:hover{color:var(--tb-text);background:rgba(194,163,90,.08);}
+.wg-topbar__icon--search{border:1px solid rgba(194,163,90,.18);background:rgba(194,163,90,.05);}
+.wg-topbar__badge{
+  position:absolute;top:-2px;right:-2px;min-width:15px;height:15px;border-radius:8px;
+  background:linear-gradient(180deg,#d8bd76,#a8893f);color:#150f08;
+  font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:9px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;padding:0 3px;
+  border:1px solid var(--tb-bg);
+}
+
+/* ---- auth (guest) ---- */
+.wg-topbar__login{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--tb-soft);transition:color .2s;}
+.wg-topbar__login:hover{color:var(--tb-text);}
+.wg-topbar__register{
+  font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#150f08;
+  background:linear-gradient(180deg,#d8bd76,#a8893f);padding:9px 20px;border-radius:6px;
+  border:1px solid rgba(216,194,138,.6);box-shadow:0 2px 12px rgba(168,133,74,.3);
+  transition:filter .2s,transform .2s;
+}
+.wg-topbar__register:hover{filter:brightness(1.07);transform:translateY(-1px);}
+
+/* ---- avatar ---- */
+.wg-topbar__avatar{
+  width:36px;height:36px;border-radius:50%;flex:none;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 34% 24%,rgba(255,238,190,.22),transparent 30%),linear-gradient(145deg,#6f562d,#2c1122);
+  border:1px solid rgba(216,194,138,.4);
+  /* outer ring colour follows the chosen presence/status */
+  box-shadow:0 0 0 2px var(--tb-bg),0 0 0 3px var(--tb-presence);
+  background-size:cover;background-position:center;
+}
+.wg-topbar__avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.wg-topbar__avatar-letter{font-family:var(--wg-font-display,"Cinzel",serif);font-size:15px;font-weight:600;color:#ecdcb6;line-height:1;}
+/* the menu-header avatar shows the picture but no status ring */
+.wg-usermenu__head .av{box-shadow:none;}
+.wg-usermenu__head .av .wg-topbar__avatar-letter{font-size:17px;}
+
+/* ---- pop-outs (drafts / notifications / chats) ---- */
+.wg-topbar__popout{position:relative;display:flex;align-items:center;}
+/* 360px + 400px-max scroll list = Harmony's .chats/.notifications/.drafts-dropdown */
+.wg-topbar__panel--list{top:calc(100% + 14px);right:0;width:360px;padding:8px;}
+.wg-pop__list{max-height:400px;overflow-y:auto;overscroll-behavior:contain;padding-right:2px;}
+.wg-pop__list::-webkit-scrollbar{width:8px;}
+.wg-pop__list::-webkit-scrollbar-thumb{background:rgba(194,163,90,.22);border-radius:4px;}
+.wg-pop__sep{border:0;border-top:1px solid rgba(194,163,90,.1);margin:4px 0;}
+.wg-ava{
+  width:32px;height:32px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:var(--wg-font-display,"Cinzel",serif);font-size:13px;font-weight:600;color:#f1e6cf;
+  background:var(--c,#4a3a2a);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.wg-timeago{font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:11px;letter-spacing:.02em;color:var(--tb-muted);}
+
+/* notification filter tabs */
+.wg-pop__tabs{display:flex;gap:6px;padding:4px 4px 2px;}
+.wg-pop__tab{
+  font-size:12px;letter-spacing:.04em;color:var(--tb-soft);padding:6px 14px;border-radius:6px;
+  display:flex;align-items:center;gap:7px;transition:background .18s,color .18s;
+}
+.wg-pop__tab:hover{background:rgba(194,163,90,.07);color:var(--tb-text);}
+.wg-pop__tab.is-active{background:rgba(194,163,90,.12);color:var(--tb-text);font-weight:500;}
+.wg-pop__tabcount{font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:10px;color:var(--tb-gold);}
+
+/* notification row */
+.wg-notif{display:flex;gap:11px;align-items:flex-start;padding:11px 10px;border-radius:6px;transition:background .18s;}
+.wg-notif:hover{background:rgba(194,163,90,.07);}
+.wg-notif.unread{background:rgba(194,163,90,.045);}
+.wg-notif__body{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;}
+.wg-notif__text{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:13px;line-height:1.45;color:var(--tb-soft);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.wg-notif__text strong{color:var(--tb-text);font-weight:600;}
+.wg-notif__dot{width:8px;height:8px;border-radius:50%;background:var(--tb-gold);flex:none;margin-top:5px;}
+
+/* chat row */
+.wg-chat{display:flex;gap:11px;align-items:flex-start;padding:11px 10px;border-radius:6px;transition:background .18s;}
+.wg-chat:hover{background:rgba(194,163,90,.07);}
+.wg-chat.unread{background:rgba(194,163,90,.045);}
+.wg-chat__body{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1;}
+.wg-chat__top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
+.wg-chat__name{font-family:var(--wg-font-display,"Cinzel",serif);font-size:13.5px;color:var(--tb-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wg-chat__last{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:12.5px;color:var(--tb-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wg-chat__last strong{color:var(--tb-soft);font-weight:600;}
+
+/* draft row */
+.wg-draft{display:flex;gap:6px;align-items:flex-start;padding:9px 8px;border-radius:6px;transition:background .18s;}
+.wg-draft:hover{background:rgba(194,163,90,.07);}
+.wg-draft__open{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;}
+.wg-draft__title{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:13px;font-weight:600;color:var(--tb-text);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.wg-draft__text{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:12.5px;line-height:1.5;color:var(--tb-muted);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.wg-draft__meta{display:flex;align-items:center;gap:9px;}
+.wg-cat-label{font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--tb-gold);border:1px solid rgba(194,163,90,.3);border-radius:4px;padding:2px 7px;}
+.wg-draft__del{width:26px;height:26px;border-radius:6px;flex:none;display:flex;align-items:center;justify-content:center;
+  color:var(--tb-muted);transition:background .18s,color .18s;}
+.wg-draft__del:hover{background:rgba(191,138,134,.12);color:#d39c98;}
+
+/* empty state */
+.wg-pop__empty{display:flex;flex-direction:column;align-items:center;gap:12px;padding:34px 12px;color:var(--tb-muted);
+  font-family:var(--wg-font-text,"Jost",sans-serif);font-size:13px;}
+.wg-pop__empty[hidden]{display:none;}
+
+/* quick-search results (Harmony search.tpl quick-search-container) */
+.wg-search__results{display:none;margin-top:8px;border-top:1px solid rgba(194,163,90,.12);padding-top:6px;}
+.wg-topbar.is-searching .wg-topbar__searchbox.has-results{height:auto;flex-direction:column;align-items:stretch;padding:10px 12px;}
+.wg-topbar__searchbox.has-results .wg-search__results{display:block;}
+.wg-search__row{display:flex;gap:9px;align-items:flex-start;padding:8px 6px;border-radius:6px;transition:background .18s;}
+.wg-search__row:hover{background:rgba(194,163,90,.08);}
+.wg-search__row .t{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:13px;color:var(--tb-text);line-height:1.4;}
+.wg-search__row .m{font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:10.5px;letter-spacing:.04em;color:var(--tb-muted);margin-top:3px;}
+.wg-search__all{display:block;text-align:center;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tb-gold);padding:9px;border-radius:6px;}
+.wg-search__all:hover{background:rgba(194,163,90,.08);}
+
+/* pop-out footer (mark-all-read / see-all) */
+.wg-pop__foot{display:flex;gap:7px;padding:4px 2px 2px;}
+.wg-pop__btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  font-size:12px;letter-spacing:.03em;color:var(--tb-soft);padding:8px 10px;border-radius:6px;
+  background:rgba(194,163,90,.06);transition:background .18s,color .18s,filter .18s;}
+.wg-pop__btn:hover{background:rgba(194,163,90,.12);color:var(--tb-text);}
+.wg-pop__btn--primary{background:linear-gradient(180deg,#d8bd76,#a8893f);color:#150f08;font-weight:600;}
+.wg-pop__btn--primary:hover{filter:brightness(1.07);color:#150f08;}
+
+.wg-topbar__searchbox{
+  display:flex;align-items:center;gap:10px;overflow:hidden;
+  width:0;opacity:0;padding:0;border:1px solid transparent;border-radius:6px;
+  background:rgba(8,7,10,.55);
+  transition:width .28s ease,opacity .2s,padding .28s,border-color .2s;
+}
+.wg-topbar.is-searching .wg-topbar__searchbox{width:240px;opacity:1;padding:0 12px;border-color:rgba(194,163,90,.18);height:34px;}
+.wg-topbar.is-searching .wg-topbar__icon--search{display:none;}
+.wg-topbar__searchbox input{
+  flex:1;min-width:0;background:none;border:0;outline:none;color:var(--tb-text);
+  font-family:inherit;font-size:13px;letter-spacing:.02em;
+}
+.wg-topbar__searchbox input::placeholder{color:var(--tb-muted);}
+
+/* ===================== DROPDOWN PANELS ===================== */
+.wg-topbar__panel{
+  position:absolute;z-index:1100;
+  background:linear-gradient(100deg,rgba(42,18,34,.5),rgba(25,22,31,.97) 30%,rgba(18,16,23,.99));
+  border:1px solid rgba(194,163,90,.2);border-radius:8px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03),0 18px 40px rgba(0,0,0,.5);
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity .2s,transform .2s,visibility 0s linear .2s;
+}
+.wg-topbar__panel.is-open{opacity:1;visibility:visible;transform:translateY(0);transition:opacity .2s,transform .2s,visibility 0s;}
+
+/* forums mega-menu */
+.wg-topbar__panel--forums{top:calc(var(--tb-h) - 4px);left:290px;width:560px;padding:10px;}
+.wg-mega__grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.wg-mega__item{display:block;padding:13px 16px;border-radius:6px;transition:background .18s;}
+.wg-mega__item:hover{background:rgba(194,163,90,.08);}
+.wg-mega__item .t{font-family:var(--wg-font-display,"Cinzel",serif);font-size:15px;color:var(--tb-text);margin-bottom:3px;}
+.wg-mega__item .d{font-size:12.5px;color:var(--tb-muted);}
+.wg-mega__foot{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:8px;padding:14px 16px 6px;border-top:1px solid rgba(194,163,90,.12);
+}
+.wg-mega__foot .links{display:flex;gap:20px;}
+.wg-mega__foot .links a{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--tb-soft);transition:color .2s;}
+.wg-mega__foot .links a:hover{color:var(--tb-text);}
+.wg-mega__foot .all{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--tb-gold);}
+
+/* user menu */
+.wg-topbar__usermenu{position:relative;}
+.wg-topbar__panel--user{top:calc(var(--tb-h) - 2px);right:26px;width:248px;overflow:hidden;}
+.wg-usermenu__head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid rgba(194,163,90,.12);}
+.wg-usermenu__head .av{width:40px;height:40px;flex:none;}
+.wg-usermenu__head .nm{font-family:var(--wg-font-display,"Cinzel",serif);font-size:15px;color:var(--tb-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.wg-usermenu__head .vp{font-size:12px;color:var(--tb-gold);}
+.wg-usermenu__list{padding:8px;}
+.wg-usermenu__row{
+  display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:6px;
+  font-size:14px;color:var(--tb-soft);transition:background .18s,color .18s;
+}
+.wg-usermenu__row:hover{background:rgba(194,163,90,.08);color:var(--tb-text);}
+.wg-usermenu__row.danger{color:#bf8a86;}
+.wg-usermenu__row.danger:hover{background:rgba(191,138,134,.1);color:#d39c98;}
+.wg-usermenu__sep{height:1px;background:rgba(194,163,90,.12);margin:7px 4px;}
+.wg-topbar__panel--forums .wg-mega__item.is-active,
+.wg-usermenu__row.is-active{background:rgba(194,163,90,.06);}
+.wg-usermenu__row{width:100%;text-align:left;}
+.wg-usermenu__label{font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--tb-muted);padding:11px 12px 5px;}
+.wg-usermenu__row .dot{width:11px;height:11px;border-radius:50%;flex:none;margin:0 2px;box-shadow:0 0 0 3px rgba(0,0,0,.25);}
+.wg-usermenu__row .chk{margin-left:auto;color:var(--tb-gold);flex:none;}
+.wg-usermenu__row svg{flex:none;}
+
+/* ===================== MOBILE ===================== */
+.wg-topbar__burger{display:none;flex-direction:column;gap:4px;width:24px;flex:none;}
+.wg-topbar__burger span{width:20px;height:1.6px;background:var(--tb-gold);display:block;transition:transform .25s,opacity .25s;}
+.wg-topbar.is-drawer .wg-topbar__burger span:nth-child(1){transform:translateY(5.6px) rotate(45deg);}
+.wg-topbar.is-drawer .wg-topbar__burger span:nth-child(2){opacity:0;}
+.wg-topbar.is-drawer .wg-topbar__burger span:nth-child(3){transform:translateY(-5.6px) rotate(-45deg);}
+
+.wg-topbar__drawer{
+  display:none;overflow:hidden;max-height:0;
+  border-top:1px solid var(--tb-border);
+  transition:max-height .3s ease;
+}
+.wg-topbar.is-drawer .wg-topbar__drawer{max-height:560px;}
+.wg-topbar__drawer-in{padding:10px 16px 18px;}
+.wg-drawer__search{
+  display:flex;align-items:center;gap:10px;background:rgba(8,7,10,.5);
+  border:1px solid rgba(194,163,90,.18);border-radius:8px;padding:10px 12px;margin:8px 0 14px;
+}
+.wg-drawer__search input{flex:1;background:none;border:0;outline:none;color:var(--tb-text);font:inherit;font-size:13px;}
+.wg-drawer__search input::placeholder{color:var(--tb-muted);}
+.wg-drawer__link{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:15px;color:var(--tb-soft);padding:12px 8px;border-bottom:1px solid rgba(194,163,90,.08);
+}
+.wg-drawer__link.is-active{color:var(--tb-text);}
+.wg-drawer__sub{display:none;padding:2px 8px 6px;}
+.wg-drawer__link[aria-expanded="true"] + .wg-drawer__sub{display:block;}
+.wg-drawer__sub a{display:block;font-size:13.5px;color:var(--tb-muted);padding:9px 14px;}
+.wg-drawer__sub a:hover{color:var(--tb-text);}
+.wg-drawer__util{display:flex;align-items:center;gap:18px;margin-top:18px;padding:0 8px;}
+.wg-drawer__util a{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--tb-soft);}
+.wg-drawer__util .dot{width:7px;height:7px;border-radius:50%;background:var(--tb-gold);}
+.wg-drawer__auth{display:flex;gap:12px;margin-top:18px;padding:0 8px;}
+.wg-drawer__auth .wg-topbar__register{flex:1;text-align:center;}
+.wg-drawer__auth .wg-topbar__login{flex:1;text-align:center;padding:9px 0;border:1px solid rgba(194,163,90,.4);border-radius:6px;}
+
+@media (max-width:1024px){
+  .wg-topbar__bar{padding:0 16px;height:58px;}
+  .wg-topbar{--tb-h:58px;}
+  .wg-topbar__nav,.wg-topbar__icon--search,.wg-topbar__searchbox{display:none;}
+  .wg-topbar__left{gap:0;flex:1;justify-content:center;}
+  .wg-topbar__burger{display:flex;}
+  .wg-topbar__brand{position:absolute;left:50%;transform:translateX(-50%);}
+  .wg-topbar__name{font-size:12px;letter-spacing:.1em;}
+  .wg-topbar__name--full{display:none;}
+  .wg-topbar__name--short{display:inline;}
+  .wg-topbar__glyph{width:18px;height:18px;}
+  .wg-topbar__glyph i{width:6px;height:6px;}
+  .wg-topbar__drawer{display:block;}
+  .wg-topbar__panel--forums,.wg-topbar__panel--user,.wg-topbar__panel--list{display:none;}
+  .wg-topbar__right .wg-topbar__icon--chat,.wg-topbar__popout{display:none;}
+}
+
+/* preview-only switch */
+.wg-topbar-demo{
+  position:fixed;right:18px;bottom:18px;z-index:5000;
+  display:flex;gap:6px;align-items:center;padding:6px;border-radius:999px;
+  background:rgba(18,16,23,.95);border:1px solid rgba(194,163,90,.25);
+  box-shadow:0 8px 26px rgba(0,0,0,.5);font-family:"Jost",sans-serif;
+}
+.wg-topbar-demo button{
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#b9b2a6;
+  padding:7px 14px;border-radius:999px;cursor:pointer;transition:.2s;
+}
+.wg-topbar-demo button.on{background:linear-gradient(180deg,#d8bd76,#a8893f);color:#150f08;font-weight:600;}
+</style>
+
+
+<!-- ============================ TOP BAR ============================ -->
+<header class="wg-topbar" data-state="member" data-presence="online">
+  <div class="wg-topbar__bar">
+
+    <!-- left: burger (mobile) + brand + nav -->
+    <div class="wg-topbar__left">
+      <button class="wg-topbar__burger" data-wg-burger aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a class="wg-topbar__brand" href="/">
+        <span class="wg-topbar__glyph"><i></i></span>
+        <span class="wg-topbar__name wg-topbar__name--full">SHADOWS OVER WESTGATE</span>
+        <span class="wg-topbar__name wg-topbar__name--short">WESTGATE</span>
+      </a>
+
+      <nav class="wg-topbar__nav">
+        <a class="wg-topbar__link is-active" href="/news">News</a>
+        <a class="wg-topbar__link" href="/gallery">Gallery</a>
+        <a class="wg-topbar__link" href="/wiki">Wiki</a>
+        <!-- Forums: dropdown trigger. data-wg-menu pairs with the panel's data-wg-panel -->
+        <button class="wg-topbar__link" data-wg-menu="forums" aria-expanded="false" aria-haspopup="true">
+          Forums
+          <svg class="caret" width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <a class="wg-topbar__link" href="/category/84/dev-blog">Dev Blog</a>
+      </nav>
+    </div>
+
+    <!-- right: search + utilities + (member) avatar OR (guest) auth -->
+    <div class="wg-topbar__right">
+
+      <!-- inline search (desktop) -->
+      <button class="wg-topbar__icon wg-topbar__icon--search" data-wg-search aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.4"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+      <form class="wg-topbar__searchbox" action="/search" method="get" role="search">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#9a9086" stroke-width="1.3"/><path d="M10 10l3 3" stroke="#9a9086" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <input type="search" name="term" placeholder="Search Westgate…" data-wg-search-input>
+      </form>
+
+      <!-- ===== MEMBER cluster ===== (live: {{{ if loggedIn }}}) -->
+      <div class="wg-topbar__authed" data-wg-when="member" style="display:flex;align-items:center;gap:16px;">
+        <!-- ============================================================
+             POP-OUTS. Structure mirrors Harmony's sidebar partials:
+               drafts        -> partials/sidebar/drafts.tpl
+               notifications -> partials/sidebar/notifications.tpl
+               chats         -> partials/sidebar/chats.tpl
+             In the live theme these ARE those partials (Bootstrap
+             data-bs-toggle="dropdown"); NodeBB's client JS fills each
+             [component="…/list"] container at runtime. The rows below are
+             styled stand-ins so the panels aren't empty in preview.
+             ============================================================ -->
+
+        <!-- Drafts (partials/sidebar/drafts.tpl) -->
+        <div class="wg-topbar__popout">
+          <button class="wg-topbar__icon" data-wg-menu="drafts" aria-label="Drafts" aria-expanded="false" aria-haspopup="true" title="Drafts">
+            <svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M10 3H4a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M12.5 2.5l3 3-6 6H6.5v-3l6-6z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            <span class="wg-topbar__badge" data-count="drafts">2</span>
+          </button>
+          <div class="wg-topbar__panel wg-topbar__panel--list" data-wg-panel="drafts" role="menu">
+            <div class="wg-pop__list" data-component="drafts/list">
+              <!-- each: drafts/open + drafts/delete -->
+              <div class="wg-draft" data-save-id="1">
+                <a class="wg-draft__open" href="/category/3/roleplay/compose">
+                  <div class="wg-draft__title">A letter left at the Undergate</div>
+                  <div class="wg-draft__text">My dear Caelum — the arrangement we spoke of cannot wait for the next moon. Meet me where the…</div>
+                  <div class="wg-draft__meta"><span class="wg-cat-label">Roleplay &amp; Stories</span><span class="wg-timeago">2h ago</span></div>
+                </a>
+                <button class="wg-draft__del" aria-label="Delete draft" title="Delete draft">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5.5 4V2.8h3V4M4.2 4l.5 7.2h4.6L9.8 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+              <hr class="wg-pop__sep">
+              <div class="wg-draft" data-save-id="2">
+                <a class="wg-draft__open" href="/category/2/general/compose">
+                  <div class="wg-draft__title">Replying to "Best smuggling routes?"</div>
+                  <div class="wg-draft__text">Avoid the Customs Quay after dusk — the new harbourmaster doubled the watch. The cistern tunnels…</div>
+                  <div class="wg-draft__meta"><span class="wg-cat-label">General Discussion</span><span class="wg-timeago">yesterday</span></div>
+                </a>
+                <button class="wg-draft__del" aria-label="Delete draft" title="Delete draft">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 4h8M5.5 4V2.8h3V4M4.2 4l.5 7.2h4.6L9.8 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+              <!-- empty state (drafts.tpl .no-drafts) -->
+              <div class="wg-pop__empty" hidden>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 12h6l1.5-3 3 6L15 12h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>You have no saved drafts.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications (partials/sidebar/notifications.tpl) -->
+        <div class="wg-topbar__popout">
+          <button class="wg-topbar__icon" data-wg-menu="notifications" aria-label="Notifications" aria-expanded="false" aria-haspopup="true" title="Notifications">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a4 4 0 00-4 4c0 4-1.5 5-1.5 5h11S13 10 13 6a4 4 0 00-4-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.5 14a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.3"/></svg>
+            <span class="wg-topbar__badge" data-count="notifications">3</span>
+          </button>
+          <div class="wg-topbar__panel wg-topbar__panel--list" data-wg-panel="notifications" role="menu">
+            <!-- filter tabs (notifications.tpl) -->
+            <div class="wg-pop__tabs">
+              <button class="wg-pop__tab is-active" data-filter="all">All</button>
+              <button class="wg-pop__tab" data-filter="unread">Unread <span class="wg-pop__tabcount">3</span></button>
+            </div>
+            <hr class="wg-pop__sep">
+            <div class="wg-pop__list" data-component="notifications/list">
+              <a class="wg-notif unread" href="/post/2410">
+                <span class="wg-ava" style="--c:#5a3d6e;">V</span>
+                <span class="wg-notif__body">
+                  <span class="wg-notif__text"><strong>Velessa Thorne</strong> replied to your topic <strong>The Masquerade at Hollow House</strong>.</span>
+                  <span class="wg-timeago">12 minutes ago</span>
+                </span>
+                <span class="wg-notif__dot" aria-label="unread"></span>
+              </a>
+              <hr class="wg-pop__sep">
+              <a class="wg-notif unread" href="/post/2402">
+                <span class="wg-ava" style="--c:#6e4a2c;">G</span>
+                <span class="wg-notif__body">
+                  <span class="wg-notif__text"><strong>Guildmaster Orin</strong> mentioned you in <strong>Contracts &amp; Commissions</strong>.</span>
+                  <span class="wg-timeago">1 hour ago</span>
+                </span>
+                <span class="wg-notif__dot" aria-label="unread"></span>
+              </a>
+              <hr class="wg-pop__sep">
+              <a class="wg-notif unread" href="/post/2388">
+                <span class="wg-ava" style="--c:#3d5a4e;">M</span>
+                <span class="wg-notif__body">
+                  <span class="wg-notif__text"><strong>Magpie</strong> and 3 others upvoted your post.</span>
+                  <span class="wg-timeago">3 hours ago</span>
+                </span>
+                <span class="wg-notif__dot" aria-label="unread"></span>
+              </a>
+              <hr class="wg-pop__sep">
+              <a class="wg-notif" href="/post/2350">
+                <span class="wg-ava" style="--c:#5a2c2c;">H</span>
+                <span class="wg-notif__body">
+                  <span class="wg-notif__text"><strong>House Verrault</strong> accepted your application.</span>
+                  <span class="wg-timeago">yesterday</span>
+                </span>
+              </a>
+            </div>
+            <hr class="wg-pop__sep">
+            <div class="wg-pop__foot">
+              <button class="wg-pop__btn"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7.5l3 3 5-7M7 10l1.5 1.5 5-7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Mark all read</button>
+              <a class="wg-pop__btn wg-pop__btn--primary" href="/notifications"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 3.5h8M4 7h8M4 10.5h8M1.4 3.5h.01M1.4 7h.01M1.4 10.5h.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> See all</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat (partials/sidebar/chats.tpl) -->
+        <div class="wg-topbar__popout wg-topbar__icon--chat">
+          <button class="wg-topbar__icon" data-wg-menu="chats" aria-label="Messages" aria-expanded="false" aria-haspopup="true" title="Messages">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 4h12v8H7l-3 3v-3H3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            <span class="wg-topbar__badge" data-count="chats">2</span>
+          </button>
+          <div class="wg-topbar__panel wg-topbar__panel--list" data-wg-panel="chats" role="menu">
+            <div class="wg-pop__list" data-component="chat/list">
+              <a class="wg-chat unread" href="/chats/12">
+                <span class="wg-ava" style="--c:#5a3d6e;">V</span>
+                <span class="wg-chat__body">
+                  <span class="wg-chat__top"><span class="wg-chat__name">Velessa Thorne</span><span class="wg-timeago">2m</span></span>
+                  <span class="wg-chat__last">Bring the ledger. We settle accounts tonight.</span>
+                </span>
+                <span class="wg-notif__dot" aria-label="unread"></span>
+              </a>
+              <hr class="wg-pop__sep">
+              <a class="wg-chat unread" href="/chats/9">
+                <span class="wg-ava" style="--c:#2c4a6e;">T</span>
+                <span class="wg-chat__body">
+                  <span class="wg-chat__top"><span class="wg-chat__name">The Cinderfall Crew</span><span class="wg-timeago">40m</span></span>
+                  <span class="wg-chat__last"><strong>Rooke:</strong> meet at the third bell, usual place</span>
+                </span>
+                <span class="wg-notif__dot" aria-label="unread"></span>
+              </a>
+              <hr class="wg-pop__sep">
+              <a class="wg-chat" href="/chats/4">
+                <span class="wg-ava" style="--c:#6e4a2c;">O</span>
+                <span class="wg-chat__body">
+                  <span class="wg-chat__top"><span class="wg-chat__name">Guildmaster Orin</span><span class="wg-timeago">3h</span></span>
+                  <span class="wg-chat__last">Good. The commission is yours.</span>
+                </span>
+              </a>
+            </div>
+            <hr class="wg-pop__sep">
+            <div class="wg-pop__foot">
+              <button class="wg-pop__btn"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M1 7.5l3 3 5-7M7 10l1.5 1.5 5-7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg> Mark all read</button>
+              <a class="wg-pop__btn wg-pop__btn--primary" href="/user/archvillainette/chats"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M4 3.5h8M4 7h8M4 10.5h8M1.4 3.5h.01M1.4 7h.01M1.4 10.5h.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> See all</a>
+            </div>
+          </div>
+        </div>
+        <!-- user menu -->
+        <div class="wg-topbar__usermenu">
+          <button class="wg-topbar__avatar" data-wg-menu="user" aria-label="Account" aria-expanded="false" aria-haspopup="true">
+            <!-- LIVE: {{{ if user.picture }}}<img src="{user.picture}" alt="{user.username}">{{{ else }}}<span class="wg-topbar__avatar-letter" style="background-color:{user.icon:bgColor}">{user.icon:text}</span>{{{ end }}} -->
+            <span class="wg-topbar__avatar-letter">A</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ===== GUEST cluster ===== (live: {{{ else }}}) -->
+      <div class="wg-topbar__guest" data-wg-when="guest" style="display:none;align-items:center;gap:16px;">
+        <a class="wg-topbar__login" href="/login">Log In</a>
+        <a class="wg-topbar__register" href="/register">Register</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Forums mega-menu (sample categories — wire to real list) ===== -->
+  <div class="wg-topbar__panel wg-topbar__panel--forums" data-wg-panel="forums" role="menu">
+    <div class="wg-mega__grid">
+      <a class="wg-mega__item" href="/category/1/news"><div class="t">News</div><div class="d">Official server announcements</div></a>
+      <a class="wg-mega__item" href="/category/84/dev-blog"><div class="t">Developer Blog</div><div class="d">Behind-the-scenes updates</div></a>
+      <a class="wg-mega__item is-active" href="/category/2/general"><div class="t">General Discussion</div><div class="d">Talk of the city and beyond</div></a>
+      <a class="wg-mega__item" href="/category/3/roleplay"><div class="t">Roleplay &amp; Stories</div><div class="d">In-character journals and tales</div></a>
+      <a class="wg-mega__item" href="/category/4/guilds"><div class="t">Guilds &amp; Factions</div><div class="d">Masked guilds and noble houses</div></a>
+      <a class="wg-mega__item" href="/category/5/help"><div class="t">Help &amp; Support</div><div class="d">New players start here</div></a>
+    </div>
+    <div class="wg-mega__foot">
+      <div class="links">
+        <a href="/recent">Recent</a>
+        <a href="/unread">Unread</a>
+        <a href="/tags">Tags</a>
+      </div>
+      <a class="all" href="/categories">All Categories →</a>
+    </div>
+  </div>
+
+  <!-- ===== User menu ===== (live: Harmony user dropdown include) ===== -->
+  <div class="wg-topbar__panel wg-topbar__panel--user" data-wg-panel="user" role="menu">
+    <a class="wg-usermenu__head" href="/user/archvillainette">
+      <!-- LIVE: {{{ if user.picture }}}<img class="wg-topbar__avatar av" src="{user.picture}" alt="">{{{ else }}}<span class="wg-topbar__avatar av"><span class="wg-topbar__avatar-letter" style="background-color:{user.icon:bgColor}">{user.icon:text}</span></span>{{{ end }}} -->
+      <span class="wg-topbar__avatar av"><span class="wg-topbar__avatar-letter">A</span></span>
+      <span style="min-width:0;">
+        <span class="nm" style="display:block;">archvillainette</span>
+        <span class="vp" style="display:block;">View profile</span>
+      </span>
+    </a>
+    <div class="wg-usermenu__list">
+      <!-- Presence (LIVE: Harmony user-status include; sets your online state) -->
+      <div class="wg-usermenu__label">Status</div>
+      <button class="wg-usermenu__row presence is-active" data-presence="online">
+        <span class="dot" style="background:#7fb86a;"></span>Online
+        <svg class="chk" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 7l3 3 5-6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="wg-usermenu__row presence" data-presence="away">
+        <span class="dot" style="background:#d8bd76;"></span>Away
+      </button>
+      <button class="wg-usermenu__row presence" data-presence="dnd">
+        <span class="dot" style="background:#bf6a66;"></span>Do not disturb
+      </button>
+      <button class="wg-usermenu__row presence" data-presence="offline">
+        <span class="dot" style="background:#6b6152;"></span>Invisible
+      </button>
+
+      <div class="wg-usermenu__sep"></div>
+      <a class="wg-usermenu__row" href="/user/archvillainette/bookmarks">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M4 2h7v11l-3.5-2.2L4 13z" stroke="#a8893f" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        Bookmarks
+      </a>
+      <a class="wg-usermenu__row" href="/user/archvillainette/edit">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M9.4 2.8l2.8 2.8M9.8 2.4a1.3 1.3 0 011.8 0l.2.2a1.3 1.3 0 010 1.8L5.3 11.7l-3 .9.9-3 6.6-6.6z" stroke="#a8893f" stroke-width="1.3" stroke-linejoin="round"/></svg>
+        Edit Profile
+      </a>
+      <a class="wg-usermenu__row" href="/user/archvillainette/settings">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="2.4" stroke="#a8893f" stroke-width="1.3"/><path d="M7.5 1.5v2M7.5 11.5v2M1.5 7.5h2M11.5 7.5h2" stroke="#a8893f" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Settings
+      </a>
+
+      <!-- Moderator Tools — privilege-gated server-side ({{{ if privileges.isAdminOrMod }}}) -->
+      <div class="wg-usermenu__label">Moderator Tools</div>
+      <a class="wg-usermenu__row" href="/flags">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M3.5 1.8v11.4M3.5 2.4h7.5l-1.5 2.6 1.5 2.6h-7.5" stroke="#a8893f" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Flagged Content
+      </a>
+      <a class="wg-usermenu__row" href="/post-queue">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="2.6" y="2.6" width="9.8" height="9.8" rx="1.4" stroke="#a8893f" stroke-width="1.3"/><path d="M5 5.4h5M5 7.5h5M5 9.6h2.8" stroke="#a8893f" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Post Queue
+      </a>
+      <a class="wg-usermenu__row" href="/ip-blacklist">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="5" stroke="#a8893f" stroke-width="1.3"/><path d="M4 4l7 7" stroke="#a8893f" stroke-width="1.3" stroke-linecap="round"/></svg>
+        IP Blacklist
+      </a>
+
+      <div class="wg-usermenu__sep"></div>
+      <a class="wg-usermenu__row danger" href="/logout">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M6 2H3v11h3M9.5 4.5L12.5 7.5 9.5 10.5M12 7.5H6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== Mobile drawer ===== -->
+  <div class="wg-topbar__drawer">
+    <div class="wg-topbar__drawer-in">
+      <form class="wg-drawer__search" action="/search" method="get" role="search">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#9a9086" stroke-width="1.3"/><path d="M10 10l3 3" stroke="#9a9086" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <input type="search" name="term" placeholder="Search Westgate…">
+      </form>
+
+      <a class="wg-drawer__link is-active" href="/news">News</a>
+      <a class="wg-drawer__link" href="/gallery">Gallery</a>
+      <a class="wg-drawer__link" href="/wiki">Wiki</a>
+      <button class="wg-drawer__link" data-wg-drawer-sub aria-expanded="false">
+        Forums
+        <svg width="9" height="6" viewBox="0 0 9 6" fill="none"><path d="M1 1l3.5 3.5L8 1" stroke="#a8893f" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+      <div class="wg-drawer__sub">
+        <a href="/category/2/general">General Discussion</a>
+        <a href="/category/3/roleplay">Roleplay &amp; Stories</a>
+        <a href="/category/4/guilds">Guilds &amp; Factions</a>
+        <a href="/category/5/help">Help &amp; Support</a>
+        <a href="/categories">All Categories →</a>
+      </div>
+      <a class="wg-drawer__link" href="/category/84/dev-blog">Dev Blog</a>
+
+      <!-- member utilities -->
+      <div class="wg-drawer__util" data-wg-when="member">
+        <a href="/notifications"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a4 4 0 00-4 4c0 4-1.5 5-1.5 5h11S13 10 13 6a4 4 0 00-4-4z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.5 14a1.5 1.5 0 003 0" stroke="currentColor" stroke-width="1.3"/></svg>Notifications<span class="dot"></span></a>
+        <a href="/chats"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 4h12v8H7l-3 3v-3H3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Messages</a>
+      </div>
+
+      <!-- guest auth -->
+      <div class="wg-drawer__auth" data-wg-when="guest" style="display:none;">
+        <a class="wg-topbar__login" href="/login">Log In</a>
+        <a class="wg-topbar__register" href="/register">Register</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PREVIEW-ONLY: member/guest switch. Delete this block for production. -->
+<div class="wg-topbar-demo">
+  <button data-wg-demo="member" class="on">Member</button>
+  <button data-wg-demo="guest">Guest</button>
+</div>
+
+<script>
+(function(){
+  var bar = document.querySelector('.wg-topbar');
+  if(!bar) return;
+
+  // ---- dropdown menus (Forums + user) ----
+  var triggers = bar.querySelectorAll('[data-wg-menu]');
+  function closeMenus(except){
+    bar.querySelectorAll('[data-wg-panel]').forEach(function(p){
+      if(p.getAttribute('data-wg-panel') !== except) p.classList.remove('is-open');
+    });
+    triggers.forEach(function(t){
+      if(t.getAttribute('data-wg-menu') !== except) t.setAttribute('aria-expanded','false');
+    });
+  }
+  triggers.forEach(function(t){
+    var key = t.getAttribute('data-wg-menu');
+    var panel = bar.querySelector('[data-wg-panel="'+key+'"]');
+    t.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = panel.classList.contains('is-open');
+      closeMenus(open ? null : key);
+      panel.classList.toggle('is-open', !open);
+      t.setAttribute('aria-expanded', String(!open));
+    });
+  });
+  // keep panel open when interacting inside it
+  bar.querySelectorAll('[data-wg-panel]').forEach(function(p){
+    p.addEventListener('click', function(e){ e.stopPropagation(); });
+  });
+
+  // ---- inline search ----
+  var searchBtn = bar.querySelector('[data-wg-search]');
+  var searchInput = bar.querySelector('[data-wg-search-input]');
+  if(searchBtn){
+    searchBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      bar.classList.add('is-searching');
+      closeMenus(null);
+      if(searchInput) setTimeout(function(){ searchInput.focus(); }, 60);
+    });
+  }
+  function closeSearch(){
+    if(searchInput && searchInput.value.trim() !== '') return; // keep if user typed
+    bar.classList.remove('is-searching');
+  }
+
+  // ---- mobile burger + drawer ----
+  var burger = bar.querySelector('[data-wg-burger]');
+  if(burger){
+    burger.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = bar.classList.toggle('is-drawer');
+      burger.setAttribute('aria-expanded', String(open));
+    });
+  }
+  // drawer Forums accordion
+  var drawerSub = bar.querySelector('[data-wg-drawer-sub]');
+  if(drawerSub){
+    drawerSub.addEventListener('click', function(){
+      var open = drawerSub.getAttribute('aria-expanded') === 'true';
+      drawerSub.setAttribute('aria-expanded', String(!open));
+    });
+  }
+
+  // ---- presence / status selector (drives the avatar ring; persists locally) ----
+  var checkSvg = '<svg class="chk" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 7l3 3 5-6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function applyPresence(key){
+    var row = bar.querySelector('[data-presence="' + key + '"]');
+    if(!row) return;
+    bar.setAttribute('data-presence', key);            // switches --tb-presence ring colour
+    bar.querySelectorAll('[data-presence]').forEach(function(x){
+      x.classList.remove('is-active');
+      var c = x.querySelector('.chk'); if(c) c.remove();
+    });
+    row.classList.add('is-active');
+    if(!row.querySelector('.chk')) row.insertAdjacentHTML('beforeend', checkSvg);
+  }
+  bar.querySelectorAll('[data-presence]').forEach(function(p){
+    p.addEventListener('click', function(e){
+      e.stopPropagation();
+      var key = p.getAttribute('data-presence');
+      applyPresence(key);
+      try { localStorage.setItem('wg-topbar-presence', key); } catch(_){}
+    });
+  });
+  // restore last choice so it sticks across reloads (live: read NodeBB user status)
+  try {
+    var saved = localStorage.getItem('wg-topbar-presence');
+    if(saved) applyPresence(saved);
+  } catch(_){}
+
+  // ---- pop-out niceties (preview-only; live these are NodeBB component actions) ----
+  // notification filter tabs (data-filter all/unread)
+  bar.querySelectorAll('.wg-pop__tab').forEach(function(tab){
+    tab.addEventListener('click', function(e){
+      e.stopPropagation();
+      var tabs = tab.parentElement.querySelectorAll('.wg-pop__tab');
+      tabs.forEach(function(t){ t.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+      var unreadOnly = tab.getAttribute('data-filter') === 'unread';
+      var list = tab.closest('[data-wg-panel]').querySelector('[data-component="notifications/list"]');
+      list.querySelectorAll('.wg-notif').forEach(function(row){
+        var hide = unreadOnly && !row.classList.contains('unread');
+        row.style.display = hide ? 'none' : '';
+        var sep = row.nextElementSibling;
+        if(sep && sep.classList.contains('wg-pop__sep')) sep.style.display = hide ? 'none' : '';
+      });
+    });
+  });
+  // mark-all-read: clear unread rows + dots + badge for that panel
+  bar.querySelectorAll('.wg-pop__btn:not(.wg-pop__btn--primary)').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var panel = btn.closest('[data-wg-panel]');
+      panel.querySelectorAll('.unread').forEach(function(r){ r.classList.remove('unread'); });
+      panel.querySelectorAll('.wg-notif__dot').forEach(function(d){ d.remove(); });
+      var key = panel.getAttribute('data-wg-panel');
+      var badge = bar.querySelector('.wg-topbar__badge[data-count="'+key+'"]');
+      if(badge) badge.style.display = 'none';
+      var tabc = panel.querySelector('.wg-pop__tabcount'); if(tabc) tabc.textContent = '0';
+    });
+  });
+  // draft delete: drop the row (+ its separator)
+  bar.querySelectorAll('.wg-draft__del').forEach(function(del){
+    del.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      var row = del.closest('.wg-draft');
+      var sep = row.nextElementSibling || row.previousElementSibling;
+      if(sep && sep.classList && sep.classList.contains('wg-pop__sep')) sep.remove();
+      row.remove();
+      var list = bar.querySelector('[data-component="drafts/list"]');
+      var badge = bar.querySelector('.wg-topbar__badge[data-count="drafts"]');
+      var left = list.querySelectorAll('.wg-draft').length;
+      if(badge) badge.textContent = left;
+      if(left === 0){
+        if(badge) badge.style.display = 'none';
+        var empty = list.querySelector('.wg-pop__empty'); if(empty) empty.hidden = false;
+      }
+    });
+  });
+
+  // ---- outside click + Escape close everything ----
+  document.addEventListener('click', function(){ closeMenus(null); closeSearch(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      closeMenus(null);
+      bar.classList.remove('is-searching');
+      bar.classList.remove('is-drawer');
+      if(burger) burger.setAttribute('aria-expanded','false');
+    }
+  });
+
+  // ---- PREVIEW-ONLY: member/guest switch ----
+  var demo = document.querySelectorAll('[data-wg-demo]');
+  function setState(state){
+    bar.setAttribute('data-state', state);
+    document.querySelectorAll('[data-wg-when]').forEach(function(el){
+      var match = el.getAttribute('data-wg-when') === state;
+      el.style.display = match ? 'flex' : 'none';
+    });
+    demo.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-wg-demo') === state); });
+    closeMenus(null);
+  }
+  demo.forEach(function(b){
+    b.addEventListener('click', function(){ setState(b.getAttribute('data-wg-demo')); });
+  });
+})();
+</script>

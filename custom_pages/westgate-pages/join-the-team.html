@@ -1,0 +1,172 @@
+<!--
+  ============================================================================
+  SHADOWS OVER WESTGATE — JOIN THE TEAM / Recruitment (Custom Page content)
+  ----------------------------------------------------------------------------
+  HOW TO USE (NodeBB Custom Pages + Widgets, theme: nodebb-theme-westgate)
+
+  1. ACP -> Custom Pages: add a page with route "join" (or "recruitment").
+  2. ACP -> Extend -> Widgets: pick that page's template, choose the main
+     content area, drag in an "HTML" widget, and paste THIS ENTIRE FILE in.
+  3. Sidebar-off + nav links: same as the Home page (see home.html notes).
+
+  NOTES
+  - Shares the SAME scoped vocabulary as home.html (.wg-page, .wg-btn,
+    .wg-card, .wg-eyebrow, .wg-rule, .wg-h2). If both pages ever live in one
+    bundle the styles are identical and de-dupe cleanly.
+  - All colours/fonts use the theme's global --wg-* variables.
+  - DISCORD: replace every href="#discord" with your real invite link.
+  - Image placeholders show a striped fill. To go live, copy each data-src
+    onto src (data-wg-art marks them).
+  ============================================================================
+-->
+<style>
+.wg-page{
+  --page-bright:#f3ede4;
+  /* Full-width: the forum panel already provides left/right gutters, so content
+     fills the panel (matching the footer rule). Override per-block where a
+     narrower reading measure is wanted (e.g. .wg-cta). */
+  --page-maxw:none;
+  font-family:var(--wg-font-text,"Jost",sans-serif);
+  color:var(--wg-text-soft,#b9b2a6);
+}
+.wg-page *{box-sizing:border-box;}
+.wg-page .wg-wrap{max-width:var(--page-maxw);margin:0 auto;}
+.wg-page a{text-decoration:none;}
+.wg-page img[data-wg-art]{background:repeating-linear-gradient(135deg,#1b1320,#1b1320 11px,#161019 11px,#161019 22px);}
+
+
+.wg-page .wg-btn{display:inline-block;font-family:var(--wg-font-ui,"Jost",sans-serif);
+  font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:#150f08;
+  background:linear-gradient(180deg,#d8bd76,#a8893f);padding:14px 30px;border-radius:6px;
+  border:1px solid rgba(216,194,138,.6);box-shadow:0 4px 22px rgba(168,133,74,.28);
+  transition:filter .2s,transform .2s;}
+.wg-page .wg-btn:hover{filter:brightness(1.07);transform:translateY(-1px);}
+
+.wg-page .wg-eyebrow{font-family:var(--wg-font-display,"Cinzel",serif);font-size:12px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--wg-gold,#c2a35a);}
+.wg-page .wg-h2{font-family:var(--wg-font-display,"Cinzel",serif);font-weight:600;
+  font-size:34px;color:var(--page-bright);margin:0;letter-spacing:.02em;
+  text-shadow:0 1px 0 rgba(0,0,0,.9),0 0 10px rgba(104,32,76,.16);}
+.wg-page .wg-card{background:var(--wg-velvet-panel);border:1px solid var(--wg-border,rgba(194,163,90,.14));
+  border-radius:8px;box-shadow:var(--wg-velvet-shadow);}
+.wg-page .wg-rule{display:flex;align-items:center;justify-content:center;gap:18px;}
+.wg-page .wg-rule i{height:1px;width:80px;display:block;}
+.wg-page .wg-rule span{width:7px;height:7px;background:var(--wg-gold,#c2a35a);transform:rotate(45deg);}
+
+.wg-page .wg-section{padding:80px 24px 0;}
+.wg-page .wg-section.last{padding-bottom:100px;}
+.wg-page .wg-section__head{text-align:center;margin-bottom:44px;}
+.wg-page .wg-section__head .wg-eyebrow{display:block;margin-bottom:12px;}
+
+/* hero */
+.wg-page .wg-rhero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:82px 24px 20px;}
+.wg-page .wg-rhero h1{font-family:var(--wg-font-display,"Cinzel",serif);font-weight:700;
+  font-size:clamp(36px,4.6vw,52px);line-height:1.08;letter-spacing:.02em;color:var(--page-bright);margin:0 0 22px;}
+.wg-page .wg-rhero .lead{font-family:var(--wg-font-text,"Jost",sans-serif);font-weight:300;
+  font-size:18px;line-height:1.7;color:#cfc5b7;margin:0 0 34px;max-width:30em;}
+.wg-page .wg-shot{overflow:hidden;}
+.wg-page .wg-shot .bar{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid rgba(194,163,90,.16);}
+.wg-page .wg-shot .bar i{width:9px;height:9px;border-radius:50%;display:block;}
+.wg-page .wg-shot .bar span{font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:12px;color:var(--wg-text-muted,#9a9086);margin-left:6px;}
+.wg-page .wg-shot img{width:100%;aspect-ratio:16/11;object-fit:cover;display:block;background:#161019;}
+
+/* pillars */
+.wg-page .wg-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.wg-page .wg-pillar{overflow:hidden;display:flex;flex-direction:column;}
+.wg-page .wg-pillar img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border-bottom:1px solid rgba(194,163,90,.12);background:#161019;}
+.wg-page .wg-pillar .body{padding:26px 26px 28px;}
+.wg-page .wg-pillar h3{font-family:var(--wg-font-display,"Cinzel",serif);font-size:20px;color:var(--wg-text,#e6e0d6);margin:0 0 10px;}
+.wg-page .wg-pillar p{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:14.5px;line-height:1.7;color:var(--wg-text-muted,#9a9086);margin:0;}
+
+/* team panel */
+.wg-page .wg-team{padding:46px 50px;display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;}
+.wg-page .wg-team h2{font-family:var(--wg-font-display,"Cinzel",serif);font-weight:600;font-size:30px;line-height:1.2;color:var(--page-bright);margin:0 0 16px;}
+.wg-page .wg-team p{font-family:var(--wg-font-text,"Jost",sans-serif);font-size:16px;line-height:1.85;color:var(--wg-text-muted,#9a9086);margin:0;}
+.wg-page .wg-team ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;}
+.wg-page .wg-team li{display:flex;align-items:center;gap:14px;font-family:var(--wg-font-text,"Jost",sans-serif);font-size:15.5px;color:var(--wg-text-soft,#b9b2a6);}
+.wg-page .wg-team li b{width:7px;height:7px;background:var(--wg-gold,#c2a35a);transform:rotate(45deg);flex:none;}
+
+/* cta */
+.wg-page .wg-cta{max-width:760px;margin:0 auto;padding:80px 24px 100px;text-align:center;}
+.wg-page .wg-cta h2{font-family:var(--wg-font-display,"Cinzel",serif);font-weight:700;font-size:40px;color:var(--page-bright);margin:0 0 16px;letter-spacing:.02em;}
+.wg-page .wg-cta .lead{font-family:var(--wg-font-text,"Jost",sans-serif);font-weight:300;font-size:18px;line-height:1.7;color:#cfc5b7;margin:0 0 30px;}
+.wg-page .wg-cta .foot{margin-top:46px;padding-top:22px;border-top:1px solid rgba(194,163,90,.12);font-family:var(--wg-font-code,"IBM Plex Mono",monospace);font-size:12px;letter-spacing:.06em;color:var(--wg-text-muted,#9a9086);}
+
+@media (max-width:900px){
+  .wg-page .wg-rhero{grid-template-columns:1fr;gap:32px;}
+  .wg-page .wg-pillars{grid-template-columns:1fr;}
+  .wg-page .wg-team{grid-template-columns:1fr;gap:28px;padding:32px;}
+}
+</style>
+
+<div class="wg-page wg-recruit">
+
+  <!-- ============ HERO ============ -->
+  <div class="wg-wrap">
+    <div class="wg-rhero">
+      <div>
+        <span class="wg-eyebrow">Persistent World · Made by Hand</span>
+        <h1 style="margin-top:22px;">Come build a world that's a pleasure to work on.</h1>
+        <p class="lead">Westgate is made by a handful of people who love this stuff — artists, writers, builders, scripters. We've kept the tools pleasant so your time goes where it matters: into the world itself. If you make things, we'd love to meet you.</p>
+        <!-- DISCORD: replace href -->
+        <a class="wg-btn" href="#discord">Say Hello on Discord</a>
+      </div>
+      <div class="wg-card wg-shot">
+        <div class="bar"><i style="background:#7fb86a;"></i><i style="background:#d8bd76;"></i><i style="background:#bf8a86;"></i><span>westgate — the undergate</span></div>
+        <!-- ART: a screenshot of a corner contributors helped build -->
+        <img data-wg-art src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/assets/uploads/westgate/recruit-shot.jpg" alt="" onerror="this.style.visibility='hidden'">
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ WHO WE NEED ============ -->
+  <div class="wg-wrap wg-section">
+    <div class="wg-section__head">
+      <span class="wg-eyebrow">Who We Need</span>
+      <h2 class="wg-h2">Every kind of maker has a place here</h2>
+      <p style="font-family:var(--wg-font-text,'Jost',sans-serif);font-size:16px;line-height:1.7;color:var(--wg-text-muted,#9a9086);margin:14px auto 0;max-width:32em;">Code, art, words, world — whatever you make, there's a part of Westgate waiting for it.</p>
+    </div>
+    <div class="wg-pillars">
+      <article class="wg-card wg-pillar">
+        <img data-wg-art src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/assets/uploads/westgate/recruit-scripts.jpg" alt="" onerror="this.style.visibility='hidden'">
+        <div class="body"><h3>Tools that stay out of your way</h3><p>For builders and scripters: a clean toolset and modern scripting on a fast core — none of NWScript's old quirks to fight. Everything's saved and versioned, so you can experiment without fear of breaking things.</p></div>
+      </article>
+      <article class="wg-card wg-pillar">
+        <img data-wg-art src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/assets/uploads/westgate/recruit-art.jpg" alt="" onerror="this.style.visibility='hidden'">
+        <div class="body"><h3>Your craft, your stamp</h3><p>For artists and asset-makers: models, textures, areas, sound. We're not after a house style to copy — we want the thing only you'd make, and we'll help get it into the game.</p></div>
+      </article>
+      <article class="wg-card wg-pillar">
+        <img data-wg-art src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/assets/uploads/westgate/recruit-lore.jpg" alt="" onerror="this.style.visibility='hidden'">
+        <div class="body"><h3>Ideas that reach players</h3><p>For writers and designers: a questline, a faction, a forgotten corner of the city. What you dream up this month is something players are living in the next.</p></div>
+      </article>
+    </div>
+  </div>
+
+  <!-- ============ WHAT IT'S LIKE ============ -->
+  <div class="wg-wrap wg-section">
+    <div class="wg-card wg-team">
+      <div>
+        <span class="wg-eyebrow">What It's Actually Like</span>
+        <h2 style="margin-top:14px;">Low ego, high trust — and your work goes live.</h2>
+        <p>No gatekeeping, no hazing, no "figure it out yourself." We give honest, kind feedback, lend a hand when it helps, and keep things moving. The thing you make this week is the thing players see this week.</p>
+      </div>
+      <ul>
+        <li><b></b>Honest, kind feedback on your work</li>
+        <li><b></b>A hand whenever you want one</li>
+        <li><b></b>What you make can be in-game within the week</li>
+        <li><b></b>Work at whatever pace fits your life</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ CTA ============ -->
+  <div class="wg-cta">
+    <div class="wg-rule" style="margin-bottom:36px;"><i style="background:linear-gradient(90deg,transparent,var(--wg-gold,#c2a35a));"></i><span></span><i style="background:linear-gradient(90deg,var(--wg-gold,#c2a35a),transparent);"></i></div>
+    <h2>Sound like your kind of place?</h2>
+    <p class="lead">No test gauntlet, no résumé. Just come say hi and tell us what you'd love to build.</p>
+    <!-- DISCORD: replace href -->
+    <a class="wg-btn" href="#discord" style="padding:16px 36px;box-shadow:0 4px 26px rgba(168,133,74,.4);">Join the Team on Discord →</a>
+    <div class="foot">Artists · writers · builders · scripters — all welcome</div>
+  </div>
+
+</div>
