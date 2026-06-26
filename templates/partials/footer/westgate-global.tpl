@@ -18,7 +18,7 @@
 				<li><a href="{relative_path}/category/1/news">News</a></li>
 				<li><a href="{relative_path}/gallery">Gallery</a></li>
 				<li><a href="{relative_path}/category/84/developer-blog">Dev Blog</a></li>
-				<li><a href="{relative_path}/join-the-team">Join the Team</a></li>
+				<li><a href="{relative_path}/recruitment">Join the Team</a></li>
 			</ul>
 		</nav>
 
