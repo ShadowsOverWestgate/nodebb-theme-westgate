@@ -1,6 +1,8 @@
 
 			</div><!-- /.container#content -->
 		</main>
+
+		<!-- IMPORT partials/footer/westgate-global.tpl -->
 	</div>
 
 	<div class="fixed-bottom d-lg-none">
