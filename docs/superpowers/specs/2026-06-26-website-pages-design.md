@@ -39,10 +39,9 @@ drafts, and authentication entry points.
 - `theme.json` declares `baseTheme: "nodebb-theme-harmony"`.
 - `theme.scss` imports Harmony first, then focused Westgate partials under
   `scss/westgate/`.
-- `templates/header.tpl` currently matches the Harmony layout pattern: a
-  `layout-container`, `partials/sidebar-left.tpl`, `#panel`, and
-  `partials/header/brand.tpl`.
-- Harmony's `footer.tpl` imports `partials/sidebar-right.tpl`.
+- `templates/header.tpl` currently mounts the Westgate topbar inside the
+  `layout-container` before `#panel`.
+- `templates/footer.tpl` no longer imports Harmony's right sidebar.
 - Harmony's sidebar partials under
   `/home/vicky/Repositories/nodebb-theme-harmony/templates/partials/sidebar/`
   own the live controls for navigation, user menu, search, notifications, chat,

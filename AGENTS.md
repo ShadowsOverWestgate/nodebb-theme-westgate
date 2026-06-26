@@ -2,7 +2,7 @@
 
 ## Project
 
-This repository is `nodebb-theme-westgate`, a NodeBB theme for the Shadows Over Westgate forum.
+This repository is `nodebb-theme-westgate`, a NodeBB theme for the Shadows Over Westgate forum and website.
 
 It is forked from `nodebb-theme-quickstart` and should remain a small, focused NodeBB child theme rather than a full replacement for NodeBB or Harmony.
 

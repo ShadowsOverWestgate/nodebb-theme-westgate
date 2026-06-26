@@ -145,13 +145,126 @@
 		});
 	}
 
+	function getWestgateTopbar() {
+		if (!document || typeof document.querySelector !== 'function') {
+			return null;
+		}
+
+		return document.querySelector('[data-wg-topbar]');
+	}
+
+	function closeWestgateTopbarPanels(topbar, exceptKey) {
+		if (!topbar || typeof topbar.querySelectorAll !== 'function') {
+			return;
+		}
+
+		toArray(topbar.querySelectorAll('[data-wg-panel]')).forEach((panel) => {
+			if (panel.getAttribute('data-wg-panel') !== exceptKey) {
+				panel.classList.remove('is-open');
+			}
+		});
+		toArray(topbar.querySelectorAll('[data-wg-menu]')).forEach((trigger) => {
+			if (trigger.getAttribute('data-wg-menu') !== exceptKey) {
+				trigger.setAttribute('aria-expanded', 'false');
+			}
+		});
+	}
+
+	function closeWestgateTopbarDrawer(topbar) {
+		if (!topbar) {
+			return;
+		}
+
+		topbar.classList.remove('is-drawer-open');
+		const burger = topbar.querySelector('[data-wg-burger]');
+		if (burger) {
+			burger.setAttribute('aria-expanded', 'false');
+		}
+	}
+
+	function initWestgateTopbar() {
+		const topbar = getWestgateTopbar();
+		if (!topbar) {
+			return;
+		}
+
+		if (!window.westgateTheme.topbarEventsBound) {
+			document.addEventListener('click', (event) => {
+				const currentTopbar = getWestgateTopbar();
+				if (!currentTopbar) {
+					return;
+				}
+
+				const trigger = event.target.closest && event.target.closest('[data-wg-menu]');
+				if (trigger && currentTopbar.contains(trigger)) {
+					event.preventDefault();
+					event.stopPropagation();
+
+					const key = trigger.getAttribute('data-wg-menu');
+					const panel = currentTopbar.querySelector(`[data-wg-panel="${key}"]`);
+					const shouldOpen = !!panel && !panel.classList.contains('is-open');
+					closeWestgateTopbarPanels(currentTopbar, shouldOpen ? key : null);
+					if (panel) {
+						panel.classList.toggle('is-open', shouldOpen);
+					}
+					trigger.setAttribute('aria-expanded', String(shouldOpen));
+					return;
+				}
+
+				const burger = event.target.closest && event.target.closest('[data-wg-burger]');
+				if (burger && currentTopbar.contains(burger)) {
+					event.preventDefault();
+					event.stopPropagation();
+
+					const isOpen = !currentTopbar.classList.contains('is-drawer-open');
+					currentTopbar.classList.toggle('is-drawer-open', isOpen);
+					burger.setAttribute('aria-expanded', String(isOpen));
+					closeWestgateTopbarPanels(currentTopbar, null);
+					return;
+				}
+
+				if (event.target.closest && event.target.closest('[data-wg-panel]')) {
+					return;
+				}
+
+				closeWestgateTopbarPanels(currentTopbar, null);
+				if (!currentTopbar.contains(event.target)) {
+					closeWestgateTopbarDrawer(currentTopbar);
+				}
+			});
+
+			document.addEventListener('keydown', (event) => {
+				if (event.key !== 'Escape') {
+					return;
+				}
+
+				const currentTopbar = getWestgateTopbar();
+				closeWestgateTopbarPanels(currentTopbar, null);
+				closeWestgateTopbarDrawer(currentTopbar);
+			});
+
+			window.westgateTheme.topbarEventsBound = true;
+		}
+
+		$(document)
+			.off('shown.bs.dropdown.westgateTopbar')
+			.on('shown.bs.dropdown.westgateTopbar', '.wg-topbar [component="sidebar/search"]', function () {
+				$(this).find('[component="search/fields"] input[name="query"]').trigger('focus');
+			});
+	}
+
 	window.westgateTheme = window.westgateTheme || {};
 	window.westgateTheme.wrapWikiTables = wrapWestgateWikiTables;
+	window.westgateTheme.initTopbar = initWestgateTopbar;
 
 	$(document).ready(function () {
 		wrapWestgateWikiTables(document);
+		initWestgateTopbar();
 		$(window).on('action:ajaxify.end', function () {
 			wrapWestgateWikiTables(document);
+			initWestgateTopbar();
+			closeWestgateTopbarPanels(getWestgateTopbar(), null);
+			closeWestgateTopbarDrawer(getWestgateTopbar());
 		});
 
 		require(['api'], function (api) {
