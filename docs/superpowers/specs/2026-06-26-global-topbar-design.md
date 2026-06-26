@@ -79,6 +79,30 @@ Harmony sidebar buttons should be restyled as topbar controls. They should feel
 native to the topbar, not like sidebar markup awkwardly placed in a horizontal
 row.
 
+## Post-Review Refinements
+
+Screenshots captured on 2026-06-26 show the topbar working visually, but with
+three refinements needed before the topbar feels fully integrated.
+
+Drawer and dropdown menus must be opaque. The current translucent treatment lets
+page content show through account, forum, and drawer surfaces, which weakens
+readability and makes the controls feel less deliberate. Keep the near-black and
+plum surface direction, but use an opaque panel base; decorative highlights,
+borders, and shadows may remain subtle.
+
+The brand lockup should be simplified to one identity line: the circular mark
+followed by `SHADOWS OVER WESTGATE`. Do not repeat `Shadows Over Westgate` as a
+subtitle in the topbar, and do not allow the primary brand name to truncate in
+normal desktop layouts. Longer project context such as `An NWN:EE Roleplaying
+Experience` belongs on larger page surfaces, not in the dense global chrome.
+
+The custom right-side `Forums` dropdown is redundant when ACP Navigation already
+contains a Forums entry. Prefer one seamless navigation model: remove the
+separate desktop Forums dropdown and let forum entry points live in ACP
+Navigation or in the mobile drawer as direct links. If ACP-managed navigation
+needs to drop text bubbles or helper labels to make this feel clean, that is
+acceptable.
+
 ## Implementation Direction
 
 The production implementation should be theme-first:
@@ -142,6 +166,12 @@ mobile bars should not duplicate those controls.
 - Search uses NodeBB search behavior rather than a visual-only input.
 - The topbar appears consistently on Custom Pages, wiki routes, and normal forum
   routes.
+- Drawer, dropdown, account, and notification surfaces are opaque enough that
+  underlying page content does not show through.
+- The brand appears once as the mark plus `SHADOWS OVER WESTGATE`; no duplicate
+  topbar subtitle repeats the site name.
+- Desktop navigation has one Forums entry model, not both ACP Navigation Forums
+  and a separate right-side Forums dropdown.
 - The topbar styling follows Westgate theme tokens and lives under
   `scss/westgate/`.
 - The implementation remains a child theme over `nodebb-theme-harmony`.

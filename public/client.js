@@ -153,23 +153,6 @@
 		return document.querySelector('[data-wg-topbar]');
 	}
 
-	function closeWestgateTopbarPanels(topbar, exceptKey) {
-		if (!topbar || typeof topbar.querySelectorAll !== 'function') {
-			return;
-		}
-
-		toArray(topbar.querySelectorAll('[data-wg-panel]')).forEach((panel) => {
-			if (panel.getAttribute('data-wg-panel') !== exceptKey) {
-				panel.classList.remove('is-open');
-			}
-		});
-		toArray(topbar.querySelectorAll('[data-wg-menu]')).forEach((trigger) => {
-			if (trigger.getAttribute('data-wg-menu') !== exceptKey) {
-				trigger.setAttribute('aria-expanded', 'false');
-			}
-		});
-	}
-
 	function closeWestgateTopbarDrawer(topbar) {
 		if (!topbar) {
 			return;
@@ -195,22 +178,6 @@
 					return;
 				}
 
-				const trigger = event.target.closest && event.target.closest('[data-wg-menu]');
-				if (trigger && currentTopbar.contains(trigger)) {
-					event.preventDefault();
-					event.stopPropagation();
-
-					const key = trigger.getAttribute('data-wg-menu');
-					const panel = currentTopbar.querySelector(`[data-wg-panel="${key}"]`);
-					const shouldOpen = !!panel && !panel.classList.contains('is-open');
-					closeWestgateTopbarPanels(currentTopbar, shouldOpen ? key : null);
-					if (panel) {
-						panel.classList.toggle('is-open', shouldOpen);
-					}
-					trigger.setAttribute('aria-expanded', String(shouldOpen));
-					return;
-				}
-
 				const burger = event.target.closest && event.target.closest('[data-wg-burger]');
 				if (burger && currentTopbar.contains(burger)) {
 					event.preventDefault();
@@ -219,15 +186,9 @@
 					const isOpen = !currentTopbar.classList.contains('is-drawer-open');
 					currentTopbar.classList.toggle('is-drawer-open', isOpen);
 					burger.setAttribute('aria-expanded', String(isOpen));
-					closeWestgateTopbarPanels(currentTopbar, null);
 					return;
 				}
 
-				if (event.target.closest && event.target.closest('[data-wg-panel]')) {
-					return;
-				}
-
-				closeWestgateTopbarPanels(currentTopbar, null);
 				if (!currentTopbar.contains(event.target)) {
 					closeWestgateTopbarDrawer(currentTopbar);
 				}
@@ -239,7 +200,6 @@
 				}
 
 				const currentTopbar = getWestgateTopbar();
-				closeWestgateTopbarPanels(currentTopbar, null);
 				closeWestgateTopbarDrawer(currentTopbar);
 			});
 
@@ -263,7 +223,6 @@
 		$(window).on('action:ajaxify.end', function () {
 			wrapWestgateWikiTables(document);
 			initWestgateTopbar();
-			closeWestgateTopbarPanels(getWestgateTopbar(), null);
 			closeWestgateTopbarDrawer(getWestgateTopbar());
 		});
 

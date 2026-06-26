@@ -29,6 +29,13 @@ function assertExcludes(haystack, needle, message) {
 	);
 }
 
+function assertMatches(haystack, pattern, message) {
+	assert(
+		pattern.test(haystack),
+		message || `Expected file to match ${pattern}`
+	);
+}
+
 const header = read('templates/header.tpl');
 const footer = read('templates/footer.tpl');
 const topbar = read('templates/partials/header/topbar.tpl');
@@ -107,6 +114,17 @@ assertIncludes(topbar, '{{{ if allowRegistration }}}', 'Registration should rema
 assertIncludes(topbar, '{{{ each navigation }}}', 'Topbar should render ACP Navigation items');
 assertIncludes(topbar, '{./textClass}', 'Topbar should honor ACP Navigation text visibility classes');
 assertExcludes(topbar, 'href="{relative_path}/admin"', 'Topbar should not hard-code the administrator link');
+assertMatches(
+	topbar,
+	/<a\b(?=[^>]*class="[^"]*\bwg-topbar__brand\b[^"]*")(?=[^>]*aria-label="{config\.siteTitle}")/,
+	'Topbar brand link should use the configured site title as its accessible name'
+);
+assertMatches(
+	topbar,
+	/<span\b(?=[^>]*class="[^"]*\bwg-topbar__brand-name\b[^"]*")[^>]*>{config\.siteTitle}<\/span>/,
+	'Topbar brand text should render the configured site title'
+);
+assertExcludes(topbar, 'data-wg-menu', 'Topbar should rely on Bootstrap and NodeBB navigation instead of custom menu triggers');
 
 assertMissing(
 	'templates/partials/header/brand.tpl',

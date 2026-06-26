@@ -2,10 +2,7 @@
 	<div class="wg-topbar__inner">
 		<a class="wg-topbar__brand" href="{relative_path}/" aria-label="{config.siteTitle}">
 			<span class="wg-topbar__brand-mark" aria-hidden="true">W</span>
-			<span class="wg-topbar__brand-text">
-				<span class="wg-topbar__brand-name">{config.siteTitle}</span>
-				<span class="wg-topbar__brand-subtitle">Shadows Over Westgate</span>
-			</span>
+			<span class="wg-topbar__brand-name">{config.siteTitle}</span>
 		</a>
 
 		<nav class="wg-topbar__nav" aria-label="[[global:navigation]]">
@@ -30,20 +27,6 @@
 				{{{ end }}}
 			</ul>
 		</nav>
-
-		<div class="wg-topbar__forums dropdown">
-			<button class="wg-topbar__nav-link wg-topbar__forums-toggle" type="button" data-wg-menu="forums" aria-expanded="false" aria-haspopup="true">
-				<span>Forums</span>
-				<i class="fa fa-fw fa-chevron-down" aria-hidden="true"></i>
-			</button>
-			<div class="wg-topbar__panel wg-topbar__panel--forums" data-wg-panel="forums" role="menu">
-				<a href="{relative_path}/categories" role="menuitem">[[pages:categories]]</a>
-				<a href="{relative_path}/recent" role="menuitem">[[recent:title]]</a>
-				<a href="{relative_path}/unread" role="menuitem">[[unread:title]]</a>
-				<a href="{relative_path}/popular" role="menuitem">[[pages:popular]]</a>
-				<a href="{relative_path}/tags" role="menuitem">[[tags:tags]]</a>
-			</div>
-		</div>
 
 		<div class="wg-topbar__utilities">
 			{{{ if config.loggedIn }}}
