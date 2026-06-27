@@ -1,0 +1,178 @@
+<!-- IMPORT emails/partials/header.html -->
+<!-- preheader -->
+<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">[[email:digest.preheader]]</div>
+<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
+<!-- Email Body : BEGIN -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600px;">
+<!-- 1 Column Text : BEGIN -->
+<tr>
+<td bgcolor="#fbf7ef">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="padding: 40px 40px 6px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<h1 style="margin: 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 24px; line-height: 27px; color: #1a1418; font-weight: normal;">[[email:greeting-with-name, {displayname}]]</h1>
+</td>
+</tr>
+<tr>
+<td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<h1 style="margin: 0 0 10px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">[[email:digest.title.{interval}]]</h1>
+</td>
+</tr>
+{{{ if notifications.length }}}
+<tr>
+<td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<ul style="margin: 0; padding: 0;">
+{{{ each notifications }}}
+<li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="padding: 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px;">
+{{{ if notifications.image }}}
+<img style="vertical-align: middle; width: 32px; height: 32px; border-radius: 50%" src="{notifications.image}" alt="" />
+{{{ else }}}
+<div style="vertical-align: middle; width: 32px; height: 32px; line-height: 32px; font-size: 16px; background-color: {notifications.user.icon:bgColor}; color: white; text-align: center; display: inline-block; border-radius: 50%">{notifications.user.icon:text}</div>
+{{{ end }}}
+</td>
+<td style="padding: 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{notifications.notification_url}">{notifications.bodyShort}</a></p>
+</td>
+</tr>
+</table>
+</li>
+{{{ end }}}
+</ul>
+</td>
+</tr>
+{{{ end }}}
+{{{ if publicRooms.length }}}
+<tr>
+<td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<h1 style="margin: 16px 0 24px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">[[email:digest.unread-rooms]]</h1>
+<ul style="margin: 0; padding: 0;">
+{{{ each publicRooms }}}
+<li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="padding: 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/chats/{./roomId}"># [[email:digest.room-name-unreadcount, {./roomName}, {./unreadCountText}]]</a></p>
+</td>
+</tr>
+</table>
+</li>
+{{{ end }}}
+</ul>
+</td>
+</tr>
+{{{ end }}}
+{{{ if topTopics.length }}}
+<tr>
+<td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<h1 style="margin: 16px 0 24px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">[[email:digest.top-topics, {site_title}]]</h1>
+<ul style="margin: 0; padding: 0;">
+{{{ each topTopics }}}
+<li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{renderDigestAvatar(@value)}</td>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/topic/{topTopics.slug}"><strong>{topTopics.title}</strong></a></p>
+<p style="margin: 0; font-size: 12px;"><a style="text-decoration:none !important; text-decoration:none; color: #9a9086; line-height: 16px;" href="{url}/uid/{topTopics.teaser.user.uid}"><strong>{topTopics.teaser.user.displayname}</strong></a></p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 26px; color: #3a3340;">{topTopics.teaser.content}</p>
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px;">
+<a style="text-decoration:none !important; text-decoration:none; text-transform: capitalize; color: #a8893f; line-height: 16px;" href="{url}/topic/{topTopics.slug}">
+<small><strong><span style="color: #9a9086;">&rsaquo;</span> [[global:read-more]]</strong></small>
+</a>
+</p>
+</td>
+</tr>
+</table>
+</li>
+{{{ if !@last }}}
+<li style="text-decoration: none; list-style-type: none; margin: 0px 64px 16px 64px; border-bottom: 1px solid #e2d8c4"></li>
+{{{ end }}}
+{{{ end }}}
+</ul>
+</td>
+</tr>
+{{{ end }}}
+{{{ if popularTopics.length }}}
+<tr>
+<td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<h1 style="margin: 16px 0 24px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">[[email:digest.popular-topics, {site_title}]]</h1>
+<ul style="margin: 0; padding: 0;">
+{{{ each popularTopics }}}
+<li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{renderDigestAvatar(@value)}</td>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/topic/{popularTopics.slug}"><strong>{popularTopics.title}</strong></a></p>
+<p style="margin: 0; font-size: 12px;"><a style="text-decoration:none !important; text-decoration:none; color: #9a9086; line-height: 16px;" href="{url}/uid/{popularTopics.teaser.user.uid}"><strong>{popularTopics.teaser.user.displayname}</strong></a></p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 26px; color: #3a3340;">{popularTopics.teaser.content}</p>
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px;">
+<a style="text-decoration:none !important; text-decoration:none; text-transform: capitalize; color: #a8893f; line-height: 16px;" href="{url}/topic/{popularTopics.slug}">
+<small><strong><span style="color: #9a9086;">&rsaquo;</span> [[global:read-more]]</strong></small>
+</a>
+</p>
+</td>
+</tr>
+</table>
+</li>
+{{{ if !@last }}}
+<li style="text-decoration: none; list-style-type: none; margin: 0px 64px 16px 64px; border-bottom: 1px solid #e2d8c4"></li>
+{{{ end }}}
+{{{ end }}}
+</ul>
+</td>
+</tr>
+{{{ end }}}
+{{{ if recent.length }}}
+<tr>
+<td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
+<h1 style="margin: 16px 0 24px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">[[email:digest.latest-topics, {site_title}]]</h1>
+<ul style="margin: 0; padding: 0;">
+{{{ each recent }}}
+<li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{renderDigestAvatar(@value)}</td>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/topic/{recent.slug}"><strong>{recent.title}</strong></a></p>
+<p style="margin: 0; font-size: 12px;"><a style="text-decoration:none !important; text-decoration:none; color: #9a9086; line-height: 16px;" href="{url}/uid/{recent.teaser.user.uid}"><strong>{recent.teaser.user.displayname}</strong></a></p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding: 8px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 26px; color: #3a3340;">{recent.teaser.content}</p>
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px;">
+<a style="text-decoration:none !important; text-decoration:none; text-transform: capitalize; color: #a8893f; line-height: 16px;" href="{url}/topic/{recent.slug}">
+<small><strong><span style="color: #9a9086;">&rsaquo;</span> [[global:read-more]]</strong></small>
+</a>
+</p>
+</td>
+</tr>
+</table>
+</li>
+{{{ if !@last }}}
+<li style="text-decoration: none; list-style-type: none; margin: 0px 64px 16px 64px; border-bottom: 1px solid #e2d8c4"></li>
+{{{ end }}}
+{{{ end }}}
+</ul>
+</td>
+</tr>
+{{{ end }}}
+</table>
+</td>
+</tr>
+<!-- 1 Column Text : END -->
+</table>
+<!-- Email Body : END -->
+<!-- IMPORT emails/partials/footer.html -->

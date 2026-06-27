@@ -1,0 +1,12 @@
+{
+  "reset.preheader": "Reset your Shadows Over Westgate password",
+  "welcome.preheader": "Confirm your email to enter Shadows Over Westgate",
+  "verify-email.preheader": "Confirm your new email address",
+  "reset_notify.preheader": "Your Shadows Over Westgate password was changed",
+  "registration_accepted.preheader": "Your Shadows Over Westgate account is approved",
+  "invitation.preheader": "You have been invited to Shadows Over Westgate",
+  "banned.preheader": "Your Shadows Over Westgate account status has changed",
+  "test.preheader": "Test email from Shadows Over Westgate",
+  "notification.preheader": "You have a new notification on Shadows Over Westgate",
+  "digest.preheader": "Your Shadows Over Westgate activity digest"
+}
