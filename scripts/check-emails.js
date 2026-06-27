@@ -3,20 +3,23 @@
 const fs = require('fs');
 const path = require('path');
 
-const dir = path.join(__dirname, '..', 'email');
-const files = fs.readdirSync(dir).filter((f) => f.endsWith('.html'));
+const dir = path.join(__dirname, '..', 'templates', 'emails');
+const files = fs.readdirSync(dir).filter((f) => f.endsWith('.tpl'));
 
 const failures = [];
+if (!files.length) {
+  failures.push('templates/emails: no email templates found');
+}
 for (const f of files) {
   const src = fs.readFileSync(path.join(dir, f), 'utf8');
   const trimmed = src.trim();
   const checks = [
     [
-      trimmed.startsWith('<!-- IMPORT emails/partials/header.html -->'),
+      trimmed.startsWith('<!-- IMPORT emails/partials/header.tpl -->'),
       'header IMPORT must be first',
     ],
     [
-      trimmed.endsWith('<!-- IMPORT emails/partials/footer.html -->'),
+      trimmed.endsWith('<!-- IMPORT emails/partials/footer.tpl -->'),
       'footer IMPORT must be last',
     ],
     [/<!-- preheader -->/, 'missing preheader marker'],

@@ -1,4 +1,4 @@
-<!-- IMPORT emails/partials/header.html -->
+<!-- IMPORT emails/partials/header.tpl -->
 <!-- preheader -->
 <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">[[email:verify-email.preheader]]</div>
 <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
@@ -47,4 +47,4 @@
 </tr>
 </table>
 <!-- Email Body : END -->
-<!-- IMPORT emails/partials/footer.html -->
+<!-- IMPORT emails/partials/footer.tpl -->

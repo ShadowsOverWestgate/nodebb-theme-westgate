@@ -1,4 +1,4 @@
-# Build note: the email templates import `emails/partials/header.html` and `emails/partials/footer.html` through NodeBB's `emails/` view namespace.
+# Build note: the email templates import `emails/partials/header.tpl` and `emails/partials/footer.tpl` through NodeBB's `emails/` view namespace.
 
 # Email templates
 
@@ -9,8 +9,8 @@ them to users on various events (password reset, digest, ban, etc.).
 
 - **Discovery.** NodeBB looks for email templates under a theme/plugin's
   templates directory. Core ships them in `src/views/emails/*.tpl`; a theme
-  overrides one by shipping a file of the same name. The `email/` directory
-  here is built into NodeBB's `emails/` view namespace, so `email/reset.html`
+  overrides one by shipping a file of the same name. The `templates/emails/` directory
+  here is built into NodeBB's `emails/` view namespace, so `templates/emails/reset.tpl`
   overrides the core `reset` template. Run `./nodebb build` after editing so
   the changes are compiled into `build/`.
 - **Template engine.** [Benchpress](https://github.com/benchpressjs/benchpressjs),
@@ -23,7 +23,7 @@ them to users on various events (password reset, digest, ban, etc.).
     live in NodeBB's language files, not here.
 - **Send path.** `Emailer.send(template, uid, params)` →
   `sendToEmail` → `renderAndTranslate('emails/<name>', params)`. `<name>` is
-  the filename without extension (`reset.html` → template name `reset`).
+  the filename without extension (`reset.tpl` → template name `reset`).
 - **Default params** available in every template: `url`, `site_title`,
   `logo.{src,width,height}`, `uid`, `username`, `displayname`, `rtl`, plus
   `showUnsubscribe` / `unsubUrl` for digest- and notification-type mails.
@@ -33,27 +33,27 @@ them to users on various events (password reset, digest, ban, etc.).
 
 | File | NodeBB event | Notable params |
 |------|--------------|----------------|
-| `welcome.html` | New registration needing email confirmation | confirmation link |
-| `verify-email.html` | User adds/changes an email and must confirm it | confirmation link |
-| `reset.html` | User requests a password reset | `{reset_link}` |
-| `reset_notify.html` | Confirmation that the password was changed | — |
-| `registration_accepted.html` | Admin approves a queued registration | — |
-| `banned.html` | User is banned | ban reason / expiry |
-| `invitation.html` | A user is invited to the forum | invite link |
-| `notification.html` | Per-event notification (reply, mention, etc.); also post-queue items | `showUnsubscribe`, `unsubUrl` |
-| `digest.html` | Scheduled activity digest (daily/weekly/monthly) | unread topics, `showUnsubscribe` |
-| `test.html` | "Send test email" button in the ACP | — |
+| `welcome.tpl` | New registration needing email confirmation | confirmation link |
+| `verify-email.tpl` | User adds/changes an email and must confirm it | confirmation link |
+| `reset.tpl` | User requests a password reset | `{reset_link}` |
+| `reset_notify.tpl` | Confirmation that the password was changed | — |
+| `registration_accepted.tpl` | Admin approves a queued registration | — |
+| `banned.tpl` | User is banned | ban reason / expiry |
+| `invitation.tpl` | A user is invited to the forum | invite link |
+| `notification.tpl` | Per-event notification (reply, mention, etc.); also post-queue items | `showUnsubscribe`, `unsubUrl` |
+| `digest.tpl` | Scheduled activity digest (daily/weekly/monthly) | unread topics, `showUnsubscribe` |
+| `test.tpl` | "Send test email" button in the ACP | — |
 
 ## Partials
 
 `partials/` holds fragments imported by the templates above. Every
-non-partial template starts with `<!-- IMPORT emails/partials/header.html -->`
-and ends with `<!-- IMPORT emails/partials/footer.html -->`.
+non-partial template starts with `<!-- IMPORT emails/partials/header.tpl -->`
+and ends with `<!-- IMPORT emails/partials/footer.tpl -->`.
 
-- `header.html` — shared email head/header markup.
-- `footer.html` — shared footer with the unsubscribe block
+- `header.tpl` — shared email head/header markup.
+- `footer.tpl` — shared footer with the unsubscribe block
   (`{{{ if showUnsubscribe }}}`).
-- `post-queue-body.html` — queued-post notification body fragment (category,
+- `post-queue-body.tpl` — queued-post notification body fragment (category,
   topic, author, content), maintained for use by a notification branch/template.
 
 ## Editing notes
@@ -68,7 +68,7 @@ and ends with `<!-- IMPORT emails/partials/footer.html -->`.
   them in the language files.
 - Run `node scripts/check-emails.js` after converting templates. It enforces
   the shared-partial structure by requiring a header import, footer import,
-  and `<!-- preheader -->` marker in each `email/*.html` file.
+  and `<!-- preheader -->` marker in each `templates/emails/*.tpl` file.
 - Rebuild (`./nodebb build`) and use the ACP test-email button to verify.
 
 ## Deliverability — out of scope for these templates (ops/mail layer)

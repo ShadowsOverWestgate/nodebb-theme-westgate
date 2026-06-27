@@ -26,7 +26,7 @@
         }
       </style>
     <![endif]-->
-    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+    <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-templates/emails/ -->
     <!--[if !mso]><!-->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Jost:wght@400;600&display=swap" rel="stylesheet" />
     <!--<![endif]-->

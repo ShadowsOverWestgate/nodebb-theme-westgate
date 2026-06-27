@@ -1,6 +1,6 @@
-<!-- IMPORT emails/partials/header.html -->
+<!-- IMPORT emails/partials/header.tpl -->
 <!-- preheader -->
-<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">[[email:notification.preheader]]</div>
+<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">[[email:invitation.preheader]]</div>
 <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;</div>
 <!-- Email Body : BEGIN -->
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600px;">
@@ -9,29 +9,27 @@
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr>
 <td style="padding: 40px 40px 6px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
-<h1 style="margin: 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 24px; line-height: 27px; color: #1a1418; font-weight: normal;">[[email:greeting-with-name, {username}]]</h1>
+<h1 style="margin: 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 24px; line-height: 27px; color: #1a1418; font-weight: normal;">[[email:greeting-no-name]]</h1>
 </td>
 </tr>
 <tr>
 <td style="padding: 0px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
-<h1 style="margin: 0 0 10px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">{intro}</h1>
+<h1 style="margin: 0 0 10px 0; font-family: Cinzel, Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 21px; color: #9a9086; font-weight: normal;">[[email:invitation.text1, {username}, {site_title}]]</h1>
 </td>
 </tr>
-<tr class="notification-body">
+<tr>
 <td style="padding: 20px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
-<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 26px; color: #3a3340;">
-{body}
-</p>
+<p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 26px; color: #3a3340;">[[email:invitation.text2, {expireDays}]]</p>
 </td>
 </tr>
 <tr>
 <td style="padding: 32px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
 <!-- Button : BEGIN -->
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
 <tr>
 <td style="border-radius: 3px; background: #2a1222; text-align: center;" class="button-td">
-<a href="{notification_url}" style="background: #2a1222; border: 15px solid #2a1222; border-color: #c2a35a; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
-<span style="color: #f4ecd8" class="button-link">[[email:notif.cta{{{ if notification.cta-type }}}-{notification.cta-type}{{{ end }}}]] &rarr;</span>
+<a href="{registerLink}" style="background: #2a1222; border: 15px solid #2a1222; border-color: #c2a35a; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a">
+<span style="color: #f4ecd8;" class="button-link">[[email:invitation.cta]] &rarr;</span>
 </a>
 </td>
 </tr>
@@ -44,4 +42,4 @@
 </tr>
 </table>
 <!-- Email Body : END -->
-<!-- IMPORT emails/partials/footer.html -->
+<!-- IMPORT emails/partials/footer.tpl -->
