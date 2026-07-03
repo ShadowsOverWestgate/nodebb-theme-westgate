@@ -1,0 +1,17 @@
+/* Wiki badge on global search results (quick-search dropdown + /search page).
+   Marks results tagged by nodebb-plugin-westgate-wiki (isWikiArticle/wikiPath). */
+.westgate-wiki-badge {
+	font-family: var(--wg-font-ui);
+	font-size: 0.62em;
+	font-weight: 600;
+	letter-spacing: 0.09em;
+	text-transform: uppercase;
+	color: var(--wg-gold);
+	background: rgba(194, 163, 90, 0.1);
+	border: 1px solid var(--wg-ledger-border);
+	vertical-align: middle;
+}
+
+.quick-search-results .westgate-wiki-badge {
+	font-size: 0.7rem;
+}
