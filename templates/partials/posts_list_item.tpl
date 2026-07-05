@@ -1,7 +1,7 @@
 <li component="post" class="posts-list-item  {{{ if ./deleted }}} deleted{{{ else }}}{{{ if ./topic.deleted }}} deleted{{{ end }}}{{{ end }}}{{{ if ./topic.scheduled }}} scheduled{{{ end }}}" data-pid="{./pid}" data-uid="{./uid}">
     <hr/>
     <a class="topic-title fw-semibold fs-5 mb-2 text-reset text-break d-block" href="{{{ if ./isWikiArticle }}}{config.relative_path}{./wikiPath}{{{ else }}}{config.relative_path}/post/{encodeURIComponent(./pid)}{{{ end }}}">
-    {{{ if ./isWikiArticle }}}<span class="badge westgate-wiki-badge"><i class="fa fa-book-open"></i> [[westgate:wiki-badge]]</span> {{{ else }}}{{{ if ./isMainPost }}}<i class="fa fa-book text-muted" title="[[topic:topic]]"></i> {{{ end }}}{{{ end }}}{./topic.title}
+    {{{ if ./isWikiArticle }}}<span class="badge westgate-wiki-badge"><i class="fa fa-book-open"></i> [[westgate:wiki-badge]]</span> {{{ end }}}{./topic.title}
     </a>
 
     <div class="post-body d-flex flex-column gap-1 mb-2">

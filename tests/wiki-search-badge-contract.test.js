@@ -39,4 +39,10 @@ assertIncludes(read('scss/westgate/_search.scss'), '.westgate-wiki-badge', 'sear
 const languageKeys = JSON.parse(read('languages/en-GB/westgate.json'));
 assert(languageKeys['wiki-badge'], 'westgate language file should define the wiki-badge label');
 
+const postsListItem = read('templates/partials/posts_list_item.tpl');
+assert(
+	!postsListItem.includes('./isMainPost }}}<i class="fa fa-book'),
+	'posts_list_item.tpl should not render a book icon for plain main posts'
+);
+
 console.log('wiki search badge contract tests passed');
