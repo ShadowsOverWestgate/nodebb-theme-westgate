@@ -135,7 +135,8 @@ $wg-topbar-panel-bg: linear-gradient(
 }
 
 .wg-topbar__utility-list .nav-link {
-  justify-content: center;
+  // beat Bootstrap's !important .justify-content-between on notifications/chats/drafts links
+  justify-content: center !important;
   width: 2.35rem;
   height: 2.35rem;
   padding: 0;
