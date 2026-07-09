@@ -6,6 +6,36 @@ This repository is `nodebb-theme-westgate`, a NodeBB theme for the Shadows Over 
 
 It is forked from `nodebb-theme-quickstart` and should remain a small, focused NodeBB child theme rather than a full replacement for NodeBB or Harmony.
 
+Shadows Over Westgate (SoW) is a Neverwinter Nights persistent-world project.
+Its community forum and wiki run on NodeBB (a Node.js forum platform). This
+theme is the visual layer for that forum. It is consumed by sow-nodebb
+(https://git.westgate.pw/ShadowsOverWestgate/sow-nodebb), which pins this repo
+by exact commit in `plugins.lock` and compiles it into the production forum
+image at image-build time. Switching themes in the Admin Control Panel does
+nothing in production; only the theme pinned and activated in sow-nodebb is
+compiled in.
+
+## How It Is Used
+
+There is no build step in this repo; NodeBB compiles the SCSS. Local check:
+`node scripts/check-emails.js` (if working on email templates). To see changes
+live, use the `docker-compose.dev.yml` dev loop in sow-nodebb with this repo
+as an extra mounted package. Release: merge here, re-pin the commit SHA in
+sow-nodebb's `plugins.lock`, rebuild and publish the image there.
+
+## Guidance Map
+
+- `README.md` and `GAME_ICONS.md`: repo intro and icon usage notes.
+- `theme.json`, `plugin.json`: theme metadata, hooks, static dirs.
+- `theme.scss` (imports-only) and `scss/`: all styling; `scss/overrides.scss`
+  holds pre-Bootstrap variable overrides.
+- `templates/`: Harmony template overrides (same relative paths as Harmony).
+- `custom_pages/`: source content and mockups for custom-pages surfaces.
+- `lib/`, `public/client.js`: server hooks and client behavior.
+- `tests/`: contract tests for topbar, footer, icons, and wiki table
+  rendering. Plain assert scripts: run each with
+  `node tests/<name>.test.js`; there is no `npm test` script.
+
 ## Theme Direction
 
 The visual target is black velvet silk, darkness, vampirism, decadence, and decay.
