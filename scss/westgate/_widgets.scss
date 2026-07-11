@@ -5,11 +5,11 @@
 [data-widget-area="header"],
 [data-widget-area="footer"] {
 	display: grid;
-	gap: 0.85rem;
+	gap: var(--wg-space-sm);
 }
 
 [data-widget-area="header"] {
-	margin-bottom: 0.85rem;
+	margin-bottom: var(--wg-space-sm);
 }
 
 [data-widget-area="footer"] {
@@ -20,7 +20,7 @@
 [data-widget-area="sidebar-footer"] {
 	display: grid;
 	align-content: start;
-	gap: 0.85rem;
+	gap: var(--wg-space-sm);
 }
 
 [data-widget-area] > :where(
@@ -51,11 +51,11 @@
 	.westgate-widget-card,
 	.wg-widget-card
 ) {
-	padding: 0.85rem;
+	padding: var(--wg-space-md);
 	background:
 		linear-gradient(to bottom, transparent calc(100% - 1px), rgba(194, 163, 90, 0.045) calc(100% - 1px)),
 		linear-gradient(100deg, rgba(42, 18, 34, 0.34), rgba(18, 16, 23, 0.96) 62%, rgba(13, 12, 17, 0.98)) !important;
-	background-size: 100% 1.78rem, auto;
+	background-size: 100% var(--wg-ledger-line), auto;
 	border: 1px solid rgba(194, 163, 90, 0.14);
 	border-radius: 8px;
 	box-shadow: var(--wg-velvet-shadow);
@@ -229,7 +229,7 @@
 	--bs-gutter-x: 0.45rem;
 	--bs-gutter-y: 0.45rem;
 	width: 100%;
-	margin: 0 0 0.85rem;
+	margin: 0 0 var(--wg-space-sm);
 	padding: 0.6rem;
 	background:
 		linear-gradient(to bottom, rgba(255, 241, 196, 0.018), rgba(8, 7, 10, 0.08)),

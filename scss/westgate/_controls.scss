@@ -45,6 +45,40 @@
   --bs-btn-active-border-color: rgba(216, 194, 138, 0.56);
 }
 
+// core's guest sign-up prompt ships btn-warning/btn-info: remap to the
+// theme's two button voices (dark gold plate + ghost)
+.guest-cta-alert .btn-warning {
+  --bs-btn-bg: #5a4a1a;
+  --bs-btn-border-color: #a8893f;
+  --bs-btn-color: #f0e6d8;
+  --bs-btn-hover-bg: #6a5720;
+  --bs-btn-hover-border-color: #c2a35a;
+  --bs-btn-hover-color: #fff4dd;
+  --bs-btn-active-bg: #493914;
+  --bs-btn-active-border-color: #c2a35a;
+  --bs-btn-active-color: #fff4dd;
+  background-image: linear-gradient(to bottom, #5a4a1a 0%, #473914 100%);
+}
+
+.guest-cta-alert .btn-info {
+  --bs-btn-color: #d8cec0;
+  --bs-btn-bg: rgba(8, 7, 10, 0.12);
+  --bs-btn-border-color: rgba(216, 194, 138, 0.28);
+  --bs-btn-hover-color: var(--wg-text);
+  --bs-btn-hover-bg: rgba(194, 163, 90, 0.075);
+  --bs-btn-hover-border-color: rgba(216, 194, 138, 0.44);
+  --bs-btn-active-bg: rgba(194, 163, 90, 0.12);
+  --bs-btn-active-border-color: rgba(216, 194, 138, 0.5);
+  --bs-btn-active-color: var(--wg-text);
+  background-image: none;
+}
+
+.guest-cta-alert .btn-close {
+  filter: invert(86%) sepia(16%) saturate(360%) hue-rotate(356deg)
+    brightness(95%) contrast(90%);
+  opacity: 0.82;
+}
+
 .modal-footer .btn-secondary,
 .bootbox .modal-footer .btn-secondary,
 .modal-footer .btn[data-bs-dismiss="modal"],
@@ -207,20 +241,30 @@ textarea[component="topic/quickreply/text"]::placeholder {
   color: rgba(185, 178, 166, 0.62) !important;
 }
 
-table[component="notification/table"] {
+table[component="notification/table"],
+.page-flags [component="flags/list"],
+li[component="post"] .content table {
   --bs-table-bg: transparent;
   --bs-table-color: var(--wg-text-soft);
-  --bs-table-border-color: rgba(194, 163, 90, 0.1);
+  --bs-table-border-color: rgba(194, 163, 90, 0.16);
+  --bs-table-striped-bg: rgba(194, 163, 90, 0.035);
+  --bs-table-striped-color: var(--wg-text-soft);
   --bs-table-hover-bg: rgba(194, 163, 90, 0.04);
   --bs-table-hover-color: var(--wg-text);
   color: var(--wg-text-soft) !important;
+}
+
+// classless markdown tables in posts don't get Bootstrap's .table variables
+li[component="post"] .content table :where(th, td) {
+  border-color: rgba(194, 163, 90, 0.16);
 }
 
 table[component="notification/table"] :where(th, td, label) {
   color: var(--wg-text-soft) !important;
 }
 
-table[component="notification/table"] thead :where(th, td) {
+table[component="notification/table"] thead :where(th, td),
+li[component="post"] .content table thead :where(th, td) {
   color: var(--wg-ledger-ink-muted) !important;
   font-family: var(--wg-font-display);
   font-size: 0.86rem;
@@ -355,7 +399,7 @@ table[component="notification/table"] a[data-type]:focus {
     ),
     linear-gradient(100deg, rgba(32, 19, 30, 0.98), rgba(13, 12, 17, 0.98)) !important;
   background-size:
-    100% 1.82rem,
+    100% var(--wg-ledger-line),
     auto;
   border-color: rgba(194, 163, 90, 0.18) !important;
   color: var(--wg-text-soft) !important;
@@ -622,6 +666,6 @@ table[component="notification/table"] a[data-type]:focus {
 }
 
 :focus-visible {
-  outline: 2px solid var(--wg-focus) !important;
+  outline: 2px solid var(--wg-focus-ring) !important;
   outline-offset: 2px;
 }

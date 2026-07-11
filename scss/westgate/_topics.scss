@@ -20,7 +20,7 @@ body.template-category .category-header .description {
 }
 
 .topic-list-header > .card {
-	padding: 0.55rem !important;
+	padding: var(--wg-space-xs) !important;
 	background: rgba(18, 15, 22, 0.78) !important;
 	border-color: var(--wg-ledger-border) !important;
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.018) !important;
@@ -42,7 +42,7 @@ body.template-category .category-header .description {
 
 ul[component="category"] {
 	display: grid;
-	gap: 0.85rem;
+	gap: var(--wg-space-sm);
 	padding: 0 !important;
 	background: transparent !important;
 	border: 0 !important;
@@ -53,15 +53,15 @@ li[component="category/topic"] {
 	position: relative;
 	isolation: isolate;
 	margin: 0 !important;
-	padding: 0.95rem 1rem !important;
+	padding: var(--wg-space-md) !important;
 	overflow: hidden;
 	background:
 		linear-gradient(to bottom, transparent calc(100% - 1px), var(--wg-ledger-ruling) calc(100% - 1px)),
 		linear-gradient(to right, rgba(194, 163, 90, 0.08), transparent 5.25rem),
 		var(--wg-ledger-panel) !important;
-	background-size: 100% 1.78rem, auto, auto;
+	background-size: 100% var(--wg-ledger-line), auto, auto;
 	border: 1px solid var(--wg-ledger-border) !important;
-	border-left: 2px solid rgba(194, 163, 90, 0.34) !important;
+	border-left: 1px solid rgba(194, 163, 90, 0.34) !important;
 	border-radius: 6px !important;
 	box-shadow: var(--wg-ledger-shadow) !important;
 	transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
@@ -98,7 +98,7 @@ li[component="category/topic"].unread:nth-child(even) {
 		linear-gradient(to bottom, transparent calc(100% - 1px), rgba(216, 194, 138, 0.055) calc(100% - 1px)),
 		linear-gradient(to right, rgba(216, 194, 138, 0.09), transparent 5.25rem),
 		var(--wg-ledger-panel) !important;
-	background-size: 100% 1.78rem, auto, auto;
+	background-size: 100% var(--wg-ledger-line), auto, auto;
 }
 
 li[component="category/topic"]:hover {
@@ -113,9 +113,7 @@ li[component="category/topic"].unread {
 		var(--wg-ledger-panel) !important;
 	border-color: rgba(216, 194, 138, 0.17) !important;
 	border-left-color: var(--wg-ledger-ink) !important;
-	box-shadow:
-		var(--wg-ledger-shadow),
-		inset 2px 0 0 rgba(216, 194, 138, 0.1) !important;
+	box-shadow: var(--wg-ledger-shadow) !important;
 }
 
 li[component="category/topic"].pinned {
@@ -139,7 +137,7 @@ li[component="category/topic"].pinned:not(.unread) {
 }
 
 li[component="category/topic"].pinned:has(+ li[component="category/topic"]:not(.pinned)) {
-	margin-bottom: 0.85rem !important;
+	margin-bottom: var(--wg-space-sm) !important;
 }
 
 li[component="category/topic"].pinned:has(+ li[component="category/topic"]:not(.pinned))::after {
@@ -161,8 +159,7 @@ li[component="category/topic"].locked {
 	border-left-color: rgba(168, 74, 78, 0.42) !important;
 	box-shadow:
 		var(--wg-ledger-shadow),
-		0 0 12px rgba(142, 52, 56, 0.09),
-		inset 2px 0 0 rgba(142, 52, 56, 0.1) !important;
+		0 0 12px rgba(142, 52, 56, 0.09) !important;
 }
 
 li[component="category/topic"].locked:not(.unread) {
@@ -182,8 +179,7 @@ li[component="category/topic"].locked.pinned {
 	border-left-color: rgba(168, 74, 78, 0.58) !important;
 	box-shadow:
 		var(--wg-ledger-shadow),
-		0 0 14px rgba(142, 52, 56, 0.085),
-		inset 2px 0 0 rgba(216, 194, 138, 0.13) !important;
+		0 0 14px rgba(142, 52, 56, 0.085) !important;
 }
 
 li[component="category/topic"].pinned::after,
@@ -275,6 +271,12 @@ li[component="category/topic"] [component="topic/labels"] .badge {
 	font-weight: 600 !important;
 }
 
+// timestamps are data, not labels — the Engraving Rule keeps them plain
+li[component="category/topic"] [component="topic/labels"] .badge.timeago {
+	letter-spacing: 0;
+	text-transform: none;
+}
+
 li[component="category/topic"] [component="topic/labels"] .badge i {
 	color: var(--wg-ledger-ink);
 	margin-right: 0.12rem;
@@ -364,6 +366,7 @@ li[component="category/topic"] [component="topic/select"]:focus {
 
 li[component="category/topic"] .meta.stats > div {
 	min-height: 3.25rem;
+	padding: var(--wg-space-2xs) var(--wg-space-xs);
 	background: rgba(255, 255, 255, 0.018) !important;
 	border: 1px solid rgba(194, 163, 90, 0.09) !important;
 	border-radius: 3px !important;
@@ -393,6 +396,17 @@ li[component="category/topic"] [component="topic/teaser"] .lastpost {
 	background: transparent !important;
 	border-left-color: rgba(194, 163, 90, 0.42) !important;
 	color: var(--wg-ledger-ink-muted);
+}
+
+// Harmony marks teasers with .border-2 + .lh-sm: keep the gilt edge at 1px
+// and give the clamped teaser text breathing room
+.lastpost.border-2 {
+	border-width: 1px !important;
+}
+
+.lastpost.lh-sm,
+.lastpost .lh-sm {
+	line-height: 1.35 !important;
 }
 
 li[component="category/topic"] [component="topic/teaser"] .permalink,

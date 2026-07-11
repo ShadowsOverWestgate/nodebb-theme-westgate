@@ -1216,7 +1216,7 @@
 	}
 
 	.westgate-wiki .wiki-article-prose .wg-mobile-table-scroll:focus {
-		outline: 2px solid rgba(194, 163, 90, 0.42);
+		outline: 2px solid var(--wg-focus-ring);
 		outline-offset: 2px;
 	}
 

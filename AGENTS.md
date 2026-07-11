@@ -17,11 +17,49 @@ compiled in.
 
 ## How It Is Used
 
-There is no build step in this repo; NodeBB compiles the SCSS. Local check:
-`node scripts/check-emails.js` (if working on email templates). To see changes
-live, use the `docker-compose.dev.yml` dev loop in sow-nodebb with this repo
-as an extra mounted package. Release: merge here, re-pin the commit SHA in
-sow-nodebb's `plugins.lock`, rebuild and publish the image there.
+There is no build step in this repo; NodeBB compiles the SCSS. To see changes
+live, use the `docker-compose.dev.yml` dev loop in sow-nodebb (see How To Test
+below). Release: merge here, re-pin the commit SHA in sow-nodebb's
+`plugins.lock`, rebuild and publish the image there.
+
+## How To Test
+
+Fast checks, no forum needed:
+
+- `node tests/<name>.test.js` — contract tests (topbar, footer, icons, wiki
+  tables). There is no `npm test` script; run each file directly.
+- `node scripts/check-emails.js` — when working on email templates.
+
+Live visual check against a real forum, using the sibling checkout at
+`../sow-nodebb`:
+
+1. `cd ../sow-nodebb && cp .env.example .env` (if not done already), then set
+   `PLUGIN_PATH=../sow-nodebb-theme` and `PLUGIN_ID=nodebb-theme-westgate` so
+   the compose file mounts this working tree.
+2. `docker compose -f docker-compose.dev.yml up`
+3. Open `http://localhost:4567` (or `HTTP_PORT` from `.env`). Dev admin login:
+   `admin` / `Admin12345!` (defaults; dev-only).
+4. If Westgate is not the active theme yet, switch to it once in
+   ACP → Appearance → Themes; the choice persists in the redis volume.
+5. NodeBB compiles this theme's SCSS and templates at build time, so a browser
+   reload alone is not enough after editing them. Rebuild, then reload:
+   `docker compose -f docker-compose.dev.yml exec nodebb ./nodebb build --config=/opt/config/config.json`
+   (restart the `nodebb` service if changes still don't show).
+6. Full reset (also required after changing `PLUGIN_*` in `.env`):
+   `docker compose -f docker-compose.dev.yml down -v`
+
+Agents with browser tooling (e.g. Playwright) should point it at
+`http://localhost:4567` to load pages, take screenshots, and verify theme
+changes on the live forum.
+
+## Design Context
+
+- `PRODUCT.md`: strategic design context — register, users, purpose,
+  positioning, brand personality, anti-references, design principles,
+  accessibility target (WCAG AA). Read it before design work.
+- `DESIGN.md`: the visual system — palette ("The Velvet Ledger"), typography,
+  elevation, components, and do's/don'ts, with machine-readable tokens in its
+  frontmatter and `.impeccable/design.json`.
 
 ## Guidance Map
 

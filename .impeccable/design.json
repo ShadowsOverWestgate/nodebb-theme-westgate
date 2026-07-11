@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-11T00:00:00Z",
+  "title": "Design System: Westgate",
+  "extensions": {
+    "colorMeta": {
+      "tarnished-gold": { "role": "primary", "displayName": "Tarnished Gold", "canonical": "#c2a35a", "tonalRamp": ["#241d0e", "#3d3118", "#574624", "#725c31", "#8f7440", "#c2a35a", "#d9bf7f", "#efdcae"] },
+      "bruised-plum": { "role": "secondary", "displayName": "Bruised Plum", "canonical": "#2a1222", "tonalRamp": ["#160811", "#2a1222", "#3a1830", "#54254a", "#6f3563", "#8b487e", "#b371a5", "#d9a8ce"] },
+      "dried-blood": { "role": "tertiary", "displayName": "Dried-Blood Red", "canonical": "#8e3438", "tonalRamp": ["#20090a", "#3c1416", "#5a2124", "#8e3438", "#a84a4e", "#c26a6d", "#d99093", "#eebcbe"] },
+      "crypt-black": { "role": "neutral", "displayName": "Crypt Black", "canonical": "#0f0d12", "tonalRamp": ["#09080b", "#0f0d12", "#110f15", "#18141d", "#201924", "#3a323c", "#625760", "#9a9086"] },
+      "bone-text": { "role": "neutral", "displayName": "Bone Text", "canonical": "#e6e0d6", "tonalRamp": ["#2b2823", "#4a453d", "#6b645a", "#8d8579", "#9a9086", "#b9b2a6", "#e6e0d6", "#f3ede4"] },
+      "ledger-ink": { "role": "neutral", "displayName": "Ledger Ink", "canonical": "#d8c28a", "tonalRamp": ["#2a2413", "#4a3f22", "#6b5b33", "#8d7846", "#b09659", "#d8c28a", "#e5d4a8", "#f2e7ca"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "All headings and titles; engraved Cinzel with a faint etch shadow." },
+      "body": { "displayName": "Body", "purpose": "Posts and long reading; calm geometric Jost." },
+      "label": { "displayName": "Label", "purpose": "Small engraved labels: topbar, footer headings, table headers. The only place tracking and uppercase are allowed." },
+      "code": { "displayName": "Code", "purpose": "Code blocks and inline code." }
+    },
+    "shadows": [
+      { "name": "velvet-rest", "value": "inset 0 1px 0 rgba(255,255,255,0.025), inset 0 0 34px rgba(96,32,68,0.11), 0 10px 26px rgba(0,0,0,0.24)", "purpose": "Default velvet surface: sheen, plum bloom, ambient depth." },
+      { "name": "velvet-hover", "value": "inset 0 1px 0 rgba(255,255,255,0.035), inset 0 0 38px rgba(120,36,84,0.14), 0 12px 30px rgba(0,0,0,0.3)", "purpose": "Hover state of velvet surfaces; warmer bloom, slightly deeper." },
+      { "name": "ledger-rest", "value": "inset 0 1px 0 rgba(255,255,255,0.024), inset 0 -1px 0 rgba(0,0,0,0.42), 0 8px 18px rgba(0,0,0,0.2)", "purpose": "Flatter page-like ledger surfaces." },
+      { "name": "control-depth", "value": "inset 0 1px 0 rgba(255,244,221,0.04), 0 2px 8px rgba(0,0,0,0.22)", "purpose": "Small ambient depth on buttons and controls." }
+    ],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Dark gold plate with gilt border; the main call to action.",
+      "html": "<button class=\"ds-btn-primary\">Post Reply</button>",
+      "css": ".ds-btn-primary { font-family: Jost, system-ui, sans-serif; font-size: 0.95rem; color: #f0e6d8; background: linear-gradient(to bottom, #5a4a1a 0%, #473914 100%); border: 1px solid #a8893f; border-radius: 6px; padding: 8px 20px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.24); transition: background 0.15s, border-color 0.15s; } .ds-btn-primary:hover { color: #fff4dd; background: linear-gradient(to bottom, #6a5720 0%, #53431a 100%); border-color: #c2a35a; } .ds-btn-primary:focus-visible { outline: 2px solid rgba(194,163,90,0.28); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Near-transparent dark button with a gilt edge; secondary actions.",
+      "html": "<button class=\"ds-btn-ghost\">Cancel</button>",
+      "css": ".ds-btn-ghost { font-family: Jost, system-ui, sans-serif; font-size: 0.95rem; color: #d8cec0; background: linear-gradient(to bottom, rgba(255,244,221,0.018), rgba(0,0,0,0.06)), rgba(8,7,10,0.12); border: 1px solid rgba(216,194,138,0.28); border-radius: 6px; padding: 8px 20px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,244,221,0.035); transition: background 0.15s, border-color 0.15s; } .ds-btn-ghost:hover { color: #e6e0d6; background: rgba(194,163,90,0.075); border-color: rgba(216,194,138,0.44); } .ds-btn-ghost:focus-visible { outline: 2px solid rgba(194,163,90,0.28); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Near-black well with gilt border; gold ring on focus.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Search Westgate...\" />",
+      "css": ".ds-input { font-family: Jost, system-ui, sans-serif; font-size: 1rem; color: #e6e0d6; background-color: rgba(18,15,22,0.96); border: 1px solid rgba(194,163,90,0.18); border-radius: 6px; padding: 8px 12px; width: 260px; transition: border-color 0.15s, box-shadow 0.15s; } .ds-input::placeholder { color: rgba(185,178,166,0.62); } .ds-input:focus { outline: none; background-color: rgba(255,255,255,0.04); border-color: rgba(194,163,90,0.5); box-shadow: inset 0 1px 0 rgba(255,255,255,0.026), 0 0 0 1px rgba(194,163,90,0.28); }"
+    },
+    {
+      "name": "Velvet Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The signature velvet surface used for category rows, topics, and posts.",
+      "html": "<div class=\"ds-velvet-card\"><h3 class=\"ds-velvet-title\">The Harbor District</h3><p class=\"ds-velvet-body\">Rumors travel faster than ships. Post what you have heard on the docks.</p></div>",
+      "css": ".ds-velvet-card { background: linear-gradient(100deg, rgba(42,18,34,0.46) 0%, rgba(25,22,31,0.95) 23%, rgba(18,16,23,0.99) 62%, rgba(13,12,17,0.98) 100%), #0f0d12; border: 1px solid rgba(194,163,90,0.14); border-radius: 8px; padding: 16px 20px; max-width: 420px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.025), inset 0 0 34px rgba(96,32,68,0.11), 0 10px 26px rgba(0,0,0,0.24); transition: border-color 0.2s, box-shadow 0.2s; } .ds-velvet-card:hover { border-color: rgba(194,163,90,0.22); box-shadow: inset 0 1px 0 rgba(255,255,255,0.035), inset 0 0 38px rgba(120,36,84,0.14), 0 12px 30px rgba(0,0,0,0.3); } .ds-velvet-title { font-family: Cinzel, Georgia, serif; font-weight: 600; font-size: 1.1rem; color: #e6e0d6; margin: 0 0 6px; text-shadow: 0 1px 0 rgba(0,0,0,0.9), 0 0 10px rgba(104,32,76,0.16); } .ds-velvet-body { font-family: Jost, system-ui, sans-serif; font-size: 0.95rem; color: #b9b2a6; margin: 0; }"
+    },
+    {
+      "name": "Ledger Panel",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Ruled page-like surface for tables and lists, written in ledger ink.",
+      "html": "<div class=\"ds-ledger\"><div class=\"ds-ledger-head\">Notifications</div><div class=\"ds-ledger-row\">A letter arrives from the Night Court</div><div class=\"ds-ledger-row\">Your application was <span class=\"ds-ledger-stamp\">stamped</span></div></div>",
+      "css": ".ds-ledger { background: linear-gradient(100deg, rgba(38,22,35,0.5) 0%, rgba(19,17,24,0.97) 34%, rgba(13,12,17,0.98) 100%), #0f0d12; border: 1px solid rgba(194,163,90,0.18); border-radius: 8px; max-width: 420px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.024), inset 0 -1px 0 rgba(0,0,0,0.42), 0 8px 18px rgba(0,0,0,0.2); } .ds-ledger-head { font-family: Cinzel, Georgia, serif; font-weight: 600; font-size: 0.86rem; letter-spacing: 0.02em; color: #a99d8f; padding: 10px 16px; border-bottom: 1px solid rgba(194,163,90,0.16); } .ds-ledger-row { font-family: Jost, system-ui, sans-serif; font-size: 0.95rem; color: #d8c28a; padding: 10px 16px; border-bottom: 1px solid rgba(194,163,90,0.055); } .ds-ledger-row:last-child { border-bottom: none; } .ds-ledger-stamp { color: #a84a4e; font-weight: 600; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Velvet Ledger",
+    "overview": "The forum is the account book of a vampire court: pages of near-black velvet, ruled with faint gold lines, written in tarnished gilt ink, stamped here and there with a dried-blood seal. Every surface is dark and plush. Gold appears as thin edges, rulings, and small marks of importance — the way gilt survives on an old book long after the leather has gone dark. Nothing is bright. Nothing is flat. Depth comes from fabric and candlelight, not from floating cards. It is a working forum first: text stays readable, focus stays visible, and the atmosphere never taxes reading.",
+    "keyCharacteristics": [
+      "Near-black plum-tinted surfaces with velvet gradient sheen",
+      "Tarnished gold carries all borders, links, and affordances",
+      "Engraved serif headings (Cinzel) over calm geometric body text (Jost)",
+      "Red reserved for states and small stamped details",
+      "Ambient, candlelit shadows; hierarchy by panel tone, not lift"
+    ],
+    "rules": [
+      { "name": "The Gilt Edge Rule", "body": "Gold is edging, not paint. It lives in 1px borders, thin rules, icons, and text. The only gold-filled surface in the theme is the primary button, and even that is a dark #5a4a1a, not bright gold.", "section": "colors" },
+      { "name": "The Sparing Red Rule", "body": "Red is a state and a detail — an error, a seal, a warning. It is never a background, never decoration, never loud.", "section": "colors" },
+      { "name": "The Engraving Rule", "body": "Wide letter-spacing and uppercase belong only to small Cinzel labels. Headings at reading size keep letter-spacing 0. Body text is never tracked, never uppercase.", "section": "typography" },
+      { "name": "The Candlelight Rule", "body": "Shadows are atmosphere. If you need to show one thing sits above another, change the panel tone and border alpha; do not invent a bigger shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep body text at or above 4.5:1 contrast; Ash Text (#b9b2a6) on Crypt Black is the floor. Drop to Dust Text only for genuinely secondary metadata.",
+      "Do carry the theme to every surface — wiki, custom pages, applications, reports, admin-facing lists. One unthemed page breaks the spell.",
+      "Do build hierarchy with the three panel tones and border alpha steps (8% / 14% / 18–22%), per the Candlelight Rule.",
+      "Do keep a visible 2px gold focus outline on everything interactive.",
+      "Do stay a small child theme: inherit from Harmony and override only what Westgate needs."
+    ],
+    "donts": [
+      "Don't make anything \"bright, playful, clinical, or flat SaaS-style\" (PRODUCT.md). No white surfaces, no saturated blues, no flat borderless cards.",
+      "Don't add \"loud ornament\" (PRODUCT.md). No filigree backgrounds, no large gold fills, no glow effects beyond the existing plum bloom.",
+      "Don't use red as a surface or decoration — states and small seals only (the Sparing Red Rule).",
+      "Don't track or uppercase body text; that treatment belongs to small Cinzel labels only (the Engraving Rule).",
+      "Don't ship anything that could pass as a generic default forum skin. If a screenshot could be any NodeBB forum, it is not done."
+    ]
+  }
+}

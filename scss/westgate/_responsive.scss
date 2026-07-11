@@ -11,7 +11,7 @@
 	li[component="categories/category"],
 	li[component="category/topic"],
 	li[component="post"] .post-container {
-		padding: 0.85rem !important;
+		padding: var(--wg-space-sm) !important;
 	}
 
 	li[component="categories/category"] h2.title {
@@ -29,11 +29,17 @@
 	.topic-list-header [component="category/controls"] {
 		width: 100%;
 	}
+
+	// keep the guest "Log in to post / reply" CTA on one line
+	[component="category/post/guest"],
+	[component="topic/reply/guest"] {
+		white-space: nowrap;
+	}
 }
 
 @include media-breakpoint-down(md) {
 	.category-header {
-		padding: 0.85rem;
+		padding: var(--wg-space-sm);
 	}
 
 	li[component="post"] .content,

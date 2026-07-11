@@ -53,7 +53,7 @@ assertIncludes(partial, 'aria-label="Powered by Tiptap"', 'Tiptap credit should 
 	'{relative_path}/category/1/news',
 	'{relative_path}/gallery',
 	'{relative_path}/category/84/developer-blog',
-	'{relative_path}/join-the-team',
+	'{relative_path}/recruitment',
 	'{relative_path}/categories',
 	'{relative_path}/wiki',
 	'{relative_path}/register',

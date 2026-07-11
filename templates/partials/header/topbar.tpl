@@ -105,10 +105,6 @@
 				</a>
 				{{{ end }}}
 				{{{ end }}}
-				<a class="wg-topbar__drawer-link" href="{relative_path}/categories"><i class="fa fa-fw fa-layer-group" aria-hidden="true"></i><span>[[pages:categories]]</span></a>
-				<a class="wg-topbar__drawer-link" href="{relative_path}/recent"><i class="fa fa-fw fa-clock" aria-hidden="true"></i><span>[[recent:title]]</span></a>
-				<a class="wg-topbar__drawer-link" href="{relative_path}/unread"><i class="fa fa-fw fa-inbox" aria-hidden="true"></i><span>[[unread:title]]</span></a>
-				<a class="wg-topbar__drawer-link" href="{relative_path}/tags"><i class="fa fa-fw fa-tags" aria-hidden="true"></i><span>[[tags:tags]]</span></a>
 			</nav>
 
 			{{{ if config.loggedIn }}}

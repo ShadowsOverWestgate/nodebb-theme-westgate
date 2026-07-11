@@ -216,6 +216,40 @@ li[component="category/topic"] .user-icon {
     0 0 10px rgba(0, 0, 0, 0.34);
 }
 
+// user data (email, join/last-online dates) never wears the engraving —
+// Harmony marks these with .text-break + .ff-secondary in the stats row
+.account-stats .text-break.ff-secondary {
+  font-family: var(--wg-font-text);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+// 404: core picks a random beige animal glyph (dog, hippo, otter, ...);
+// match the glyph element itself so every variant wears the cowl
+.template-404 i.fa.fa-4x {
+  display: inline-block;
+  width: 4.5rem;
+  height: 4.5rem;
+  background-color: var(--wg-gold-soft);
+  -webkit-mask: url("./plugins/nodebb-theme-westgate/game-icons/cowled.svg")
+    center / contain no-repeat;
+  mask: url("./plugins/nodebb-theme-westgate/game-icons/cowled.svg")
+    center / contain no-repeat;
+
+  &::before {
+    content: "";
+  }
+}
+
+// replace core's grey-triangle default cover with the velvet material
+// (.cover on profiles, .list-cover on the groups list)
+.cover[style*="cover-default.png"],
+.list-cover[style*="cover-default.png"] {
+  background-image:
+    radial-gradient(120% 90% at 18% 0%, rgba(58, 24, 48, 0.6), transparent 60%),
+    linear-gradient(100deg, #2a1222, #110f15 55%, #09080b) !important;
+}
+
 .account,
 .account .profile,
 .account .cover,
@@ -357,15 +391,7 @@ li[component="category/topic"] .user-icon {
   border-bottom-color: rgba(194, 163, 90, 0.12) !important;
 }
 
-.page-flags [component="flags/list"] {
-  --bs-table-bg: transparent;
-  --bs-table-color: var(--wg-text-soft);
-  --bs-table-border-color: rgba(194, 163, 90, 0.1);
-  --bs-table-hover-bg: rgba(194, 163, 90, 0.04);
-  --bs-table-hover-color: var(--wg-text);
-  color: var(--wg-text-soft) !important;
-}
-
+// table variables shared with notification/post tables live in _controls.scss
 .page-flags [component="flags/list"] :where(th, td) {
   color: var(--wg-text-soft) !important;
   border-color: rgba(194, 163, 90, 0.1) !important;

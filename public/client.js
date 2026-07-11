@@ -16,7 +16,10 @@
 
 (function () {
 	const WG_TABLE_SCROLL_CLASS = 'wg-mobile-table-scroll';
-	const WIKI_TABLE_SELECTOR = '.westgate-wiki .wiki-page-content.wiki-article-prose > .card-body table';
+	const WIKI_TABLE_SELECTOR = [
+		'.westgate-wiki .wiki-page-content.wiki-article-prose > .card-body table',
+		'li[component="post"] .content table',
+	].join(', ');
 	const WIKI_TABLE_MIN_COLUMN_WIDTH = 40;
 	const WIKI_TABLE_DESKTOP_MIN_WIDTH = 720;
 	const SKIP_TABLE_SELECTOR = [

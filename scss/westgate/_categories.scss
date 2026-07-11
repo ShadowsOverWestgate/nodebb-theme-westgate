@@ -7,7 +7,7 @@ ul.categories-list,
 ul.westgate-categories-list {
   position: relative;
   display: grid;
-  gap: 0.75rem;
+  gap: var(--wg-space-sm);
   padding-left: 0;
 }
 
@@ -15,13 +15,12 @@ li[component="categories/category"] {
   position: relative;
   isolation: isolate;
   margin: 0 !important;
-  padding: 1rem !important;
+  padding: var(--wg-space-md) !important;
   overflow: visible;
   transition:
     background 0.18s ease,
     border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease;
+    box-shadow 0.18s ease;
 }
 
 li[component="categories/category"].unread {
@@ -29,8 +28,15 @@ li[component="categories/category"].unread {
 }
 
 li[component="categories/category"] .icon {
-  border: 1px solid rgba(246, 223, 163, 0.34);
+  border: 1px solid var(--wg-etched-highlight);
   border-radius: 6px !important;
+  // ACP colors arrive candy-bright; the plum wash and filter pull the
+  // plate into the velvet register while keeping the per-category hue
+  background-image: linear-gradient(
+    160deg,
+    rgba(42, 18, 34, 0.42),
+    rgba(9, 8, 11, 0.58)
+  );
   box-shadow:
     inset 0 1px 0 rgba(255, 242, 204, 0.28),
     inset 0 0 0 1px rgba(18, 15, 22, 0.62),
@@ -38,7 +44,7 @@ li[component="categories/category"] .icon {
     0 0 0 1px rgba(56, 48, 42, 0.9),
     0 0 0 2px rgba(124, 105, 62, 0.24),
     0 9px 18px rgba(0, 0, 0, 0.32);
-  filter: saturate(0.82) contrast(1.12);
+  filter: saturate(0.62) contrast(1.12);
   text-shadow:
     0 1px 0 rgba(0, 0, 0, 0.72),
     0 -1px 0 rgba(255, 238, 190, 0.18),
@@ -46,7 +52,13 @@ li[component="categories/category"] .icon {
 }
 
 body.template-category .category-header .icon {
-  border: 1px solid rgba(246, 223, 163, 0.34);
+  border: 1px solid var(--wg-etched-highlight);
+  background-image: linear-gradient(
+    160deg,
+    rgba(42, 18, 34, 0.42),
+    rgba(9, 8, 11, 0.58)
+  );
+  filter: saturate(0.62) contrast(1.12);
   box-shadow:
     inset 0 1px 0 rgba(255, 242, 204, 0.28),
     inset 0 0 0 1px rgba(18, 15, 22, 0.62),
@@ -272,7 +284,7 @@ ul.category-children {
     rgba(30, 28, 34, 0.62) 46%,
     rgba(36, 18, 29, 0.78)
   );
-  border: 1px solid rgba(246, 223, 163, 0.3);
+  border: 1px solid var(--wg-etched-highlight);
   border-radius: 4px !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 240, 190, 0.28),
@@ -311,6 +323,7 @@ ul.category-children {
 
 li[component="categories/category"] .meta.stats > div {
   min-height: 3.55rem;
+  padding: var(--wg-space-2xs) var(--wg-space-xs);
   background: rgba(255, 255, 255, 0.018) !important;
   border: 1px solid rgba(194, 163, 90, 0.09) !important;
   border-radius: 3px !important;

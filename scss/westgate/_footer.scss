@@ -33,7 +33,7 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1.6fr) minmax(10rem, 1fr) minmax(10rem, 1fr);
 	gap: clamp(2rem, 5vw, 3.125rem);
-	width: min(100%, 1240px);
+	width: min(100%, var(--wg-page-width));
 	margin: 0 auto;
 	padding: clamp(2.75rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem) 1.875rem;
 }
@@ -120,14 +120,14 @@
 	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 0.75rem;
-	width: min(100%, 1240px);
+	width: min(100%, var(--wg-page-width));
 	margin: 0 auto;
 	padding: 1.375rem clamp(1rem, 4vw, 2rem);
 	border-top: 1px solid rgba(194, 163, 90, 0.1);
 
 	p {
 		margin: 0;
-		color: #7f756f;
+		color: var(--wg-text-muted);
 		font-family: var(--wg-font-ui);
 		font-size: 0.78rem;
 		line-height: 1.45;
@@ -140,7 +140,7 @@
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: 0.625rem;
-	width: min(100%, 1240px);
+	width: min(100%, var(--wg-page-width));
 	margin: 0 auto;
 	padding: 0 1rem 1.875rem;
 	font-family: var(--wg-font-ui);
@@ -148,6 +148,7 @@
 	text-align: center;
 }
 
+// quiet ghost credits — third-party names must never be the loudest pixels
 .wg-footer .wg-footer__powered-pill {
 	display: inline-flex;
 	align-items: center;
@@ -155,46 +156,37 @@
 	gap: 0.45rem;
 	width: 10.875rem;
 	min-height: 2rem;
-	border: 1px solid var(--wg-border);
+	border: 1px solid var(--wg-border-soft);
 	border-radius: 8px;
 	padding: 0.42rem 0.75rem;
 	color: var(--wg-text-muted);
-	background: var(--wg-velvet-panel);
-	box-shadow: var(--wg-velvet-shadow);
+	background: rgba(255, 244, 221, 0.02);
 
 	&:hover,
 	&:focus {
 		border-color: rgba(194, 163, 90, 0.22);
-		color: #efe7da;
-		background: var(--wg-velvet-panel-hover);
-		box-shadow:
-			inset 0 1px 0 rgba(255, 255, 255, 0.035),
-			inset 0 0 38px rgba(120, 36, 84, 0.14),
-			0 12px 30px rgba(0, 0, 0, 0.3);
+		color: var(--wg-text-soft);
+		background: rgba(194, 163, 90, 0.06);
 	}
 
 	&:focus-visible {
-		outline: none;
-		box-shadow:
-			inset 0 1px 0 rgba(255, 255, 255, 0.035),
-			inset 0 0 38px rgba(120, 36, 84, 0.14),
-			0 0 0 2px rgba(194, 163, 90, 0.18),
-			0 12px 30px rgba(0, 0, 0, 0.3);
+		outline: 2px solid var(--wg-focus-ring);
+		outline-offset: 2px;
 	}
 }
 
 .wg-footer .wg-footer__powered-label {
-	color: var(--wg-ledger-ink);
+	color: var(--wg-text-muted);
 	font-size: 0.78rem;
 	font-weight: 600;
 	white-space: nowrap;
 }
 
 .wg-footer .wg-footer__powered-name {
-	color: #f2edf7;
-	font-family: var(--wg-font-display);
+	color: var(--wg-text-soft);
+	font-family: var(--wg-font-ui);
 	font-size: 0.82rem;
-	font-weight: 700;
+	font-weight: 600;
 	letter-spacing: 0.04em;
 	white-space: nowrap;
 }
