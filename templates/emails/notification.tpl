@@ -20,7 +20,7 @@
 <tr class="notification-body">
 <td style="padding: 20px 40px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 15px; line-height: 20px; color: #3a3340;">
 <p style="margin: 0; padding: 6px 0px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; line-height: 26px; color: #3a3340;">
-{body}
+{{txEscape(body)}}
 </p>
 </td>
 </tr>

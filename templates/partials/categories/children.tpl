@@ -3,7 +3,7 @@
 	{{{ if !./isSection }}}
 	<li data-cid="{./cid}" class="category-children-item small {./class}">
 		<div class="westgate-category-child d-flex gap-1">
-			{buildCategoryIcon(@value, "18px", "westgate-child-icon rounded-1")}
+			{{buildCategoryIcon(@value, "18px", "westgate-child-icon rounded-1")}}
 			<a href="{{{ if ./link }}}{./link}{{{ else }}}{config.relative_path}/category/{./slug}{{{ end }}}" class="text-reset fw-semibold flex-1">{./name}</a>
 		</div>
 	</li>

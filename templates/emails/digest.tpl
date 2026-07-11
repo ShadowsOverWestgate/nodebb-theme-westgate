@@ -34,7 +34,7 @@
 {{{ end }}}
 </td>
 <td style="padding: 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
-<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{notifications.notification_url}">{notifications.bodyShort}</a></p>
+<p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{notifications.notification_url}">{{notifications.bodyShort}}</a></p>
 </td>
 </tr>
 </table>
@@ -73,7 +73,7 @@
 <li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr>
-<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{renderDigestAvatar(@value)}</td>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{{renderDigestAvatar(@value)}}</td>
 <td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
 <p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/topic/{topTopics.slug}"><strong>{topTopics.title}</strong></a></p>
 <p style="margin: 0; font-size: 12px;"><a style="text-decoration:none !important; text-decoration:none; color: #9a9086; line-height: 16px;" href="{url}/uid/{topTopics.teaser.user.uid}"><strong>{topTopics.teaser.user.displayname}</strong></a></p>
@@ -108,7 +108,7 @@
 <li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr>
-<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{renderDigestAvatar(@value)}</td>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{{renderDigestAvatar(@value)}}</td>
 <td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
 <p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/topic/{popularTopics.slug}"><strong>{popularTopics.title}</strong></a></p>
 <p style="margin: 0; font-size: 12px;"><a style="text-decoration:none !important; text-decoration:none; color: #9a9086; line-height: 16px;" href="{url}/uid/{popularTopics.teaser.user.uid}"><strong>{popularTopics.teaser.user.displayname}</strong></a></p>
@@ -143,7 +143,7 @@
 <li style="text-decoration: none; list-style-type: none; padding-bottom: 0.5em;">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr>
-<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{renderDigestAvatar(@value)}</td>
+<td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; width: 32px; vertical-align: middle;">{{renderDigestAvatar(@value)}}</td>
 <td style="padding: 6px 16px; font-family: Jost, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 16px; color: #3a3340;">
 <p style="margin: 0;"><a style="text-decoration:none !important; text-decoration:none; color: #a8893f;" href="{url}/topic/{recent.slug}"><strong>{recent.title}</strong></a></p>
 <p style="margin: 0; font-size: 12px;"><a style="text-decoration:none !important; text-decoration:none; color: #9a9086; line-height: 16px;" href="{url}/uid/{recent.teaser.user.uid}"><strong>{recent.teaser.user.displayname}</strong></a></p>

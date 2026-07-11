@@ -9,17 +9,17 @@
 			<ul id="main-nav" class="wg-topbar__nav-list list-unstyled d-flex align-items-center mb-0">
 				{{{ each navigation }}}
 				{{{ if displayMenuItem(@root, @index) }}}
-				<li class="nav-item {./class}{{{ if ./dropdown }}} dropdown{{{ end }}}" title="{./title}">
-					<a class="nav-link navigation-link wg-topbar__nav-link d-flex gap-2 align-items-center {{{ if ./dropdown }}}dropdown-toggle{{{ end }}}" {{{ if ./dropdown }}} href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" {{{ else }}} href="{./route}"{{{ end }}} {{{ if ./id }}}id="{./id}"{{{ end }}}{{{ if ./targetBlank }}} target="_blank"{{{ end }}} {{{ if ./text }}}aria-label="{./text}"{{{ end }}}>
+				<li class="nav-item {./class}{{{ if ./dropdown }}} dropdown{{{ end }}}" title="{tx(./title)}">
+					<a class="nav-link navigation-link wg-topbar__nav-link d-flex gap-2 align-items-center {{{ if ./dropdown }}}dropdown-toggle{{{ end }}}" {{{ if ./dropdown }}} href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" {{{ else }}} href="{./route}"{{{ end }}} {{{ if ./id }}}id="{./id}"{{{ end }}}{{{ if ./targetBlank }}} target="_blank"{{{ end }}} {{{ if ./text }}}aria-label="{tx(./text)}"{{{ end }}}>
 						{{{ if ./iconClass }}}
 						<i class="fa fa-fw {./iconClass}" data-content="{./content}"></i>
 						{{{ end }}}
-						{{{ if ./text }}}<span class="nav-text text-truncate {./textClass}">{./text}</span>{{{ end }}}
+						{{{ if ./text }}}<span class="nav-text text-truncate {./textClass}">{{tx(./text)}}</span>{{{ end }}}
 						<span component="navigation/count" class="badge rounded-1 bg-primary {{{ if !./content }}}hidden{{{ end }}}">{./content}</span>
 					</a>
 					{{{ if ./dropdown }}}
 					<ul class="dropdown-menu wg-topbar__dropdown p-1 shadow" role="menu">
-						{./dropdownContent}
+						{{./dropdownContent}}
 					</ul>
 					{{{ end }}}
 				</li>
@@ -100,7 +100,7 @@
 				{{{ if displayMenuItem(@root, @index) }}}
 				<a class="wg-topbar__drawer-link {./class}" href="{./route}" {{{ if ./targetBlank }}}target="_blank"{{{ end }}}>
 					{{{ if ./iconClass }}}<i class="fa fa-fw {./iconClass}" aria-hidden="true"></i>{{{ end }}}
-					{{{ if ./text }}}<span class="{./textClass}">{./text}</span>{{{ end }}}
+					{{{ if ./text }}}<span class="{./textClass}">{{tx(./text)}}</span>{{{ end }}}
 					<span component="navigation/count" class="badge rounded-1 bg-primary {{{ if !./content }}}hidden{{{ end }}}">{./content}</span>
 				</a>
 				{{{ end }}}
