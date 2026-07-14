@@ -8,9 +8,10 @@ not in ACP widgets:
 - **Gallery** — a player-upload screenshot category rendered as a masonry grid.
 - **Top bar** — global header partial that replaces the left sidebar.
 
-The two static pages (Home, Join the Team) are NOT here — they ship as
-paste-ready HTML widgets in `westgate-pages/home.html` and
-`westgate-pages/join-the-team.html`.
+The static pages are NOT here. Home now lives in the
+`nodebb-plugin-westgate-pages` repo as `templates/home.tpl` (sow-* classes,
+styled by `scss/westgate/_pages.scss`); Join the Team still ships as the
+paste-ready HTML widget `westgate-pages/join-the-team.html`.
 
 ---
 

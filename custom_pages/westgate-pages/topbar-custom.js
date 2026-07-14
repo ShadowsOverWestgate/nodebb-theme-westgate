@@ -5,8 +5,9 @@
    (In the live theme this can instead live in the theme's client-side bundle.)
 
    WHY THIS FILE EXISTS
-   - The two static pages (home.html / join-the-team.html) need NO JavaScript;
-     they are pure HTML/CSS (the only inline bit is an <img onerror> fallback).
+   - The static page (join-the-team.html) needs NO JavaScript; it is pure
+     HTML/CSS (the only inline bit is an <img onerror> fallback). Home lives
+     in the westgate-pages plugin now (templates/home.tpl).
    - The TOP BAR needs this small controller for: Forums mega-menu, inline
      search, the mobile burger/drawer, and the drawer's Forums accordion.
 

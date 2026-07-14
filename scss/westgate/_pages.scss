@@ -1,6 +1,6 @@
 // Styles for the file-based site pages served by nodebb-plugin-westgate-pages
-// (/news /blog /gallery). Home and recruitment carry their own scoped <style>
-// blocks in their templates; everything here styles the sow-* class family.
+// (/ /news /blog /gallery). Recruitment still carries its own scoped <style>
+// block in its template; everything here styles the sow-* class family.
 // Values follow DESIGN.md: Cinzel 600 headings with the etch shadow, velvet
 // panels, the Gilt Edge rule (gold as edging), and dark-gold-plate primaries.
 
@@ -291,6 +291,10 @@ a.sow-card:hover {
 	&.three {
 		grid-template-columns: repeat(3, 1fr);
 	}
+
+	&.four {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }
 
 .sow-gallery-grid {
@@ -321,11 +325,207 @@ a.sow-card:hover {
 	}
 }
 
+// Home: art hero
+.sow-home-hero {
+	position: relative;
+	overflow: hidden;
+	border: 1px solid var(--wg-border);
+	border-radius: 8px;
+	min-height: 420px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: var(--wg-space-xl) var(--wg-space-md);
+	margin-top: var(--wg-space-2xs);
+	box-shadow: var(--wg-velvet-shadow);
+
+	h1 {
+		font-size: clamp(2.5rem, 6vw, 4.25rem);
+		line-height: 1.04;
+		margin: 12px 0 0;
+		text-shadow: 0 4px 40px rgba(0, 0, 0, 0.7);
+	}
+
+	p {
+		font-weight: 300;
+		font-size: 1.1875rem;
+		color: var(--wg-text-soft);
+		max-width: 620px;
+		margin: 18px auto 0;
+		text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+	}
+
+	.sow-button-row {
+		justify-content: center;
+		margin-top: var(--wg-space-md);
+	}
+}
+
+.sow-home-hero-bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.sow-home-hero-veil {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: linear-gradient(180deg, rgba(9, 8, 11, 0.55) 0%, rgba(9, 8, 11, 0.25) 38%, rgba(9, 8, 11, 0.82) 86%, var(--wg-bg) 100%);
+}
+
+.sow-home-hero-inner {
+	position: relative;
+}
+
+// Home: server status strip. Servers are grey ("unknown") until the status
+// feed marks them .online / .offline — see the script in home.tpl.
+.sow-status-strip {
+	margin-top: calc(var(--wg-space-lg) * -1);
+	position: relative;
+	z-index: 5;
+	padding: var(--wg-space-sm) var(--wg-space-md);
+	display: flex;
+	align-items: center;
+	gap: var(--wg-space-md);
+	flex-wrap: wrap;
+	overflow: visible;
+}
+
+.sow-status-sep {
+	width: 1px;
+	height: 40px;
+	background: var(--wg-border);
+}
+
+.sow-server {
+	display: flex;
+	align-items: center;
+	gap: var(--wg-space-xs);
+
+	&.online .sow-server-dot {
+		background: var(--wg-status-online);
+		box-shadow: 0 0 0 4px rgba(127, 184, 106, 0.16);
+	}
+
+	&.offline .sow-server-dot {
+		background: var(--wg-status-offline);
+		border-color: transparent;
+	}
+}
+
+// Unknown (no feed yet): hollow grey ring, so it reads differently from the
+// solid grey offline dot.
+.sow-server-dot {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 2px solid var(--wg-text-muted);
+	background: transparent;
+}
+
+.sow-server-name {
+	font-family: var(--wg-font-display);
+	font-weight: 600;
+	font-size: 1.125rem;
+	letter-spacing: 0.05em;
+	color: var(--wg-text);
+}
+
+.sow-server-players,
+.sow-connect-label {
+	font-family: var(--wg-font-code);
+	font-size: 0.6875rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--wg-text-muted);
+	margin-top: 3px;
+}
+
+.sow-connect {
+	flex: 1;
+	min-width: 160px;
+
+	.sow-connect-label {
+		color: var(--wg-gold);
+		margin: 0 0 4px;
+	}
+}
+
+.sow-connect-addr {
+	font-family: var(--wg-font-code);
+	font-size: 0.875rem;
+	color: var(--wg-text-soft);
+}
+
+// Home: setting pitch prose
+.sow-pitch {
+	max-width: 760px;
+	margin: 0 auto;
+	padding: var(--wg-space-xl) var(--wg-space-md) 0;
+	text-align: center;
+
+	p {
+		font-size: 1.0625rem;
+		line-height: 1.9;
+		margin: 0 0 var(--wg-space-sm);
+	}
+
+	blockquote {
+		font-family: var(--wg-font-display);
+		font-style: italic;
+		font-size: 1.375rem;
+		line-height: 1.5;
+		color: var(--wg-gold);
+		margin: var(--wg-space-lg) auto;
+		max-width: 560px;
+	}
+}
+
+.sow-pitch-lead {
+	font-weight: 300;
+	font-size: 1.375rem;
+	line-height: 1.7;
+	color: var(--wg-text-soft);
+}
+
+.sow-pitch-sign {
+	font-family: var(--wg-font-display);
+	font-size: 1.1875rem;
+	letter-spacing: 0.04em;
+	color: var(--wg-text);
+}
+
+// Home: centered section head reusing the page-hero type at section scale
+.sow-home-section-head {
+	padding-top: 0;
+
+	h1 {
+		font-size: 2.125rem;
+	}
+}
+
 @media (max-width: 900px) {
 	.sow-news-layout,
 	.sow-feature,
 	.sow-grid.three {
 		grid-template-columns: 1fr;
+	}
+
+	.sow-grid.four {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.sow-status-strip {
+		gap: var(--wg-space-sm);
+	}
+
+	.sow-status-sep {
+		display: none;
 	}
 
 	.sow-gallery-grid {
