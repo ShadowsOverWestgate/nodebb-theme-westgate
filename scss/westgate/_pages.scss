@@ -1,0 +1,344 @@
+// Styles for the file-based site pages served by nodebb-plugin-westgate-pages
+// (/news /blog /gallery). Home and recruitment carry their own scoped <style>
+// blocks in their templates; everything here styles the sow-* class family.
+// Values follow DESIGN.md: Cinzel 600 headings with the etch shadow, velvet
+// panels, the Gilt Edge rule (gold as edging), and dark-gold-plate primaries.
+
+.sow-page {
+	font-family: var(--wg-font-text);
+	color: var(--wg-text-soft);
+	padding-bottom: var(--wg-space-xl);
+
+	a {
+		text-decoration: none;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--wg-font-display);
+		font-weight: 600;
+		color: var(--wg-text);
+		text-shadow: 0 1px 0 rgba(0, 0, 0, 0.9), 0 0 10px rgba(104, 32, 76, 0.16);
+	}
+
+	p {
+		color: var(--wg-text-muted);
+		line-height: 1.7;
+	}
+}
+
+.sow-kicker {
+	font-family: var(--wg-font-display);
+	font-weight: 600;
+	font-size: 0.86rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--wg-gold);
+}
+
+.sow-page-hero {
+	text-align: center;
+	padding: var(--wg-space-xl) var(--wg-space-md) var(--wg-space-lg);
+
+	h1 {
+		font-size: clamp(2.125rem, 5vw, 3.25rem);
+		margin: 12px 0 0;
+	}
+
+	p {
+		font-weight: 300;
+		font-size: 1.125rem;
+		max-width: 620px;
+		margin: 18px auto 0;
+	}
+}
+
+.sow-section {
+	margin-top: var(--wg-space-xl);
+}
+
+.sow-section-header {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: var(--wg-space-sm);
+	flex-wrap: wrap;
+	margin-bottom: var(--wg-space-md);
+
+	h2 {
+		font-size: 1.75rem;
+		margin: 0;
+	}
+
+	p {
+		margin: 6px 0 0;
+		font-size: 0.9375rem;
+	}
+
+	> a {
+		font-family: var(--wg-font-display);
+		font-weight: 600;
+		font-size: 0.86rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--wg-gold);
+		border-bottom: 1px solid var(--wg-gold-soft);
+		padding-bottom: 3px;
+	}
+}
+
+.sow-card {
+	display: block;
+	background: var(--wg-velvet-panel);
+	border: 1px solid var(--wg-border);
+	border-radius: 8px;
+	box-shadow: var(--wg-velvet-shadow);
+	overflow: hidden;
+	transition: border-color 0.25s;
+
+	img,
+	video {
+		display: block;
+		width: 100%;
+		object-fit: cover;
+	}
+}
+
+a.sow-card:hover {
+	border-color: var(--wg-gold-soft);
+}
+
+.sow-card-body {
+	padding: var(--wg-space-md);
+
+	h3 {
+		font-size: 1.1875rem;
+		margin: 0 0 10px;
+	}
+
+	p {
+		font-size: 0.9rem;
+		margin: 0;
+	}
+}
+
+.sow-meta {
+	display: flex;
+	gap: var(--wg-space-2xs);
+	flex-wrap: wrap;
+	margin-bottom: 12px;
+}
+
+.sow-chip {
+	font-family: var(--wg-font-code);
+	font-size: 0.6875rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--wg-gold);
+	background: rgba(194, 163, 90, 0.08);
+	border: 1px solid var(--wg-gold-soft);
+	border-radius: 4px;
+	padding: 3px 9px;
+}
+
+.sow-button-row {
+	display: flex;
+	gap: var(--wg-space-xs);
+	flex-wrap: wrap;
+	margin-top: var(--wg-space-sm);
+}
+
+.sow-button {
+	display: inline-block;
+	font-family: var(--wg-font-ui);
+	font-size: 0.8125rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: #d8cec0;
+	background: rgba(194, 163, 90, 0.06);
+	padding: 12px 24px;
+	border-radius: 6px;
+	border: 1px solid rgba(216, 194, 138, 0.28);
+	transition: background 0.2s, border-color 0.2s;
+
+	&:hover,
+	&:focus {
+		color: var(--wg-text);
+		background: rgba(194, 163, 90, 0.075);
+		border-color: rgba(216, 194, 138, 0.44);
+	}
+
+	// Matches the theme's .btn-primary dark gold plate (see _controls.scss).
+	&.primary {
+		color: #f0e6d8;
+		background: linear-gradient(to bottom, #5a4a1a 0%, #473914 100%);
+		border-color: #a8893f;
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.06),
+			0 2px 8px rgba(0, 0, 0, 0.24);
+
+		&:hover,
+		&:focus {
+			color: #fff4dd;
+			background: linear-gradient(to bottom, #6a5720 0%, #53431a 100%);
+			border-color: #c2a35a;
+		}
+	}
+}
+
+// News: main list + sidebar
+.sow-news-layout {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: var(--wg-space-lg);
+	align-items: start;
+}
+
+.sow-sidebar {
+	display: grid;
+	gap: var(--wg-space-sm);
+}
+
+.sow-list {
+	display: grid;
+	gap: var(--wg-space-xs);
+}
+
+.sow-list-item {
+	display: grid;
+	grid-template-columns: 90px 1fr;
+	gap: var(--wg-space-sm);
+	background: var(--wg-velvet-panel);
+	border: 1px solid var(--wg-border);
+	border-radius: 8px;
+	padding: var(--wg-space-sm) var(--wg-space-md);
+	transition: border-color 0.25s;
+
+	&:hover {
+		border-color: var(--wg-gold-soft);
+	}
+
+	h3 {
+		font-size: 1.125rem;
+		margin: 0 0 8px;
+	}
+
+	p {
+		font-size: 0.875rem;
+		margin: 0;
+	}
+}
+
+.sow-list-date {
+	font-family: var(--wg-font-code);
+	font-size: 0.75rem;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--wg-text-muted);
+	padding-top: 4px;
+}
+
+.sow-note-panel {
+	background: var(--wg-panel-2);
+	border: 1px solid var(--wg-border-soft);
+	border-radius: 6px;
+	padding: var(--wg-space-sm) var(--wg-space-md);
+
+	h3 {
+		font-size: 1rem;
+		margin: 0 0 8px;
+	}
+
+	p {
+		font-size: 0.84375rem;
+		margin: 0;
+	}
+}
+
+// Featured block: media card + copy card side by side (blog, gallery)
+.sow-feature {
+	display: grid;
+	grid-template-columns: 3fr 2fr;
+	gap: var(--wg-space-md);
+	align-items: stretch;
+
+	img,
+	video {
+		height: 100%;
+		min-height: 240px;
+	}
+}
+
+.sow-feature-copy {
+	padding: var(--wg-space-lg) var(--wg-space-md);
+
+	h2 {
+		font-size: 1.625rem;
+		margin: 0 0 14px;
+	}
+
+	p {
+		font-size: 0.9375rem;
+	}
+}
+
+.sow-grid {
+	display: grid;
+	gap: var(--wg-space-md);
+
+	&.three {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.sow-gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--wg-space-md);
+}
+
+.sow-gallery-card img {
+	aspect-ratio: 16 / 10;
+}
+
+.sow-empty {
+	color: var(--wg-text-muted);
+	font-style: italic;
+	padding: var(--wg-space-md) 0;
+}
+
+.sow-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--wg-space-md);
+	margin-top: var(--wg-space-lg);
+
+	.sow-pagination-status {
+		color: var(--wg-text-muted);
+	}
+}
+
+@media (max-width: 900px) {
+	.sow-news-layout,
+	.sow-feature,
+	.sow-grid.three {
+		grid-template-columns: 1fr;
+	}
+
+	.sow-gallery-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 580px) {
+	.sow-gallery-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.sow-list-item {
+		grid-template-columns: 1fr;
+	}
+}
