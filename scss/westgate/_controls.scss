@@ -397,7 +397,7 @@ table[component="notification/table"] a[data-type]:focus {
       transparent calc(100% - 1px),
       rgba(194, 163, 90, 0.055) calc(100% - 1px)
     ),
-    linear-gradient(100deg, rgba(32, 19, 30, 0.98), rgba(13, 12, 17, 0.98)) !important;
+    var(--wg-velvet-panel) !important;
   background-size:
     100% var(--wg-ledger-line),
     auto;

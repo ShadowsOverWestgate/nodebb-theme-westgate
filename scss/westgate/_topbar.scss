@@ -1,10 +1,4 @@
-$wg-topbar-panel-bg: linear-gradient(
-  100deg,
-  #2a1222 0%,
-  #19161f 23%,
-  #121017 62%,
-  #0d0c11 100%
-);
+$wg-topbar-panel-bg: rgba(21, 17, 26, 0.98);
 
 .wg-layout-container {
   min-height: 100vh;
@@ -14,9 +8,7 @@ $wg-topbar-panel-bg: linear-gradient(
   top: 0;
   z-index: 1020;
   color: var(--wg-text-soft);
-  background:
-    linear-gradient(180deg, rgba(255, 241, 196, 0.035), transparent 42%),
-    linear-gradient(90deg, rgba(42, 18, 34, 0.96), rgba(15, 13, 18, 0.98) 38%, rgba(9, 8, 11, 0.99));
+  background: rgba(24, 20, 29, 0.98);
   border-bottom: 1px solid rgba(194, 163, 90, 0.2);
   box-shadow:
     inset 0 1px 0 rgba(255, 244, 221, 0.04),

@@ -5,6 +5,10 @@ body {
 }
 
 body {
+  --bs-link-color: var(--wg-gold);
+  --bs-link-color-rgb: 194, 163, 90;
+  --bs-link-hover-color: #e0c878;
+  --bs-link-hover-color-rgb: 224, 200, 120;
   font-family: var(--wg-font-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -12,6 +16,12 @@ body {
 
 #panel {
   background: var(--wg-bg);
+}
+
+// h-100 on #content collapses inside the flex-grown #panel, so the 404's
+// flex-fill never gets height to center in; let #content grow instead
+body.template-404 #content {
+  flex-grow: 1;
 }
 
 .layout-container,

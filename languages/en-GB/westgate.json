@@ -1,3 +1,5 @@
 {
-	"wiki-badge": "Wiki"
+    "wiki-badge": "Wiki",
+    "404.title": "You've wandered off the map.",
+    "404.message": "This alley leads nowhere, and in Westgate, nowhere is where the Night Masks find you.<br>Turn back to the <a href=\"%1/\">lantern-lit streets</a> before they notice you lingering."
 }
