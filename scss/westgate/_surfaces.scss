@@ -251,13 +251,18 @@ li[component="category/topic"] .user-icon {
   }
 }
 
+// shared velvet gradient: groups/profile default covers + sow banner fallback
+@mixin wg-velvet-cover {
+  background-image:
+    radial-gradient(120% 90% at 18% 0%, rgba(58, 24, 48, 0.6), transparent 60%),
+    linear-gradient(100deg, #2a1222, #110f15 55%, #09080b) !important;
+}
+
 // replace core's grey-triangle default cover with the velvet material
 // (.cover on profiles, .list-cover on the groups list)
 .cover[style*="cover-default.png"],
 .list-cover[style*="cover-default.png"] {
-  background-image:
-    radial-gradient(120% 90% at 18% 0%, rgba(58, 24, 48, 0.6), transparent 60%),
-    linear-gradient(100deg, #2a1222, #110f15 55%, #09080b) !important;
+  @include wg-velvet-cover;
 }
 
 .account,
