@@ -66,7 +66,7 @@ $input-bg: rgba($white, 0.025) !default;
 $input-color: $wg-text !default;
 $input-border-color: rgba($wg-gold, 0.18) !default;
 $input-focus-border-color: rgba($wg-gold, 0.42) !default;
-$input-placeholder-color: rgba($wg-text-soft, 0.62) !default;
+$input-placeholder-color: rgba($wg-text-soft, 0.74) !default;
 $btn-border-radius: 6px !default;
 $border-radius: 8px !default;
 $border-radius-sm: 6px !default;
@@ -109,5 +109,5 @@ $breadcrumb-active-color: $body-color !default;
 $breadcrumb-item-padding-x: 12px !default;
 
 .form-control::placeholder, .bootstrap-tagsinput::placeholder {
-	color: $gray-500 !important;
+	color: $input-placeholder-color !important;
 }

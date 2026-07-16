@@ -21,8 +21,8 @@
 				</span>
 				{{{ if !isNumber(cid) }}}
 				<a href="{./url}" class="badge text-body border border-gray-300 text-xs" data-ajaxify="false">
-					<span class="fw-normal">View Original</span>
-					<i class="fa fa-external-link"></i>
+					<span class="fw-normal">[[westgate:view-original]]</span>
+					<i class="fa fa-external-link" aria-hidden="true"></i>
 				</a>
 				{{{ end }}}
 				{{{ if (!feeds:disableRSS && rssFeedUrl) }}}
@@ -39,7 +39,7 @@
 	{{{ if ./handleFull }}}
 	<p class="text-secondary text-sm fst-italic mb-0 {{{ if config.theme.centerHeaderElements }}}text-center{{{ end }}}">
 		[[category:handle.description, {handleFull}]]
-		<a href="#" class="link-secondary" data-action="copy" data-clipboard-text="{handleFull}"><i class="fa fa-fw fa-copy" aria-hidden="true"></i></a>
+		<a href="#" class="link-secondary" data-action="copy" data-clipboard-text="{handleFull}" aria-label="[[westgate:copy-handle]]"><i class="fa fa-fw fa-copy" aria-hidden="true"></i></a>
 	</p>
 	{{{ end }}}
 
@@ -65,7 +65,7 @@
 		<div class="alert alert-warning mb-4" id="category-no-followers" data-bs-toggle="dropdown" data-bs-target='[component="topic/watch"] button' aria-hidden="true">
 			<i class="fa fa-triangle-exclamation pe-2"></i>
 			[[category:no-followers]]
-			<a href="#" class="stretched-link"></a>
+			<a href="#" class="stretched-link" tabindex="-1"></a>
 		</div>
 		{{{ end }}}
 

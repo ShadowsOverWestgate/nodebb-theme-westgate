@@ -189,7 +189,7 @@ $wg-topbar-panel-bg: rgba(21, 17, 26, 0.98);
 .wg-topbar .btn.btn-light:hover,
 .wg-topbar .btn.btn-light:focus {
   color: var(--wg-text) !important;
-  background: rgba(194, 163, 90, 0.08) !important;
+  background: var(--wg-border-soft) !important;
 }
 
 // one primary vocabulary: the dark gold plate from _controls.scss
@@ -296,6 +296,12 @@ $wg-topbar-panel-bg: rgba(21, 17, 26, 0.98);
   outline: 0;
 }
 
+// The input's own outline is off; put the visible focus ring on its wrapper.
+.wg-topbar__drawer-search:focus-within {
+  border-color: rgba(194, 163, 90, 0.5);
+  box-shadow: 0 0 0 1px var(--wg-focus);
+}
+
 .wg-topbar__drawer-nav,
 .wg-topbar__drawer-actions,
 .wg-topbar__drawer-auth {
@@ -323,7 +329,7 @@ $wg-topbar-panel-bg: rgba(21, 17, 26, 0.98);
 .wg-topbar__drawer-actions a:focus {
   color: var(--wg-text);
   border-color: rgba(194, 163, 90, 0.22);
-  background: rgba(194, 163, 90, 0.08);
+  background: var(--wg-border-soft);
 }
 
 @media (max-width: 1199.98px) {

@@ -129,6 +129,101 @@ li[component="post"] .content h4 {
 	text-shadow: none;
 }
 
+// Code in posts: the markdown plugin ships a light highlight.js stylesheet
+// (white .hljs background), so both the block and its syntax colors must be
+// re-inked for the dark ledger.
+li[component="post"] .content code,
+.composer .preview code {
+	background: rgba(8, 7, 10, 0.45);
+	border: 1px solid rgba(194, 163, 90, 0.12);
+	border-radius: 4px;
+	padding: 0.1em 0.35em;
+	color: var(--wg-text);
+	font-family: var(--wg-font-code);
+	font-size: 0.88em;
+}
+
+li[component="post"] .content pre,
+.composer .preview pre {
+	background: linear-gradient(180deg, rgba(18, 15, 22, 0.92), rgba(8, 7, 10, 0.82)) !important;
+	border: 1px solid rgba(194, 163, 90, 0.22) !important;
+	border-radius: 6px;
+	padding: 0.85rem 1rem;
+	color: var(--wg-text-soft) !important;
+	scrollbar-color: rgba(194, 163, 90, 0.5) rgba(8, 7, 10, 0.48);
+	scrollbar-width: thin;
+}
+
+li[component="post"] .content pre code,
+.composer .preview pre code {
+	background: transparent;
+	border: 0;
+	padding: 0;
+	color: inherit;
+	font-size: 0.85rem;
+}
+
+li[component="post"] .content pre code.hljs,
+.composer .preview pre code.hljs {
+	background: transparent !important;
+	color: var(--wg-text-soft) !important;
+
+	.hljs-comment,
+	.hljs-quote {
+		color: var(--wg-text-muted);
+		font-style: italic;
+	}
+
+	.hljs-keyword,
+	.hljs-selector-tag,
+	.hljs-literal,
+	.hljs-tag {
+		color: #e0c878;
+	}
+
+	.hljs-string,
+	.hljs-regexp,
+	.hljs-addition {
+		color: #a3c58a;
+	}
+
+	.hljs-number,
+	.hljs-attr,
+	.hljs-attribute,
+	.hljs-variable,
+	.hljs-template-variable,
+	.hljs-symbol {
+		color: #d9a37a;
+	}
+
+	.hljs-title,
+	.hljs-section,
+	.hljs-name,
+	.hljs-selector-id,
+	.hljs-selector-class {
+		color: var(--wg-ledger-ink);
+	}
+
+	.hljs-type,
+	.hljs-built_in,
+	.hljs-builtin-name,
+	.hljs-meta {
+		color: var(--wg-gold);
+	}
+
+	.hljs-deletion {
+		color: #c55a5f;
+	}
+
+	.hljs-emphasis {
+		font-style: italic;
+	}
+
+	.hljs-strong {
+		font-weight: 600;
+	}
+}
+
 li[component="post"] .content blockquote {
 	background: rgba(35, 27, 23, 0.36);
 	border-left: 3px solid rgba(194, 163, 90, 0.4);
@@ -150,7 +245,7 @@ li[component="post"] [component="post/reply-count"] {
 li[component="post"] [component="post/actions"] .btn:hover,
 li[component="post"] [component="post/reply-count"]:hover {
 	color: var(--wg-text) !important;
-	background: rgba(194, 163, 90, 0.08) !important;
+	background: var(--wg-border-soft) !important;
 	border-color: rgba(194, 163, 90, 0.2) !important;
 }
 
@@ -239,7 +334,7 @@ li[component="post"] [component="post/downvote"] {
 
 .pagination-block {
 	background:
-		linear-gradient(to bottom, transparent calc(100% - 1px), rgba(194, 163, 90, 0.08) calc(100% - 1px)),
+		linear-gradient(to bottom, transparent calc(100% - 1px), var(--wg-border-soft) calc(100% - 1px)),
 		rgba(18, 15, 22, 0.96) !important;
 	background-size: 100% var(--wg-ledger-line), auto;
 	border-color: var(--wg-ledger-border) !important;

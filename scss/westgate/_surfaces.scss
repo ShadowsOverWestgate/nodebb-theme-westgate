@@ -141,7 +141,7 @@ samp,
 }
 
 .alert {
-  background: rgba(194, 163, 90, 0.08);
+  background: var(--wg-border-soft);
   border-color: rgba(194, 163, 90, 0.18);
   color: var(--wg-text-soft);
 }
@@ -291,7 +291,7 @@ li[component="category/topic"] .user-icon {
       rgba(8, 7, 10, 0.08)
     ),
     var(--wg-velvet-panel) !important;
-  border: 1px solid rgba(194, 163, 90, 0.14) !important;
+  border: 1px solid var(--wg-border) !important;
   border-radius: 8px !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 244, 221, 0.028),
@@ -335,7 +335,7 @@ li[component="category/topic"] .user-icon {
 .chats-dropdown .mark-read:focus,
 .chats-list .mark-read:hover,
 .chats-list .mark-read:focus {
-  background: rgba(194, 163, 90, 0.08) !important;
+  background: var(--wg-border-soft) !important;
 }
 
 .chats-dropdown .chat-room-btn,
@@ -352,7 +352,7 @@ li[component="category/topic"] .user-icon {
 [component="chat/public/room"]:hover,
 [component="chat/public/room"]:focus,
 [component="chat/public/room"].unread {
-  background: rgba(194, 163, 90, 0.08) !important;
+  background: var(--wg-border-soft) !important;
   border-color: rgba(194, 163, 90, 0.24) !important;
   color: var(--wg-text) !important;
 }
@@ -387,7 +387,7 @@ li[component="category/topic"] .user-icon {
     rgba(216, 194, 138, 0.13),
     rgba(70, 45, 52, 0.28)
   ) !important;
-  border: 1px solid rgba(194, 163, 90, 0.28) !important;
+  border: 1px solid var(--wg-focus) !important;
   color: var(--wg-ledger-ink) !important;
 }
 

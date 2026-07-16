@@ -24,7 +24,7 @@
         {{{ each categoryItems }}}
         <li role="presentation" class="category {{{ if ./disabledClass }}}disabled {{{ end }}}{{{ if ./class }}} {./class}{{{ end }}}" data-cid="{./cid}" data-name="{./name}" data-parent-cid="{./parentCid}">
             <a class="dropdown-item rounded-1 {{{ if ./disabledClass }}}disabled{{{ end }}}" role="menuitem" href="#">{./level}
-                <span component="category-markup" style="{{{ if ./match }}}font-weight: bold;{{{end}}}">
+                <span component="category-markup" class="{{{ if ./match }}}fw-bold{{{end}}}">
                     <span class="category-item d-inline-flex align-items-center gap-1 {{{ if ./class }}}{./class}{{{ end }}}">
                         {{{ if ./icon }}}
                         {{buildCategoryIcon(@value, "24px", "rounded-circle")}}

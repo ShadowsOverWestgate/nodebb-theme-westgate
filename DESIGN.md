@@ -37,7 +37,10 @@ typography:
     fontFamily: "'IBM Plex Mono', ui-monospace, monospace"
     fontWeight: 400
 rounded:
-  md: "8px"
+  xs: "3px"
+  sm: "4px"
+  md: "6px"
+  lg: "8px"
 spacing:
   2xs: "0.25rem"
   xs: "0.5rem"
@@ -61,7 +64,7 @@ components:
   card:
     backgroundColor: "{colors.velvet-panel}"
     textColor: "{colors.ash-text}"
-    rounded: "{rounded.md}"
+    rounded: "{rounded.lg}"
 ---
 
 # Design System: Westgate
@@ -152,31 +155,40 @@ Shadows here are candlelight, not physics. They set mood — a soft top highligh
 ### Named Rules
 **The Candlelight Rule.** Shadows are atmosphere. If you need to show one thing sits above another, change the panel tone and border alpha; do not invent a bigger shadow.
 
+## 4½. Motion & Modes
+
+- Transitions are short (0.16–0.25s) and touch only paint/composite properties (color, background, border-color, box-shadow, transform). No layout-property animation.
+- A global `prefers-reduced-motion: reduce` block zeroes all transition and animation durations.
+- Box-shadow focus rings carry a transparent 2px outline so forced-colors / high-contrast mode still shows focus.
+
 ## 5. Components
 
 Etched and restrained: controls read as engraved metal — thin gilt borders, quiet vertical gradients, nothing shouts.
 
 ### Buttons
-- **Shape:** softly rounded (Bootstrap default radius; surfaces use 8px).
+- **Shape:** softly rounded. Radius scale: 8px for surfaces (cards, panels, dropdowns), 6px for controls and post containers, 4px for chips and inline code, 3px for tiny badges.
 - **Primary:** dark gold plate. Gradient #5a4a1a → #473914, border Old Gilt (#a8893f), text #f0e6d8, with a 1px inner top highlight. Hover warms the gradient to #6a5720 → #53431a and brightens the border to Tarnished Gold.
 - **Secondary / Ghost:** near-transparent dark fill (rgba(8,7,10,0.12)) with a gilt border at 28% alpha and text #d8cec0. Hover adds a faint gold wash (rgba(194,163,90,0.075)) and strengthens the border.
 - **Focus:** 2px outline in solid Tarnished Gold (#c2a35a, the `--wg-focus-ring` token) — WCAG wants ≥3:1 for focus indicators, so the outline never uses the soft alpha token. The soft token (rgba(194,163,90,0.28)) is only for input glows.
 
 ### Cards / Containers (the velvet surface)
-- **Corner Style:** 8px radius.
+- **Corner Style:** 8px radius (6px on post containers).
 - **Background:** the velvet gradient — a 100° sweep from bruised plum (rgba(42,18,34,0.46)) into near-black — over category rows, topic rows, post containers, and headers.
 - **Border:** 1px Tarnished Gold at 14% alpha; hover raises it to 22%.
 - **Shadow Strategy:** Velvet rest → Velvet hover (see Elevation).
 - **Plain panels** (cards, list-group items) use flat Velvet Panel (#18141d) with a soft gold border at 8% alpha.
 
 ### Inputs / Fields
-- **Style:** near-black well (rgba(18,15,22,0.96)), 1px gilt border at 18% alpha, Bone Text. Placeholders are Ash Text at 62% alpha.
+- **Style:** near-black well (rgba(18,15,22,0.96)), 1px gilt border at 18% alpha, Bone Text. Placeholders are Ash Text at 74% alpha (the floor that keeps 4.5:1 contrast).
 - **Focus:** border rises to gold at 50% alpha plus a 1px gold ring (rgba(194,163,90,0.28)) and a faint light wash. Focus is always visible.
 - **Selects:** custom gold chevron (inline SVG, stroke #c2a35a).
 - **Switches:** dark track with gilt border; the thumb is a Ledger Ink dot.
 
 ### Navigation (topbar)
 - Cinzel labels, tracked 0.08em and uppercase, over the dark base. Count bubbles honor the `hidden` class and only show with a real count.
+
+### Code (posts, composer preview, wiki prose)
+Code is written in a darker well of the same page: blocks use a vertical near-black gradient (rgba(18,15,22,0.92) → rgba(8,7,10,0.82)) with a gilt border at 22% alpha and 6px radius; inline code sits in rgba(8,7,10,0.45) with a 12% gilt border and 4px radius, in IBM Plex Mono. Syntax colors stay in the court's palette: keywords Gold Lit (#e0c878), titles/functions Ledger Ink (#d8c28a), types/built-ins Tarnished Gold (#c2a35a), strings a muted moss (#a3c58a), numbers/attributes a dry apricot (#d9a37a), comments Dust Text italic, deletions #c55a5f. Never ship the highlighter's default light theme.
 
 ### The Ledger (signature component)
 Ruled, page-like surfaces (notification tables, list ledgers): a flat 100° gradient from dark plum into black, faint gold rulings (rgba(194,163,90,0.055)) with stronger rules (0.16) for structure, headers in Cinzel Ledger Ink Muted, text in Ledger Ink, and Wax Seal (#a84a4e) for stamped accents.

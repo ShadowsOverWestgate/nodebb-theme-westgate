@@ -32,22 +32,22 @@
 			{{{ if config.loggedIn }}}
 			<ul id="wg-topbar-logged-in-menu" class="wg-topbar__utility-list list-unstyled d-flex align-items-center mb-0">
 				{{{ if (config.searchEnabled && user.privileges.search:content) }}}
-				<li component="sidebar/search" class="nav-item search dropdown position-relative" title="[[global:header.search]]" role="menuitem">
+				<li component="sidebar/search" class="nav-item search dropdown position-relative" title="[[global:header.search]]">
 					<!-- IMPORT partials/sidebar/search.tpl -->
 				</li>
 				{{{ end }}}
 
-				<li component="notifications" class="nav-item notifications dropdown" title="[[global:header.notifications]]" role="menuitem">
+				<li component="notifications" class="nav-item notifications dropdown" title="[[global:header.notifications]]">
 					<!-- IMPORT partials/sidebar/notifications.tpl -->
 				</li>
 
 				{{{ if canChat }}}
-				<li class="nav-item chats dropdown" title="[[global:header.chats]]" role="menuitem">
+				<li class="nav-item chats dropdown" title="[[global:header.chats]]">
 					<!-- IMPORT partials/sidebar/chats.tpl -->
 				</li>
 				{{{ end }}}
 
-				<li component="sidebar/drafts" class="nav-item drafts dropdown" title="[[global:header.drafts]]" role="menuitem">
+				<li component="sidebar/drafts" class="nav-item drafts dropdown" title="[[global:header.drafts]]">
 					<!-- IMPORT partials/sidebar/drafts.tpl -->
 				</li>
 
@@ -57,14 +57,14 @@
 				</li>
 				{{{ end }}}
 
-				<li id="user_label" class="nav-item usermenu dropdown" title="{user.username}" role="menuitem">
+				<li id="user_label" class="nav-item usermenu dropdown" title="{user.username}">
 					<!-- IMPORT partials/sidebar/user-menu.tpl -->
 				</li>
 			</ul>
 			{{{ else }}}
 			<ul id="wg-topbar-logged-out-menu" class="wg-topbar__utility-list wg-topbar__utility-list--guest list-unstyled d-flex align-items-center mb-0">
 				{{{ if (config.searchEnabled && user.privileges.search:content) }}}
-				<li component="sidebar/search" class="nav-item search dropdown position-relative" title="[[global:header.search]]" role="menuitem">
+				<li component="sidebar/search" class="nav-item search dropdown position-relative" title="[[global:header.search]]">
 					<!-- IMPORT partials/sidebar/search.tpl -->
 				</li>
 				{{{ end }}}

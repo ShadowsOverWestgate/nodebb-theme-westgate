@@ -28,7 +28,7 @@ body.template-category .category-header .description {
 
 .topic-list-header .btn {
 	background: transparent !important;
-	border-color: rgba(194, 163, 90, 0.14) !important;
+	border-color: var(--wg-border) !important;
 	color: var(--wg-text-soft) !important;
 	font-family: var(--wg-font-ui);
 }
@@ -57,7 +57,7 @@ li[component="category/topic"] {
 	overflow: hidden;
 	background:
 		linear-gradient(to bottom, transparent calc(100% - 1px), var(--wg-ledger-ruling) calc(100% - 1px)),
-		linear-gradient(to right, rgba(194, 163, 90, 0.08), transparent 5.25rem),
+		linear-gradient(to right, var(--wg-border-soft), transparent 5.25rem),
 		var(--wg-ledger-panel) !important;
 	background-size: 100% var(--wg-ledger-line), auto, auto;
 	border: 1px solid var(--wg-ledger-border) !important;
@@ -89,7 +89,7 @@ li[component="category/topic"]::after {
 	right: 0;
 	left: 0;
 	height: 1px;
-	background: linear-gradient(to right, rgba(194, 163, 90, 0.28), rgba(194, 163, 90, 0.05), transparent);
+	background: linear-gradient(to right, var(--wg-focus), rgba(194, 163, 90, 0.05), transparent);
 	pointer-events: none;
 }
 
@@ -133,7 +133,7 @@ li[component="category/topic"].pinned:not(.unread) {
 		linear-gradient(90deg, rgba(122, 101, 45, 0.09), transparent 5.75rem),
 		linear-gradient(100deg, rgba(28, 22, 26, 0.36), rgba(13, 12, 17, 0.94)) !important;
 	border-color: rgba(194, 163, 90, 0.12) !important;
-	border-left-color: rgba(194, 163, 90, 0.28) !important;
+	border-left-color: var(--wg-focus) !important;
 }
 
 li[component="category/topic"].pinned:has(+ li[component="category/topic"]:not(.pinned)) {

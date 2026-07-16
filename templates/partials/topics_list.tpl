@@ -15,7 +15,7 @@
 				</a>
 				{{{ if showSelect }}}
 				<div class="checkbox position-absolute top-100 start-50 translate-middle-x pt-2 m-0 d-none d-lg-flex" style="max-width:max-content">
-					<i component="topic/select" class="fa text-muted pointer fa-square-o p-1 hover-visible"></i>
+					<i component="topic/select" class="fa text-muted pointer fa-square-o p-1 hover-visible" role="checkbox" aria-checked="false" tabindex="0" aria-label="[[westgate:select-topic]]"></i>
 				</div>
 				{{{ end }}}
 			</div>
@@ -73,7 +73,7 @@
 				</span>
 				{{{ if showSelect }}}
 				<div class="checkbox position-absolute top-0 end-0 m-0 d-flex d-lg-none" style="max-width:max-content">
-					<i component="topic/select" class="fa fa-square-o text-muted pointer p-1"></i>
+					<i component="topic/select" class="fa fa-square-o text-muted pointer p-1" role="checkbox" aria-checked="false" tabindex="0" aria-label="[[westgate:select-topic]]"></i>
 				</div>
 				{{{ end }}}
 			</div>

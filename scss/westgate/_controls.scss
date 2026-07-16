@@ -216,8 +216,12 @@ input[type="number"].form-control::-webkit-outer-spin-button {
   border-color: rgba(194, 163, 90, 0.5) !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.026),
-    0 0 0 1px rgba(194, 163, 90, 0.28) !important;
+    0 0 0 1px var(--wg-focus) !important;
   color: var(--wg-text) !important;
+  // invisible normally; forced-colors mode paints transparent outlines in the
+  // system highlight color, so box-shadow-only focus stays visible there
+  outline: 2px solid transparent;
+  outline-offset: 1px;
 }
 
 input[type="password"].form-control,
@@ -318,7 +322,7 @@ table[component="notification/table"] a[data-type]:focus {
   background-size:
     100% 1.65rem,
     auto;
-  border-color: rgba(194, 163, 90, 0.28) !important;
+  border-color: var(--wg-focus) !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 244, 221, 0.035),
     0 0 0 1px rgba(0, 0, 0, 0.28) !important;
@@ -427,7 +431,7 @@ table[component="notification/table"] a[data-type]:focus {
   border-radius: 8px !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.026),
-    0 0 0 1px rgba(194, 163, 90, 0.28) !important;
+    0 0 0 1px var(--wg-focus) !important;
 }
 
 .composer .title-container {
@@ -461,7 +465,7 @@ table[component="notification/table"] a[data-type]:focus {
 [component="composer"] .btn:hover,
 .quick-reply .btn:hover,
 [component="topic/quickreply/container"] .btn:hover {
-  background: rgba(194, 163, 90, 0.08) !important;
+  background: var(--wg-border-soft) !important;
   color: var(--wg-text) !important;
 }
 
@@ -521,14 +525,14 @@ table[component="notification/table"] a[data-type]:focus {
   color: var(--wg-gold) !important;
 }
 .dropdown-item.active {
-  background-color: rgba(194, 163, 90, 0.08) !important;
+  background-color: var(--wg-border-soft) !important;
 }
 
 .dropdown-item:hover,
 .dropdown-item:focus,
 .dropdown-menu .nav-link:hover,
 .dropdown-menu .nav-link:focus {
-  background: rgba(194, 163, 90, 0.08) !important;
+  background: var(--wg-border-soft) !important;
   color: var(--wg-text) !important;
 }
 
@@ -602,7 +606,7 @@ table[component="notification/table"] a[data-type]:focus {
 [component="sidebar/right"] .nav-link:focus,
 .bottombar-nav .nav-link:hover,
 .bottombar-nav .nav-link:focus {
-  background: rgba(194, 163, 90, 0.08);
+  background: var(--wg-border-soft);
   color: var(--wg-text) !important;
 }
 

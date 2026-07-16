@@ -45,6 +45,6 @@
 {{{ end }}}
 
 {{{if !posts.length}}}
-<div class="text-center no-results py-2 py-md-0">[[search:no-matches]]</li>
+<div class="text-center no-results py-2 py-md-0">[[search:no-matches]]</div>
 <li role="separator" class="dropdown-divider d-block d-md-none"></li>
 {{{end}}}

@@ -1,5 +1,24 @@
 {
     "wiki-badge": "Wiki",
     "404.title": "You've wandered off the map.",
-    "404.message": "This alley leads nowhere, and in Westgate, nowhere is where the Night Masks find you.<br>Turn back to the <a href=\"%1/\">lantern-lit streets</a> before they notice you lingering."
+    "404.message": "This alley leads nowhere, and in Westgate, nowhere is where the Night Masks find you.<br>Turn back to the <a href=\"%1/\">lantern-lit streets</a> before they notice you lingering.",
+    "view-original": "View Original",
+    "copy-handle": "Copy handle",
+    "select-topic": "Select topic",
+    "footer.description": "A Neverwinter Nights: Enhanced Edition persistent world of gothic intrigue, set in the Forgotten Realms port city of Westgate.",
+    "footer.motto": "Mind the shadows.",
+    "footer.explore": "Explore",
+    "footer.home": "Home",
+    "footer.news": "News",
+    "footer.gallery": "Gallery",
+    "footer.dev-blog": "Dev Blog",
+    "footer.join-team": "Join the Team",
+    "footer.community": "Community",
+    "footer.forums": "Forums",
+    "footer.wiki": "Wiki",
+    "footer.register": "Register",
+    "footer.how-to-join": "How to Join",
+    "footer.copyright": "&copy; %1 Shadows Over Westgate &middot; A NWN:EE Persistent World",
+    "footer.setting": "Forgotten Realms &middot; Westgate &middot; Sea of Fallen Stars",
+    "footer.powered-by": "Powered by"
 }

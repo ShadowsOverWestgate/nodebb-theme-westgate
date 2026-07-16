@@ -136,7 +136,7 @@ a.sow-card:hover {
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	color: var(--wg-gold);
-	background: rgba(194, 163, 90, 0.08);
+	background: var(--wg-border-soft);
 	border: 1px solid var(--wg-gold-soft);
 	border-radius: 4px;
 	padding: 3px 9px;
@@ -654,7 +654,7 @@ a.sow-card:hover {
 	margin-top: var(--wg-space-md);
 	padding: 3px 9px;
 	color: var(--wg-gold);
-	background: rgba(194, 163, 90, 0.08);
+	background: var(--wg-border-soft);
 	border: 1px solid var(--wg-gold-soft);
 	border-radius: 4px;
 }

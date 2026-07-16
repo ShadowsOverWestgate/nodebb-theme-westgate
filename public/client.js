@@ -115,13 +115,15 @@
 		return element && element.offsetWidth ? element.offsetWidth : 0;
 	}
 
-	function setMobileTableMinWidth(table, wrapper) {
+	function measureMobileTableMinWidth(table) {
 		const columnCount = getTableColumnCount(table);
 		const measuredWidth = getRenderedWidth(table);
 		const columnWidthFloor = getTableColumnWidthFloor(table, columnCount);
 		const desktopWidthFloor = tableUsesFluidWidth(table) && columnCount >= 8 ? WIKI_TABLE_DESKTOP_MIN_WIDTH : 0;
-		const minWidth = Math.ceil(Math.max(measuredWidth, columnWidthFloor, desktopWidthFloor));
+		return Math.ceil(Math.max(measuredWidth, columnWidthFloor, desktopWidthFloor));
+	}
 
+	function applyMobileTableMinWidth(wrapper, minWidth) {
 		if (minWidth > 0 && wrapper && wrapper.style && typeof wrapper.style.setProperty === 'function') {
 			wrapper.style.setProperty('--wg-mobile-table-min-width', `${minWidth}px`);
 		}
@@ -133,6 +135,7 @@
 			return;
 		}
 
+		const wrapped = [];
 		toArray(scope.querySelectorAll(WIKI_TABLE_SELECTOR)).forEach((table) => {
 			if (!table || !table.parentNode || table.closest(SKIP_TABLE_SELECTOR)) {
 				return;
@@ -144,8 +147,16 @@
 			wrapper.setAttribute('aria-label', 'Scrollable table');
 			table.parentNode.insertBefore(wrapper, table);
 			wrapper.appendChild(table);
-			setMobileTableMinWidth(table, wrapper);
+			wrapped.push({ table, wrapper });
 		});
+
+		// batch: measure every table first, then write, so reads and writes
+		// don't interleave and force repeated reflows
+		wrapped
+			.map(({ table, wrapper }) => ({ wrapper, minWidth: measureMobileTableMinWidth(table) }))
+			.forEach(({ wrapper, minWidth }) => {
+				applyMobileTableMinWidth(wrapper, minWidth);
+			});
 	}
 
 	function getWestgateTopbar() {
@@ -223,6 +234,20 @@
 	$(document).ready(function () {
 		wrapWestgateWikiTables(document);
 		initWestgateTopbar();
+
+		// topic-select checkboxes are <i> elements; make them keyboard-operable
+		$(document).on('keydown', 'i[component="topic/select"]', function (ev) {
+			if (ev.key === 'Enter' || ev.key === ' ') {
+				ev.preventDefault();
+				$(this).trigger('click');
+			}
+		});
+		$(document).on('click', 'i[component="topic/select"]', function () {
+			// core toggles the icon class in its own click handler; sync after it runs
+			setTimeout(() => {
+				this.setAttribute('aria-checked', this.classList.contains('fa-check-square') ? 'true' : 'false');
+			}, 0);
+		});
 		$(window).on('action:ajaxify.end', function () {
 			wrapWestgateWikiTables(document);
 			initWestgateTopbar();
@@ -271,6 +296,9 @@
 							...category,
 							class: category.class || classMap[String(category.cid)] || '',
 						}));
+						callback(null, payload);
+					}).catch(() => {
+						// class map is cosmetic; never block search results on it
 						callback(null, payload);
 					});
 				});

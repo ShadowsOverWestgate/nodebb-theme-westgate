@@ -6,36 +6,36 @@
 				<h2 class="wg-footer__title" id="wg-footer-title">{config.siteTitle}</h2>
 			</div>
 			<p class="wg-footer__description">
-				A Neverwinter Nights: Enhanced Edition persistent world of gothic intrigue, set in the Forgotten Realms port city of Westgate.
+				[[westgate:footer.description]]
 			</p>
-			<p class="wg-footer__motto">Mind the shadows.</p>
+			<p class="wg-footer__motto">[[westgate:footer.motto]]</p>
 		</section>
 
-		<nav class="wg-footer__nav" aria-label="Explore">
-			<h2 class="wg-footer__heading">Explore</h2>
+		<nav class="wg-footer__nav" aria-label="[[westgate:footer.explore]]">
+			<h2 class="wg-footer__heading">[[westgate:footer.explore]]</h2>
 			<ul class="wg-footer__links">
-				<li><a href="{relative_path}/">Home</a></li>
-				<li><a href="{relative_path}/category/1/news">News</a></li>
-				<li><a href="{relative_path}/gallery">Gallery</a></li>
-				<li><a href="{relative_path}/category/84/developer-blog">Dev Blog</a></li>
-				<li><a href="{relative_path}/recruitment">Join the Team</a></li>
+				<li><a href="{relative_path}/">[[westgate:footer.home]]</a></li>
+				<li><a href="{relative_path}/category/1/news">[[westgate:footer.news]]</a></li>
+				<li><a href="{relative_path}/gallery">[[westgate:footer.gallery]]</a></li>
+				<li><a href="{relative_path}/category/84/developer-blog">[[westgate:footer.dev-blog]]</a></li>
+				<li><a href="{relative_path}/recruitment">[[westgate:footer.join-team]]</a></li>
 			</ul>
 		</nav>
 
-		<nav class="wg-footer__nav" aria-label="Community">
-			<h2 class="wg-footer__heading">Community</h2>
+		<nav class="wg-footer__nav" aria-label="[[westgate:footer.community]]">
+			<h2 class="wg-footer__heading">[[westgate:footer.community]]</h2>
 			<ul class="wg-footer__links">
-				<li><a href="{relative_path}/categories">Forums</a></li>
-				<li><a href="{relative_path}/wiki">Wiki</a></li>
-				<li><a href="{relative_path}/register">Register</a></li>
-				<li><a href="{relative_path}/wiki">How to Join</a></li>
+				<li><a href="{relative_path}/categories">[[westgate:footer.forums]]</a></li>
+				<li><a href="{relative_path}/wiki">[[westgate:footer.wiki]]</a></li>
+				<li><a href="{relative_path}/register">[[westgate:footer.register]]</a></li>
+				<li><a href="{relative_path}/wiki">[[westgate:footer.how-to-join]]</a></li>
 			</ul>
 		</nav>
 	</div>
 
 	<div class="wg-footer__meta">
-		<p>&copy; 2026 Shadows Over Westgate &middot; A NWN:EE Persistent World</p>
-		<p>Forgotten Realms &middot; Westgate &middot; Sea of Fallen Stars</p>
+		<p>[[westgate:footer.copyright, {currentYear}]]</p>
+		<p>[[westgate:footer.setting]]</p>
 	</div>
 
 	<div class="wg-footer__powered-by" aria-label="Platform credits">
@@ -46,7 +46,7 @@
 			rel="noopener noreferrer"
 			aria-label="Powered by NodeBB"
 		>
-			<span class="wg-footer__powered-label">Powered by</span>
+			<span class="wg-footer__powered-label">[[westgate:footer.powered-by]]</span>
 			<span class="wg-footer__powered-name">NodeBB</span>
 		</a>
 		<a
@@ -56,7 +56,7 @@
 			rel="noopener noreferrer"
 			aria-label="Powered by Tiptap"
 		>
-			<span class="wg-footer__powered-label">Powered by</span>
+			<span class="wg-footer__powered-label">[[westgate:footer.powered-by]]</span>
 			<span class="wg-footer__powered-name">Tiptap</span>
 		</a>
 	</div>
