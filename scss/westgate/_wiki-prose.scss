@@ -21,6 +21,10 @@
 		rgba(18, 16, 23, 0.98) 100%
 	);
 	--wiki-chrome-warning-border: rgba(194, 163, 90, 0.45);
+	/* Backdrop scrims (drawer/dialog overlays): deep charcoal instead of the
+	   plugin's slate-blue defaults, so overlays stay warm against the theme. */
+	--wiki-scrim: rgba(9, 8, 11, 0.55);
+	--wiki-scrim-strong: rgba(9, 8, 11, 0.8);
 	--wiki-chrome-danger: var(--wg-red);
 	--wiki-chrome-danger-hover: #c55a5f;
 	--wiki-redlink-color: #c06a6e;
