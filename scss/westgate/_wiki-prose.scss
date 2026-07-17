@@ -158,6 +158,10 @@
 
 	--wiki-article-drawer-layer: 1010;
 	--wiki-article-drawer-backdrop-layer: 1005;
+
+	/* Reading measure in rem, not ch: ch scales with font size, so a ch-based
+	   cap never applies to large headings. 54rem ≈ 90ch of body text. */
+	--wiki-prose-measure: 54rem;
 }
 
 /* Wiki surfaces: match forum category/topic panel depth. */
@@ -200,6 +204,32 @@
 
 .westgate-wiki .wiki-article-drawer-backdrop {
 	z-index: var(--wiki-article-drawer-backdrop-layer, 1005);
+}
+
+/* Article reading layout: the card hugs the justified text block instead of
+   leaving a dead strip, and the docked ToC column absorbs the leftover width
+   (overrides the plugin's minmax(16rem, 24rem) ToC column in wiki.css). */
+@media (min-width: 1200px) {
+	.westgate-wiki .wiki-with-fab:has(.wiki-article-drawer--toc:not([hidden])) {
+		grid-template-columns: minmax(0, 58rem) minmax(0, 1fr);
+	}
+
+	.westgate-wiki .wiki-with-fab:has(.wiki-article-drawer--toc:not([hidden])) .wiki-content-layout {
+		max-width: 58rem;
+	}
+}
+
+.westgate-wiki .wiki-article-prose {
+	padding-block: 1.5rem;
+}
+
+.westgate-wiki .wiki-article-prose :where(p, ul, ol, blockquote, .wiki-footnotes, h1, h2, h3, h4, h5, h6) {
+	margin-inline: auto;
+}
+
+.westgate-wiki .wiki-article-prose :where(p, li, blockquote) {
+	hyphens: auto;
+	text-align: justify;
 }
 
 .westgate-wiki .card.wiki-card:hover,
