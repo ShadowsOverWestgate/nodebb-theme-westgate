@@ -172,8 +172,21 @@ $wg-topbar-panel-bg: rgba(21, 17, 26, 0.98);
 
 .wg-topbar .notifications-dropdown,
 .wg-topbar .chats-dropdown,
-.wg-topbar .drafts-dropdown {
+.wg-topbar .drafts-dropdown,
+.wg-topbar .unread-dropdown {
   width: min(24rem, calc(100vw - 1.5rem));
+}
+
+.wg-topbar .wg-unread-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.wg-topbar .wg-unread-item__category {
+  margin-left: auto;
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .wg-topbar .dropdown-item,

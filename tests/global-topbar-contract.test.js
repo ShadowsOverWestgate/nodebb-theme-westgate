@@ -148,3 +148,35 @@ assertExcludes(
 	'brand-header',
 	'Removed brand banner widget area should not remain registered'
 );
+
+const unreadDrawer = read('templates/partials/header/unread-drawer.tpl');
+assertIncludes(
+	topbar,
+	'<!-- IMPORT partials/header/unread-drawer.tpl -->',
+	'Topbar should mount the unread drawer before notifications'
+);
+assert(
+	topbar.indexOf('partials/header/unread-drawer.tpl') < topbar.indexOf('partials/sidebar/notifications.tpl'),
+	'Unread drawer should sit before the notifications item'
+);
+assertIncludes(
+	unreadDrawer,
+	'component="unread/count"',
+	'Unread toggle should carry the live core count badge'
+);
+assertIncludes(
+	unreadDrawer,
+	'data-wg-unread-menu',
+	'Unread dropdown menu should expose the JS mount hook'
+);
+assertMatches(
+	topbar,
+	/href="\{relative_path\}\/unread"[^>]*>[\s\S]*?component="unread\/count"/,
+	'Mobile drawer actions should include an Unread link with count badge'
+);
+
+assertIncludes(
+	stylesheet,
+	'.unread-dropdown',
+	'Topbar styles should cover the unread dropdown'
+);

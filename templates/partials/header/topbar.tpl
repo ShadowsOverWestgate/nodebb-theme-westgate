@@ -37,6 +37,10 @@
 				</li>
 				{{{ end }}}
 
+				<li component="unread" class="nav-item unread dropdown" title="[[unread:title]]">
+					<!-- IMPORT partials/header/unread-drawer.tpl -->
+				</li>
+
 				<li component="notifications" class="nav-item notifications dropdown" title="[[global:header.notifications]]">
 					<!-- IMPORT partials/sidebar/notifications.tpl -->
 				</li>
@@ -109,6 +113,7 @@
 
 			{{{ if config.loggedIn }}}
 			<div class="wg-topbar__drawer-actions">
+				<a href="{relative_path}/unread"><i class="fa fa-fw fa-inbox" aria-hidden="true"></i><span>[[unread:title]]</span><span component="unread/count" class="badge rounded-1 bg-primary {{{ if !unreadCount.topic }}}hidden{{{ end }}}">{unreadCount.topic}</span></a>
 				<a href="{relative_path}/notifications"><i class="fa fa-fw fa-bell" aria-hidden="true"></i><span>[[global:header.notifications]]</span><span component="notifications/count" class="badge rounded-1 bg-primary {{{ if !unreadCount.notification }}}hidden{{{ end }}}">{unreadCount.notification}</span></a>
 				{{{ if canChat }}}
 				<a href="{relative_path}/user/{user.userslug}/chats{{{ if user.lastRoomId }}}/{user.lastRoomId}{{{ end }}}"><i class="fa fa-fw fa-comment" aria-hidden="true"></i><span>[[global:header.chats]]</span><span component="chat/count" class="badge rounded-1 bg-primary {{{ if !unreadCount.chat }}}hidden{{{ end }}}">{unreadCount.chat}</span></a>

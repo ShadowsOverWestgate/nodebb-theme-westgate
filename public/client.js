@@ -159,6 +159,55 @@
 			});
 	}
 
+	function renderUnreadMenu(menuEl, topics) {
+		if (!menuEl) {
+			return;
+		}
+
+		const relativePath = (window.config && window.config.relative_path) || '';
+
+		// remove the loading row and any previously injected topic rows;
+		// the empty-state and footer/divider rows are server-rendered and stay put
+		const loading = menuEl.querySelector('[data-wg-unread-loading]');
+		if (loading) {
+			loading.remove();
+		}
+		toArray(menuEl.querySelectorAll('.wg-unread-topic')).forEach((li) => {
+			li.remove();
+		});
+
+		const emptyEl = menuEl.querySelector('[data-wg-unread-empty]');
+		const footerEl = menuEl.querySelector('[data-wg-unread-footer]');
+
+		const list = (topics || []).slice(0, 10);
+		if (emptyEl) {
+			emptyEl.classList.toggle('hidden', list.length > 0);
+		}
+
+		list.forEach((topic) => {
+			const link = document.createElement('a');
+			link.className = 'dropdown-item wg-unread-item text-truncate';
+			link.href = `${relativePath}/topic/${topic.slug}`;
+			link.textContent = topic.title;
+			if (topic.category && topic.category.name) {
+				const category = document.createElement('small');
+				category.className = 'wg-unread-item__category';
+				category.textContent = topic.category.name;
+				link.appendChild(category);
+			}
+
+			const li = document.createElement('li');
+			li.className = 'wg-unread-topic';
+			li.appendChild(link);
+
+			if (footerEl) {
+				menuEl.insertBefore(li, footerEl);
+			} else {
+				menuEl.appendChild(li);
+			}
+		});
+	}
+
 	function getWestgateTopbar() {
 		if (!document || typeof document.querySelector !== 'function') {
 			return null;
@@ -225,11 +274,31 @@
 			.on('shown.bs.dropdown.westgateTopbar', '.wg-topbar [component="sidebar/search"]', function () {
 				$(this).find('[component="search/fields"] input[name="query"]').trigger('focus');
 			});
+
+		$(document)
+			.off('show.bs.dropdown.westgateUnread')
+			.on('show.bs.dropdown.westgateUnread', '.wg-topbar [component="unread"]', function () {
+				const menuEl = this.querySelector('[data-wg-unread-menu]');
+				const relativePath = (window.config && window.config.relative_path) || '';
+				fetch(relativePath + '/api/unread', {
+					headers: { accept: 'application/json' },
+				}).then(function (res) {
+					if (!res.ok) {
+						throw new Error('unread fetch failed: ' + res.status);
+					}
+					return res.json();
+				}).then(function (data) {
+					renderUnreadMenu(menuEl, data && data.topics);
+				}).catch(function () {
+					renderUnreadMenu(menuEl, []);
+				});
+			});
 	}
 
 	window.westgateTheme = window.westgateTheme || {};
 	window.westgateTheme.wrapWikiTables = wrapWestgateWikiTables;
 	window.westgateTheme.initTopbar = initWestgateTopbar;
+	window.westgateTheme.renderUnreadMenu = renderUnreadMenu;
 
 	$(document).ready(function () {
 		wrapWestgateWikiTables(document);
