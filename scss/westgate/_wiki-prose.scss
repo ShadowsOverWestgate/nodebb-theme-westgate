@@ -232,6 +232,21 @@
 	text-align: justify;
 }
 
+/* The namespace index / section listing card reuses .wiki-article-prose for
+   its card chrome, but its body is a directory listing, not reading prose.
+   Opt it out of the centered reading measure: the wiki plugin caps prose
+   children at --wiki-prose-measure and the rule above margin-inline:autos
+   them, which pins the heading, lead, and page list into a narrow centered
+   column with a big left gutter (#30). Let the listing run full-width, left. */
+.westgate-wiki .wiki-namespace-index :where(p, ul, ol, h1, h2, h3, h4, h5, h6) {
+	margin-inline: 0;
+	max-width: none;
+}
+
+.westgate-wiki .wiki-namespace-index :where(p, li, blockquote) {
+	text-align: start;
+}
+
 .westgate-wiki .card.wiki-card:hover,
 .westgate-wiki .card.wiki-topic-card:hover {
 	background: var(--wg-velvet-panel-hover) !important;

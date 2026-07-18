@@ -125,3 +125,31 @@
 	background: rgba(194, 163, 90, 0.32);
 	color: #fff4dd;
 }
+
+/* Harmony base-theme font correction.
+   Harmony generates @font-face for Inter/Poppins at our asset path and points
+   $font-family-sans-serif -> "Inter" and $font-family-secondary -> "Poppins"
+   in its own overrides.scss. We ship Jost + Cinzel, not those families, and do
+   not declare @fontsource/inter|poppins as deps -- so any element that resolves
+   to Inter/Poppins 404s in production on /assets/plugins/nodebb-theme-westgate/
+   inter/... (it only happens to resolve in dev via npm hoisting). Our BS-variable
+   override already keeps the current cascade on Jost, but that hinges on subtle
+   import order; pin the handful of Harmony rules that read those SCSS variables
+   directly (.ff-sans, .ff-secondary, the breadcrumb divider) to our own fonts so
+   nothing can request Inter/Poppins even if a Harmony bump flips the order. The
+   now-pointless inter/poppins staticDirs are removed from plugin.json alongside. */
+.ff-sans {
+	font-family: var(--wg-font-ui) !important;
+}
+
+.ff-secondary {
+	font-family: var(--wg-font-display);
+}
+
+.breadcrumb .breadcrumb-item {
+	font-family: var(--wg-font-display);
+}
+
+.breadcrumb .breadcrumb-item::before {
+	font-family: var(--wg-font-ui);
+}
