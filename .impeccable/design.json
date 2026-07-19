@@ -1,27 +1,192 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-11T00:00:00Z",
+  "generatedAt": "2026-07-19T00:00:00Z",
   "title": "Design System: Westgate",
   "extensions": {
     "colorMeta": {
-      "tarnished-gold": { "role": "primary", "displayName": "Tarnished Gold", "canonical": "#c2a35a", "tonalRamp": ["#241d0e", "#3d3118", "#574624", "#725c31", "#8f7440", "#c2a35a", "#d9bf7f", "#efdcae"] },
-      "bruised-plum": { "role": "secondary", "displayName": "Bruised Plum", "canonical": "#2a1222", "tonalRamp": ["#160811", "#2a1222", "#3a1830", "#54254a", "#6f3563", "#8b487e", "#b371a5", "#d9a8ce"] },
-      "dried-blood": { "role": "tertiary", "displayName": "Dried-Blood Red", "canonical": "#8e3438", "tonalRamp": ["#20090a", "#3c1416", "#5a2124", "#8e3438", "#a84a4e", "#c26a6d", "#d99093", "#eebcbe"] },
-      "crypt-black": { "role": "neutral", "displayName": "Crypt Black", "canonical": "#0f0d12", "tonalRamp": ["#09080b", "#0f0d12", "#110f15", "#18141d", "#201924", "#3a323c", "#625760", "#9a9086"] },
-      "bone-text": { "role": "neutral", "displayName": "Bone Text", "canonical": "#e6e0d6", "tonalRamp": ["#2b2823", "#4a453d", "#6b645a", "#8d8579", "#9a9086", "#b9b2a6", "#e6e0d6", "#f3ede4"] },
-      "ledger-ink": { "role": "neutral", "displayName": "Ledger Ink", "canonical": "#d8c28a", "tonalRamp": ["#2a2413", "#4a3f22", "#6b5b33", "#8d7846", "#b09659", "#d8c28a", "#e5d4a8", "#f2e7ca"] }
+      "tarnished-gold": {
+        "role": "primary",
+        "displayName": "Tarnished Gold",
+        "canonical": "#c2a35a",
+        "tonalRamp": [
+          "#241d0e",
+          "#3d3118",
+          "#574624",
+          "#725c31",
+          "#8f7440",
+          "#c2a35a",
+          "#d9bf7f",
+          "#efdcae"
+        ]
+      },
+      "bruised-plum": {
+        "role": "secondary",
+        "displayName": "Bruised Plum",
+        "canonical": "#2a1222",
+        "tonalRamp": [
+          "#160811",
+          "#2a1222",
+          "#3a1830",
+          "#54254a",
+          "#6f3563",
+          "#8b487e",
+          "#b371a5",
+          "#d9a8ce"
+        ]
+      },
+      "dried-blood": {
+        "role": "tertiary",
+        "displayName": "Dried-Blood Red",
+        "canonical": "#8e3438",
+        "tonalRamp": [
+          "#20090a",
+          "#3c1416",
+          "#5a2124",
+          "#8e3438",
+          "#a84a4e",
+          "#c26a6d",
+          "#d99093",
+          "#eebcbe"
+        ]
+      },
+      "crypt-black": {
+        "role": "neutral",
+        "displayName": "Crypt Black",
+        "canonical": "#0f0d12",
+        "tonalRamp": [
+          "#000000",
+          "#09080b",
+          "#0f0d12",
+          "#110f15",
+          "#18141d",
+          "#201924",
+          "#3a323c",
+          "#625760",
+          "#9a9086"
+        ]
+      },
+      "bone-text": {
+        "role": "neutral",
+        "displayName": "Bone Text",
+        "canonical": "#e6e0d6",
+        "tonalRamp": [
+          "#2b2823",
+          "#4a453d",
+          "#6b645a",
+          "#8d8579",
+          "#9a9086",
+          "#b9b2a6",
+          "#e6e0d6",
+          "#f3ede4"
+        ]
+      },
+      "ledger-ink": {
+        "role": "neutral",
+        "displayName": "Ledger Ink",
+        "canonical": "#d8c28a",
+        "tonalRamp": [
+          "#2a2413",
+          "#4a3f22",
+          "#6b5b33",
+          "#8d7846",
+          "#b09659",
+          "#d8c28a",
+          "#e5d4a8",
+          "#f2e7ca"
+        ]
+      },
+      "moss-string": {
+        "role": "tertiary",
+        "displayName": "Moss String",
+        "canonical": "#a3c58a"
+      },
+      "dry-apricot": {
+        "role": "tertiary",
+        "displayName": "Dry Apricot",
+        "canonical": "#d9a37a"
+      },
+      "deletion-red": {
+        "role": "tertiary",
+        "displayName": "Deletion Red",
+        "canonical": "#c55a5f"
+      },
+      "heart-rose": {
+        "role": "tertiary",
+        "displayName": "Heart Rose",
+        "canonical": "#d47a87"
+      },
+      "heart-wine": {
+        "role": "tertiary",
+        "displayName": "Heart Wine",
+        "canonical": "#7c2844"
+      },
+      "heart-ash": {
+        "role": "tertiary",
+        "displayName": "Heart Ash",
+        "canonical": "#b86a78"
+      },
+      "sorrow-rose": {
+        "role": "tertiary",
+        "displayName": "Sorrow Rose",
+        "canonical": "#b05c6c"
+      },
+      "sorrow-wine": {
+        "role": "tertiary",
+        "displayName": "Sorrow Wine",
+        "canonical": "#4c1a2a"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "All headings and titles; engraved Cinzel with a faint etch shadow." },
-      "body": { "displayName": "Body", "purpose": "Posts and long reading; calm geometric Jost." },
-      "label": { "displayName": "Label", "purpose": "Small engraved labels: topbar, footer headings, table headers. The only place tracking and uppercase are allowed." },
-      "code": { "displayName": "Code", "purpose": "Code blocks and inline code." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "All headings and titles; engraved Cinzel with a faint etch shadow."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Posts and long reading; calm geometric Jost."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Small engraved labels: topbar, footer headings, table headers. The only place tracking and uppercase are allowed."
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Code blocks and inline code."
+      },
+      "compact": {
+        "displayName": "Compact",
+        "purpose": "Dense UI text a step below body."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Metadata, pagination, small labels."
+      },
+      "fine": {
+        "displayName": "Fine",
+        "purpose": "Fine print: post indexes, footer legal. The floor of the ramp."
+      }
     },
     "shadows": [
-      { "name": "velvet-rest", "value": "inset 0 1px 0 rgba(255,255,255,0.025), inset 0 0 34px rgba(96,32,68,0.11), 0 10px 26px rgba(0,0,0,0.24)", "purpose": "Default velvet surface: sheen, plum bloom, ambient depth." },
-      { "name": "velvet-hover", "value": "inset 0 1px 0 rgba(255,255,255,0.035), inset 0 0 38px rgba(120,36,84,0.14), 0 12px 30px rgba(0,0,0,0.3)", "purpose": "Hover state of velvet surfaces; warmer bloom, slightly deeper." },
-      { "name": "ledger-rest", "value": "inset 0 1px 0 rgba(255,255,255,0.024), inset 0 -1px 0 rgba(0,0,0,0.42), 0 8px 18px rgba(0,0,0,0.2)", "purpose": "Flatter page-like ledger surfaces." },
-      { "name": "control-depth", "value": "inset 0 1px 0 rgba(255,244,221,0.04), 0 2px 8px rgba(0,0,0,0.22)", "purpose": "Small ambient depth on buttons and controls." }
+      {
+        "name": "velvet-rest",
+        "value": "inset 0 1px 0 rgba(255,255,255,0.025), inset 0 0 34px rgba(96,32,68,0.11), 0 10px 26px rgba(0,0,0,0.24)",
+        "purpose": "Default velvet surface: sheen, plum bloom, ambient depth."
+      },
+      {
+        "name": "velvet-hover",
+        "value": "inset 0 1px 0 rgba(255,255,255,0.035), inset 0 0 38px rgba(120,36,84,0.14), 0 12px 30px rgba(0,0,0,0.3)",
+        "purpose": "Hover state of velvet surfaces; warmer bloom, slightly deeper."
+      },
+      {
+        "name": "ledger-rest",
+        "value": "inset 0 1px 0 rgba(255,255,255,0.024), inset 0 -1px 0 rgba(0,0,0,0.42), 0 8px 18px rgba(0,0,0,0.2)",
+        "purpose": "Flatter page-like ledger surfaces."
+      },
+      {
+        "name": "control-depth",
+        "value": "inset 0 1px 0 rgba(255,244,221,0.04), 0 2px 8px rgba(0,0,0,0.22)",
+        "purpose": "Small ambient depth on buttons and controls."
+      }
     ],
     "motion": [],
     "breakpoints": []
@@ -79,10 +244,26 @@
       "Ambient, candlelit shadows; hierarchy by panel tone, not lift"
     ],
     "rules": [
-      { "name": "The Gilt Edge Rule", "body": "Gold is edging, not paint. It lives in 1px borders, thin rules, icons, and text. The only gold-filled surface in the theme is the primary button, and even that is a dark #5a4a1a, not bright gold.", "section": "colors" },
-      { "name": "The Sparing Red Rule", "body": "Red is a state and a detail — an error, a seal, a warning. It is never a background, never decoration, never loud.", "section": "colors" },
-      { "name": "The Engraving Rule", "body": "Wide letter-spacing and uppercase belong only to small Cinzel labels. Headings at reading size keep letter-spacing 0. Body text is never tracked, never uppercase.", "section": "typography" },
-      { "name": "The Candlelight Rule", "body": "Shadows are atmosphere. If you need to show one thing sits above another, change the panel tone and border alpha; do not invent a bigger shadow.", "section": "elevation" }
+      {
+        "name": "The Gilt Edge Rule",
+        "body": "Gold is edging, not paint. It lives in 1px borders, thin rules, icons, and text. The only gold-filled surface in the theme is the primary button, and even that is a dark #5a4a1a, not bright gold.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sparing Red Rule",
+        "body": "Red is a state and a detail — an error, a seal, a warning. It is never a background, never decoration, never loud.",
+        "section": "colors"
+      },
+      {
+        "name": "The Engraving Rule",
+        "body": "Wide letter-spacing and uppercase belong only to small Cinzel labels. Headings at reading size keep letter-spacing 0. Body text is never tracked, never uppercase.",
+        "section": "typography"
+      },
+      {
+        "name": "The Candlelight Rule",
+        "body": "Shadows are atmosphere. If you need to show one thing sits above another, change the panel tone and border alpha; do not invent a bigger shadow.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do keep body text at or above 4.5:1 contrast; Ash Text (#b9b2a6) on Crypt Black is the floor. Drop to Dust Text only for genuinely secondary metadata.",

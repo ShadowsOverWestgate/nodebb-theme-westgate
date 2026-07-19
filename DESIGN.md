@@ -19,6 +19,14 @@ colors:
   dust-text: "#9a9086"
   ledger-ink: "#d8c28a"
   ledger-ink-muted: "#a99d8f"
+  moss-string: "#a3c58a"
+  dry-apricot: "#d9a37a"
+  deletion-red: "#c55a5f"
+  heart-rose: "#d47a87"
+  heart-wine: "#7c2844"
+  heart-ash: "#b86a78"
+  sorrow-rose: "#b05c6c"
+  sorrow-wine: "#4c1a2a"
 typography:
   display:
     fontFamily: "Cinzel, Georgia, 'Times New Roman', serif"
@@ -35,6 +43,18 @@ typography:
     letterSpacing: "0.08em"
   code:
     fontFamily: "'IBM Plex Mono', ui-monospace, monospace"
+    fontWeight: 400
+  compact:
+    fontFamily: "Jost, system-ui, sans-serif"
+    fontSize: "0.95rem"
+    fontWeight: 400
+  small:
+    fontFamily: "Jost, system-ui, sans-serif"
+    fontSize: "0.82rem"
+    fontWeight: 400
+  fine:
+    fontFamily: "Jost, system-ui, sans-serif"
+    fontSize: "0.78rem"
     fontWeight: 400
 rounded:
   xs: "3px"
@@ -100,6 +120,8 @@ A tarnish-and-decay palette: gold that has aged, plum that has bruised, black th
 ### Tertiary
 - **Dried-Blood Red** (#8e3438): danger and warning states, small details. Never a large surface.
 - **Wax Seal** (#a84a4e): stamped accents inside ledger surfaces.
+- **Heart Rose / Heart Wine / Heart Ash** (#d47a87 / #7c2844 / #b86a78): the vote-state family — the lit heart, its wine-dark wash, and the broken heart. State colors only, per the Sparing Red Rule.
+- **Sorrow Rose / Sorrow Wine** (#b05c6c / #4c1a2a): the downvoted counterpart, a duller bruise of the same family.
 
 ### Neutral
 - **Crypt Black** (#0f0d12): the body background.
@@ -128,6 +150,7 @@ A tarnish-and-decay palette: gold that has aged, plum that has bruised, black th
 - **Label** (Cinzel 600, ~0.86rem, tracked 0.08–0.16em, often uppercase): topbar items, footer headings, table headers, search labels. The wider tracking is reserved for these small engraved labels.
 - **Body** (Jost 400, 1rem): posts, descriptions, lists. UI metadata (timestamps, stats) also uses Jost with letter-spacing 0.
 - **Code** (IBM Plex Mono 400/500): code blocks and inline code.
+- **Small type** (Jost 400): three fine steps below body — Compact (0.95rem) for dense UI text, Small (0.82rem) for metadata and pagination, Fine (0.78rem) for fine print (post indexes, footer legal). Never below 0.78rem.
 
 ### Named Rules
 **The Engraving Rule.** Wide letter-spacing and uppercase belong only to small Cinzel labels. Headings at reading size keep letter-spacing 0. Body text is never tracked, never uppercase.

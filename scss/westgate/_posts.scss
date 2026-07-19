@@ -225,8 +225,9 @@ li[component="post"] .content pre code.hljs,
 }
 
 li[component="post"] .content blockquote {
-	background: rgba(35, 27, 23, 0.36);
-	border-left: 3px solid rgba(194, 163, 90, 0.4);
+	background: rgba(42, 18, 34, 0.4);
+	border: 1px solid rgba(194, 163, 90, 0.14);
+	border-radius: 6px;
 	padding: 0.75rem 1rem;
 }
 
@@ -291,7 +292,7 @@ li[component="post"] [component="post/downvote"] {
 	i.fa-chevron-down {
 		// Font Awesome 7: fa-heart-crack (fa-heart-broken alias)
 		--fa: "\f7a9";
-		font-size: 0.92rem;
+		font-size: 0.95rem;
 		color: rgba(194, 163, 90, 0.82);
 	}
 
@@ -314,7 +315,8 @@ li[component="post"] [component="post/downvote"] {
 	}
 }
 
-.topic-sidebar-tools .btn,
+// keep the gold .btn-primary plate on Reply; only flatten the tool buttons
+.topic-sidebar-tools .btn:not(.btn-primary),
 [component="topic/navigator"] {
 	background: rgba(255, 255, 255, 0.018) !important;
 	border-color: rgba(194, 163, 90, 0.1) !important;
@@ -338,7 +340,7 @@ li[component="post"] [component="post/downvote"] {
 		rgba(18, 15, 22, 0.96) !important;
 	background-size: 100% var(--wg-ledger-line), auto;
 	border-color: var(--wg-ledger-border) !important;
-	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.32) !important;
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3) !important;
 	color: var(--wg-ledger-ink) !important;
 	font-family: var(--wg-font-ui);
 }
