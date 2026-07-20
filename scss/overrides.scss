@@ -48,6 +48,12 @@ $dark:          $wg-ink !default;
 
 $body-color: $wg-text-soft !default;
 $body-bg: $wg-ink !default;
+// We repaint Bootstrap's LIGHT colour mode dark, so emphasis must be light too.
+// Bootstrap defaults it to $black; leaving it there paints near-black text on our
+// dark surfaces wherever a component chains to --bs-emphasis-color: plain .table
+// (e.g. /wiki/manage), tooltips, nav-tabs/nav-underline active links, list-group
+// hover states, and the .text-emphasis / .link-body-emphasis utilities.
+$body-emphasis-color: $wg-text !default;
 $body-tertiary-bg: $wg-panel !default;
 $text-muted: $wg-text-muted !default;
 $border-color: rgba($wg-gold, 0.14) !default;

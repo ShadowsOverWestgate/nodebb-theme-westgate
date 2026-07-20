@@ -30,27 +30,32 @@ Fast checks, no forum needed:
   tables). There is no `npm test` script; run each file directly.
 - `node scripts/check-emails.js` — when working on email templates.
 
-Live visual check against a real forum, using the sibling checkout at
-`../sow-nodebb`:
+Live visual check against a real forum — **always possible, never skip it**.
+Every change in this repo can be seen in a browser before it ships; there is no
+theme change that can only be checked in production. A unit test cannot tell
+you that a colour is unreadable, so look at the page.
 
-1. `cd ../sow-nodebb && cp .env.example .env` (if not done already), then set
-   `PLUGIN_PATH=../sow-nodebb-theme` and `PLUGIN_ID=nodebb-theme-westgate` so
-   the compose file mounts this working tree.
-2. `docker compose -f docker-compose.dev.yml up`
-3. Open `http://localhost:4567` (or `HTTP_PORT` from `.env`). Dev admin login:
-   `admin` / `Admin12345!` (defaults; dev-only).
-4. If Westgate is not the active theme yet, switch to it once in
-   ACP → Appearance → Themes; the choice persists in the redis volume.
-5. NodeBB compiles this theme's SCSS and templates at build time, so a browser
-   reload alone is not enough after editing them. Rebuild, then reload:
-   `docker compose -f docker-compose.dev.yml exec nodebb ./nodebb build --config=/opt/config/config.json`
-   (restart the `nodebb` service if changes still don't show).
-6. Full reset (also required after changing `PLUGIN_*` in `.env`):
-   `docker compose -f docker-compose.dev.yml down -v`
+Use the sibling checkout at `../sow-nodebb`:
 
-Agents with browser tooling (e.g. Playwright) should point it at
-`http://localhost:4567` to load pages, take screenshots, and verify theme
-changes on the live forum.
+1. `cd ../sow-nodebb && cp .env.example .env`, then uncomment the "Theme
+   development" block so this working tree is the mounted package:
+   `PLUGIN_PATH=../sow-nodebb-theme`, `PLUGIN_ID=nodebb-theme-westgate`,
+   `EXTRA_PLUGINS=nodebb-plugin-westgate-wiki nodebb-plugin-westgate-pages`.
+2. `nix develop --command make dev` — the forum comes up at
+   `http://localhost:4567` (or `HTTP_PORT`) with this theme already active.
+   Dev admin login: `admin` / `Admin12345!` (defaults; dev-only).
+3. NodeBB compiles this theme's SCSS and templates at build time, so a browser
+   reload alone is not enough after editing them: `make dev-build`, then
+   reload. `make dev-restart` if changes still don't show.
+4. `make dev-reset` wipes everything; required after changing `PLUGIN_*` or
+   `EXTRA_PLUGINS` in `.env`.
+
+A fresh database is empty, so pages that render content (wiki, categories,
+topics) need seeding first. `../sow-nodebb/AGENTS.md` has the recipes for
+seeding over the REST API, for writing plugin settings straight to Redis, and
+for driving a headless browser on this NixOS box (the Playwright MCP server
+does not work here). Point any browser tooling at `http://localhost:4567` to
+load pages, take screenshots, and compare before/after.
 
 ## Design Context
 
@@ -70,8 +75,8 @@ changes on the live forum.
 - `templates/`: Harmony template overrides (same relative paths as Harmony).
 - `custom_pages/`: source content and mockups for custom-pages surfaces.
 - `lib/`, `public/client.js`: server hooks and client behavior.
-- `tests/`: contract tests for topbar, footer, icons, and wiki table
-  rendering. Plain assert scripts: run each with
+- `tests/`: contract tests for topbar, footer, icons, wiki table rendering,
+  and the Bootstrap dark-repaint variables. Plain assert scripts: run each with
   `node tests/<name>.test.js`; there is no `npm test` script.
 
 ## Theme Direction
