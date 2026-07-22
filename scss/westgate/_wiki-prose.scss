@@ -227,9 +227,18 @@
 	margin-inline: auto;
 }
 
-.westgate-wiki .wiki-article-prose :where(p, li, blockquote) {
+.westgate-wiki .wiki-article-prose :where(p, li) {
 	hyphens: auto;
 	text-align: justify;
+}
+
+/* Justify only reading prose. Table cells (bulleted lists get stretched into
+   ugly rivers), quote blocks, and code should read left/inherited, not
+   justified. */
+.westgate-wiki .wiki-article-prose :where(table, blockquote, pre) :where(p, li),
+.westgate-wiki .wiki-article-prose :where(blockquote, pre) {
+	hyphens: none;
+	text-align: start;
 }
 
 /* The namespace index / section listing card reuses .wiki-article-prose for
