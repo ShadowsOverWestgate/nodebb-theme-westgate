@@ -217,6 +217,26 @@
 	.westgate-wiki .wiki-with-fab:has(.wiki-article-drawer--toc:not([hidden])) .wiki-content-layout {
 		max-width: 58rem;
 	}
+
+	/* Pages without a docked ToC column have nothing to absorb the leftover
+	   width, so the full-bleed card left the measure-capped, margin-inline:auto'd
+	   prose blocks floating in a wide column with big side gutters — reads as a
+	   broken left indent (#31). Cap the reading column itself so the card hugs
+	   the text on every article page, matching the ToC layout. Section listings
+	   (.wiki-with-fab--section) opt out: they run full-width, left. */
+	.westgate-wiki .wiki-with-fab:not(.wiki-with-fab--section) .wiki-content-layout {
+		max-width: 58rem;
+		margin-inline: auto;
+	}
+
+	/* Same leak in the compose editor: the root carries .westgate-wiki, so the
+	   measure-cap + margin-inline:auto centers the editable prose in a
+	   full-width editor and the text drifts right of the callout/table. Cap the
+	   editing surface to match the read layout. */
+	.westgate-wiki-compose .wiki-compose-editor.wiki-article-prose {
+		max-width: 58rem;
+		margin-inline: auto;
+	}
 }
 
 .westgate-wiki .wiki-article-prose {
