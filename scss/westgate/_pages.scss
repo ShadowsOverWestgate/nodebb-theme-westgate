@@ -109,6 +109,34 @@ a.sow-card:hover {
 	border-color: var(--wg-gold-soft);
 }
 
+// Whole card acts as the article link: the title link stretches over the
+// card, chips stay clickable above it.
+.sow-card-link {
+	position: relative;
+	transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+
+	h3 a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.sow-chip {
+		position: relative;
+		z-index: 1;
+	}
+
+	&:hover,
+	&:focus-within {
+		border-color: var(--wg-gold-soft);
+		transform: translateY(-3px);
+	}
+
+	&:focus-within {
+		box-shadow: 0 0 0 2px var(--wg-gold-soft), var(--wg-velvet-shadow);
+	}
+}
+
 .sow-card-body {
 	padding: var(--wg-space-md);
 
@@ -125,7 +153,8 @@ a.sow-card:hover {
 
 .sow-meta {
 	display: flex;
-	gap: var(--wg-space-2xs);
+	align-items: center;
+	gap: var(--wg-space-xs);
 	flex-wrap: wrap;
 	margin-bottom: 12px;
 }
@@ -188,14 +217,7 @@ a.sow-card:hover {
 	}
 }
 
-// News: newspaper front page — double rule, featured story, ruled rows
-.sow-double-rule {
-	height: 7px;
-	border-top: 3px solid var(--wg-gold);
-	border-bottom: 1px solid var(--wg-gold);
-	margin-bottom: var(--wg-space-lg);
-}
-
+// News: newspaper front page — featured story card, article-row cards
 .sow-list-date {
 	font-family: var(--wg-font-code);
 	font-size: 0.75rem;
@@ -204,61 +226,65 @@ a.sow-card:hover {
 	color: var(--wg-text-muted);
 }
 
-.sow-featured-title {
-	text-align: center;
-	margin: 0 0 var(--wg-space-md);
-
-	a {
-		font-family: var(--wg-font-display);
-		font-size: clamp(2rem, 4.5vw, 3rem);
-		line-height: 1.15;
-		color: inherit;
+.sow-featured {
+	> .sow-banner {
+		// Fixed height + explicit width so the 8/5 card aspect-ratio
+		// doesn't shrink the hero to height * 1.6.
+		width: 100%;
+		height: 320px;
 	}
 }
 
 .sow-featured-body {
-	display: grid;
-	grid-template-areas:
-		'meta media'
-		'excerpt media';
-	grid-template-columns: 3fr 2fr;
-	grid-template-rows: auto 1fr;
-	gap: 10px var(--wg-space-lg);
+	padding: var(--wg-space-md) var(--wg-space-lg) var(--wg-space-lg);
+}
 
-	.sow-banner {
-		height: 100%;
-		min-height: 260px;
-		border-radius: 8px;
-		border: 1px solid var(--wg-border);
+// .sow-page h2 sets --wg-text; needs the extra class to win back gold.
+.sow-page .sow-featured-title {
+	text-align: center;
+	margin: 0 0 var(--wg-space-sm);
+	color: var(--wg-gold);
+	font-family: var(--wg-font-display);
+	font-size: clamp(2rem, 4.5vw, 3rem);
+	line-height: 1.15;
+
+	a {
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
 	}
 }
 
 .sow-featured-meta {
-	grid-area: meta;
+	justify-content: center;
+}
+
+// Full lead story inside the featured card: keep the article-body type
+// styles but drop its ledger-panel chrome (the card already frames it).
+.sow-featured-story.sow-article-body {
+	max-width: 72ch;
+	margin: 0 auto;
+	padding: 0;
+	background: none;
+	border: 0;
+	box-shadow: none;
 }
 
 .sow-featured-excerpt {
-	grid-area: excerpt;
+	max-width: 62ch;
+	margin: 0 auto;
 	font-size: 1.0625rem;
 	line-height: 1.7;
-	margin: 0;
 }
 
-.sow-featured-media {
-	grid-area: media;
-	display: block;
-}
-
-.sow-news-rows {
+// Shared by news (history below the featured story) and the dev blog list:
+// plain ruled rows, built to flick through.
+.sow-article-rows {
 	margin-top: var(--wg-space-lg);
 	border-top: 1px solid var(--wg-border);
 }
 
-.sow-news-row {
-	display: grid;
-	grid-template-columns: 1fr 120px;
-	gap: var(--wg-space-md);
-	align-items: start;
+.sow-article-row {
 	padding: var(--wg-space-md) 0;
 	border-bottom: 1px solid var(--wg-border);
 
@@ -268,15 +294,10 @@ a.sow-card:hover {
 	}
 
 	p {
+		max-width: 72ch;
 		font-size: 0.875rem;
 		margin: 0;
 	}
-}
-
-.sow-news-row-thumb .sow-banner {
-	height: 90px;
-	border-radius: 6px;
-	border: 1px solid var(--wg-border);
 }
 
 .sow-devblog-invite {
@@ -321,6 +342,7 @@ a.sow-card:hover {
 
 	&.three {
 		grid-template-columns: repeat(3, 1fr);
+		gap: var(--wg-space-lg);
 	}
 
 	&.four {
@@ -562,17 +584,8 @@ a.sow-card:hover {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
-	.sow-featured-body {
-		grid-template-areas:
-			'meta'
-			'media'
-			'excerpt';
-		grid-template-columns: 1fr;
-		grid-template-rows: auto;
-
-		.sow-banner {
-			min-height: 200px;
-		}
+	.sow-featured > .sow-banner {
+		height: 200px;
 	}
 }
 
@@ -581,18 +594,12 @@ a.sow-card:hover {
 		grid-template-columns: 1fr;
 	}
 
-	.sow-news-row {
-		grid-template-columns: 1fr;
-	}
-
-	.sow-news-row-thumb {
-		order: -1;
-	}
 }
 
 // Banners: first post image, or the shared velvet gradient
+// Friendlier crop: 8/5 keeps banners from looking vertically squished.
 .sow-banner {
-	height: 140px;
+	aspect-ratio: 8 / 5;
 	background-size: cover;
 	background-position: center;
 }
@@ -601,13 +608,37 @@ a.sow-card:hover {
 	@include wg-velvet-cover;
 }
 
-// Article page
+// Article page: full-width banner strip that stays quality-proof — the
+// backdrop is the image blurred, with the sharp 8/5 card crop seated in
+// the middle, so weak source images never render stretched.
 .sow-article-banner {
-	height: clamp(180px, 32vw, 340px);
-	background-size: cover;
-	background-position: center;
+	position: relative;
+	height: clamp(220px, 28vw, 300px);
+	overflow: hidden;
 	border: 1px solid var(--wg-border);
 	border-radius: 8px;
+}
+
+.sow-article-banner-blur {
+	position: absolute;
+	inset: -32px; // hide the blur's soft edges outside the strip
+	background-size: cover;
+	background-position: center;
+	filter: blur(24px) brightness(0.55);
+}
+
+.sow-article-banner-img {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(320px, 70%);
+	aspect-ratio: 8 / 5; // same crop as the blog-card banners
+	background-size: cover;
+	background-position: center;
+	border: 1px solid var(--wg-gold-soft);
+	border-radius: 6px;
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
 }
 
 .sow-article {
@@ -617,6 +648,7 @@ a.sow-card:hover {
 		margin: 0 0 6px;
 	}
 }
+
 
 .sow-article-date {
 	font-family: var(--wg-font-code);
@@ -736,23 +768,221 @@ a.sow-card:hover {
 	color: var(--wg-text-muted);
 }
 
-.sow-article-neighbors .sow-article-arrow {
-	font-size: 1.5rem;
-	line-height: 1;
+.sow-article-neighbors strong {
+	font-size: 0.875rem;
+	font-weight: 600;
 }
 
 .sow-related {
 	margin-top: var(--wg-space-xl);
+
+	> h2 {
+		font-size: 1.375rem;
+		margin-bottom: var(--wg-space-xs);
+	}
 }
 
-.sow-related-grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
+.sow-related-list a {
+	display: flex;
+	align-items: baseline;
 	gap: var(--wg-space-sm);
+	padding: var(--wg-space-sm) 0;
+	border-top: 1px solid var(--wg-border);
 }
 
-.sow-related-grid .sow-banner {
-	height: 90px;
+.sow-related-list .sow-list-date {
+	flex-shrink: 0;
+	font-family: var(--wg-font-code);
+	font-size: 0.6875rem;
+	text-transform: uppercase;
+	color: var(--wg-text-muted);
+}
+
+.sow-related-title {
+	color: var(--wg-text-soft);
+	transition: color 0.2s;
+}
+
+.sow-related-list a:hover .sow-related-title {
+	color: var(--wg-gold);
+}
+
+.sow-comments {
+	margin-top: var(--wg-space-xl);
+
+	> h2 {
+		font-size: 1.375rem;
+		margin-bottom: var(--wg-space-sm);
+	}
+}
+
+.sow-comment {
+	padding: var(--wg-space-md) 0;
+	border-top: 1px solid var(--wg-border);
+}
+
+.sow-comment-meta {
+	display: flex;
+	align-items: center;
+	gap: var(--wg-space-xs);
+	margin-bottom: var(--wg-space-xs);
+	font-size: 0.875rem;
+	color: var(--wg-text-muted);
+
+	img {
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	span {
+		color: var(--wg-gold);
+	}
+}
+
+.sow-comment-body {
+	color: var(--wg-text-soft);
+	line-height: 1.7;
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	img {
+		max-width: 100%;
+		border-radius: 8px;
+	}
+}
+
+.sow-heart {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 8px;
+	font-size: 0.875rem;
+	color: var(--wg-text-muted);
+	background: none;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: color 0.2s;
+
+	span {
+		color: var(--wg-text-muted);
+	}
+
+	&:hover,
+	&.voted {
+		color: var(--wg-gold);
+
+		span {
+			color: var(--wg-gold);
+		}
+	}
+}
+
+.sow-article-like {
+	margin-top: var(--wg-space-sm);
+	text-align: right;
+
+	.sow-heart {
+		font-size: 1rem;
+	}
+}
+
+.sow-comment-meta .sow-heart {
+	margin-left: auto;
+}
+
+.sow-card-author {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-left: auto;
+	font-size: 0.8125rem;
+	color: var(--wg-text-muted);
+
+	img {
+		width: 22px;
+		height: 22px;
+		// Keep the avatar from stretching the meta row and pushing the
+		// date/tags line down.
+		margin: -5px 0;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+}
+
+.sow-news-entry {
+	margin-bottom: var(--wg-space-lg);
+
+	.sow-featured-story.sow-article-body {
+		max-width: 90%;
+		text-align: justify;
+	}
+}
+
+.sow-card-likes {
+	margin-top: var(--wg-space-xs);
+	text-align: right;
+	font-size: 0.875rem;
+	color: var(--wg-text-muted);
+
+	.fa-heart {
+		color: var(--wg-gold);
+	}
+}
+
+.sow-comment-form {
+	margin-top: var(--wg-space-md);
+	padding-top: var(--wg-space-md);
+	border-top: 1px solid var(--wg-border);
+
+	.sow-comment-form-footer {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: var(--wg-space-sm);
+		margin-top: var(--wg-space-xs);
+	}
+
+	.sow-comment-form-avatar {
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.sow-comment-form-name {
+		font-size: 0.875rem;
+		color: var(--wg-text-soft);
+	}
+
+	textarea {
+		width: 100%;
+		padding: var(--wg-space-sm);
+		color: var(--wg-text-soft);
+		font: inherit;
+		background: var(--wg-ledger-panel);
+		border: 1px solid var(--wg-ledger-border);
+		border-radius: 6px;
+		resize: vertical;
+
+		&:focus {
+			outline: none;
+			border-color: var(--wg-gold-soft);
+		}
+	}
+
+	.sow-button {
+		cursor: pointer;
+	}
+}
+
+.sow-article-back {
+	margin-top: var(--wg-space-xl);
+	text-align: center;
 }
 
 .sow-pagination a {
@@ -770,10 +1000,6 @@ a.sow-card:hover {
 }
 
 @media (max-width: 700px) {
-	.sow-related-grid {
-		grid-template-columns: 1fr;
-	}
-
 	.sow-article-neighbors {
 		flex-direction: column;
 	}
